@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+// TODO: replace the url below with the output from running
+// encore db conn-uri intra_db --shadow
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://mke-intra-amf2:shadow-cvnb9a2japbkrkv94280@127.0.0.1:9500/encore_prisma_test?sslmode=disable"
+}
+
+model User {
+  id                 Int                @id @default(autoincrement())
+  name               String
+  email              String             @unique
+  password           String?
+  birthday           String?
+  registrationStatus RegistrationStatus
+  role               Role
+}
+
+enum Role {
+  unverified
+  student
+  admin
+}
+
+enum RegistrationStatus {
+  emailNotConfirmed // hagyományosan regisztrált, még nem erősítette meg az email címét
+  partialRegistration // facebook/google oauth-al regisztrált, az email megerősítve, de a többi adat hiányos (név-jelszó-szülinap)
+  registered // teljes értékű felhasználó
+}
