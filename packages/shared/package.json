@@ -1,5 +1,5 @@
 {
-  "name": "@repo/shared",
+  "name": "@intra/shared",
   "version": "0.0.0",
   "sideEffects": [
     "**/*.json"
@@ -12,8 +12,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build:components": "tsc && npm run copy-json",
-    "copy-json": "find src -name '*.json' -exec bash -c 'mkdir -p dist/$(dirname \"{}\" | cut -c5-) && cp \"{}\" dist/$(dirname \"{}\" | cut -c5-)/' \\;",
+    "build:components": "tsc",
     "check-types": "tsc --noEmit",
     "dev": "tsc --watch",
     "lint": "eslint src --max-warnings 0"

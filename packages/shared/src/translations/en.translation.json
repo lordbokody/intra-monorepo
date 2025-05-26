@@ -29,6 +29,15 @@
     "registrationInfo": "To log in, please confirm your account using the link sent to your email!",
     "login": "Login",
     "forgotPassword": "Have you forgot your password?",
-    "googleLogin": "Login with Google"
+    "googleLogin": "Login with Google",
+    "user-not-found": "User not found!",
+    "invalid-registration-status": "Invalid registration status!",
+    "invalid-or-expired-token": "Invalid or expired token!",
+    "user-email-not-confirmed": "User's email address is not confirmed!",
+    "user-has-no-password": "No password is set! Please log in using Google/Facebook!",
+    "invalid-login": "Invalid login!",
+    "forgot-password-email-subject": "Forgot Password",
+    "registration-confirmation-email-subject": "Confirm Registration",
+    "user-delete-not-allowed": "You can only delete your own user account!"
   }
 }

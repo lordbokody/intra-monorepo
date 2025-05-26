@@ -29,6 +29,15 @@
     "registrationInfo": "A belépéshez kérjük erősítsd meg a fiókod az emailben küldött link segítségével!",
     "login": "Bejelentkezés",
     "forgotPassword": "Elfelejtetted a jelszavad?",
-    "googleLogin": "Google bejelentkezés"
+    "googleLogin": "Google bejelentkezés",
+    "user-not-found": "Felhasználó nem található!",
+    "invalid-registration-status": "Hibás regisztrációs státusz!",
+    "invalid-or-expired-token": "Hibás vagy lejárt token!",
+    "user-email-not-confirmed": "Felhasználó email címe nincs megerősítve!",
+    "user-has-no-password": "Nincs jelszó beállítva! Kérjük jelentkezz be Google/Facebook használatával!",
+    "invalid-login": "Hibás bejelentkezés!",
+    "forgot-password-email-subject": "Elfelejtett jelszó",
+    "registration-confirmation-email-subject": "Regisztráció megerősítése",
+    "user-delete-not-allowed": "Csak a saját felhasználódat törölheted!"
   }
 }

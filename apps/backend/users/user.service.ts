@@ -13,11 +13,11 @@ import {
 } from "@intra/shared/types/user.types";
 
 // Methods
-import { findOneByEmailMethod } from "./methods/findOneByEmail/findOneByEmail.method";
-import { getUserMethod } from "./methods/getUser/getUser.method";
-import { getAllUsersMethod } from "./methods/getAllUsers/getAllUsers.method";
-import { updateUserMethod } from "./methods/updateUser/updateUser.method";
-import { deleteUserMethod } from "./methods/deleteUser/deleteUser.method";
+import { findOneByEmailMethod } from "./methods/findOneByEmail.method";
+import { getUserMethod } from "./methods/getUser.method";
+import { getAllUsersMethod } from "./methods/getAllUsers.method";
+import { updateUserMethod } from "./methods/updateUser.method";
+import { deleteUserMethod } from "./methods/deleteUser.method";
 
 const UserService = {
   /**

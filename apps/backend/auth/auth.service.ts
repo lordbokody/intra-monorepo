@@ -1,11 +1,11 @@
-import { registerMethod } from "./methods/register/register.method";
-import { verifyEmailMethod } from "./methods/verifyEmail/verifyEmail.method";
-import { reVerifyEmailMethod } from "./methods/reVerifyEmail/reVerifyEmail.method";
-import { loginMethod } from "./methods/login/login.method";
-import { forgotPasswordRequestMethod } from "./methods/forgotPasswordRequest/forgotPasswordRequest.method";
-import { forgotPasswordChangeMethod } from "./methods/forgotPasswordChange/forgotPasswordChange.method";
-import { loginOAuthMethod } from "./methods/loginOAuth/loginOAuth.method";
-import { finishRegistrationMethod } from "./methods/finishRegistration/finishRegistration.method";
+import { registerMethod } from "./methods/register.method";
+import { verifyEmailMethod } from "./methods/verifyEmail.method";
+import { reVerifyEmailMethod } from "./methods/reVerifyEmail.method";
+import { loginMethod } from "./methods/login.method";
+import { forgotPasswordRequestMethod } from "./methods/forgotPasswordRequest.method";
+import { forgotPasswordChangeMethod } from "./methods/forgotPasswordChange.method";
+import { loginOAuthMethod } from "./methods/loginOAuth.method";
+import { finishRegistrationMethod } from "./methods/finishRegistration.method";
 import {
     RegisterDto,
     RegisterResponse,

@@ -12,8 +12,8 @@ import {styles} from "./styles";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useTranslations} from "next-intl";
 import {axiosRequest} from "../../../../utils/axios";
-import type {LoginResponse} from "../../private/home/types";
-import {sleep} from "@repo/shared/utils/sleep.util";
+import type {LoginResponse} from "@intra/shared/types/auth.types";
+import {sleep} from "@intra/shared/utils/sleep.util";
 import {ButtonLoginGoogle} from "../../../../components/forms/buttons/buttonLoginGoogle/ButtonLoginGoogle";
 import ButtonLoginFacebook from "../../../../components/forms/buttons/buttonLoginFacebook/ButtonLoginFacebook";
 import {signIn} from "next-auth/react";
@@ -56,8 +56,8 @@ export default function Home() {
                     const signInResult = await signIn("credentials", {
                         redirect: false,
                         token: response.token,
-                        role: response.user.role,
-                        registrationStatus: response.user.registrationStatus,
+                        role: response?.user?.role,
+                        registrationStatus: response?.user?.registrationStatus,
                     });
 
                     if (signInResult?.ok) {
