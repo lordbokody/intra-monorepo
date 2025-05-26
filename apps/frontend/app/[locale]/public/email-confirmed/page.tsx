@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import {useRouter, useSearchParams} from 'next/navigation';
 import { axiosRequest } from "../../../../utils/axios";
-import type { VerifyEmailResponse, VerifyEmailStatus } from "./types";
+import type { VerifyEmailResponse, VerifyEmailStatus } from "@intra/shared/types/auth.types";
 import {styles} from "./styles";
-import {sleep} from "@repo/shared/utils/sleep.util";
+import {sleep} from "@intra/shared/utils/sleep.util";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useLocale, useTranslations} from "next-intl";
 

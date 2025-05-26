@@ -133,3 +133,5 @@ export interface VerifyEmailResponse {
     /** Hibaüzenet sikertelen metódus esetén */
     message?: string;
 }
+
+export type VerifyEmailStatus = 'loading' | 'success' | 'confirmed' | 'error';

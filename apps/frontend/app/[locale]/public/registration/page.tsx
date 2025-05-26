@@ -2,7 +2,7 @@
 
 import { useFormik, FormikProvider, Form } from 'formik';
 
-import {registerSchema} from "./schema";
+import {registerSchemaClient} from "../../../../../../packages/shared/src/schemas/auth/register.client.schema";
 import {InputText} from "../../../../components/forms/inputs/InputText";
 import {InputEmail} from "../../../../components/forms/inputs/InputEmail";
 import {InputPassword} from "../../../../components/forms/inputs/InputPassword";
@@ -13,13 +13,23 @@ import {getButtonState, ButtonStateType} from "../../../../utils/getButtonState"
 import {axiosRequest} from "../../../../utils/axios";
 import {useEffect, useState} from "react";
 import { useRouter } from 'next/navigation';
-import {RegisterResponse} from "./types";
+import {RegisterResponse} from "@intra/shared/types/auth.types";
+import {FindOneByEmailResponse} from "@intra/shared/types/user.types";
 import {styles} from "./styles";
-import {sleep} from "@repo/shared/utils/sleep.util";
+import {sleep} from "@intra/shared/utils/sleep.util";
 import {useLocale, useTranslations} from 'next-intl';
 
 import Link from "next/link";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
+
+const checkEmailExists = async (email: string): Promise<boolean> => {
+    const response = await axiosRequest<FindOneByEmailResponse>({
+        method: 'get',
+        route: `/user/find/${email}`,
+    });
+    return !response.success;
+};
+
 
 export default function RegisterPage() {
     const [isSuccess, setIsSuccess] = useState(false);
@@ -53,7 +63,6 @@ export default function RegisterPage() {
                     }
                 });
                 if(!response.success){
-                    console.log('error', response.message)
                     setIsError(true);
                     await sleep(2000);
                     setIsError(false);
@@ -71,7 +80,7 @@ export default function RegisterPage() {
                 setIsError(false);
             }
         },
-        validationSchema: registerSchema(t),
+        validationSchema: registerSchemaClient(locale, checkEmailExists),
         validateOnBlur: true,
         validateOnChange: true,
     });

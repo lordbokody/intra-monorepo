@@ -12,12 +12,12 @@ import { axiosRequest } from "../../../../utils/axios";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import {styles} from "./styles";
-import { sleep } from "@repo/shared/utils/sleep.util";
+import { sleep } from "@intra/shared/utils/sleep.util";
 import {useLocale, useTranslations} from 'next-intl';
 import { LayoutForm } from "../../../../components/layout/layoutForm/LayoutForm";
 import {signIn, useSession} from "next-auth/react";
-import {finishRegisterSchema} from "./schema";
-import {FinishRegistrationResponse} from "@repo/shared/types/auth.types";
+import {finishRegistrationClientSchema} from "../../../../../../packages/shared/src/schemas/auth/finishRegistration.client.schema";
+import {FinishRegistrationResponse} from "@intra/shared/types/auth.types";
 
 export default function RegisterPage() {
     const [isSuccess, setIsSuccess] = useState(false);
@@ -26,6 +26,7 @@ export default function RegisterPage() {
     const [buttonState, setButtonState] = useState<ButtonStateType>('enabled');
     const router = useRouter();
     const t = useTranslations('all');
+    const locale = useLocale();
     const { data: session } = useSession();
 
     const formik = useFormik({
@@ -61,8 +62,8 @@ export default function RegisterPage() {
                     const signInResult = await signIn("credentials", {
                         redirect: false,
                         token: response.token,
-                        role: response.user.role,
-                        registrationStatus: response.user.registrationStatus,
+                        role: response?.user?.role,
+                        registrationStatus: response?.user?.registrationStatus,
                     });
 
                     if (signInResult?.ok) {
@@ -85,7 +86,7 @@ export default function RegisterPage() {
                 setIsError(false);
             }
         },
-        validationSchema: finishRegisterSchema(t),
+        validationSchema: finishRegistrationClientSchema(locale),
         validateOnBlur: true,
         validateOnChange: true,
     });

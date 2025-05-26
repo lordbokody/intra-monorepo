@@ -1,5 +1,5 @@
-import {sendRegisterEmailMethod} from "./methods/sendRegisterEmail/sendRegisterEmail.method";
-import {sendForgotPasswordEmailMethod} from "./methods/sendForgotPasswordEmail/sendForgotPassword.method";
+import {sendRegisterEmailMethod} from "./methods/sendRegisterEmail.method";
+import {sendForgotPasswordEmailMethod} from "./methods/sendForgotPassword.method";
 import {
     SendRegisterEmailDto,
     SendRegisterEmailResponse,
