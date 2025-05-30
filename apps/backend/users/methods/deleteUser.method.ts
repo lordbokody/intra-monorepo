@@ -11,7 +11,10 @@ import {deleteUserSchema} from "@intra/shared/schemas/user/deleteUser.schema";
 export const deleteUserMethod = async (data: DeleteUserDto): Promise<DeleteUserResponse> => {
     try {
         // Validáljuk a kliens oldali adatokat
-        await deleteUserSchema('hu').client().validate(data, {
+        await deleteUserSchema('hu').client().validate(data);
+
+        // Validáljuk az authentikációs adatokat
+        await deleteUserSchema('hu').auth().validate(data, {
             context: {
                 role: getAuthData()?.role,
                 id: Number(getAuthData()?.userID),

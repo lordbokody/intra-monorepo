@@ -6,21 +6,23 @@ export const deleteUserSchema = (locale: string = "hu") => {
 
     const client = () =>
         yup.object({
-            id: yup
-                .number()
-                .required(t("required"))
-                .test(
-                    "can-delete",
-                    t("user-delete-not-allowed"),
-                    function (value) {
-                        const contextRole = this.options.context?.role;
-                        const contextUserID = this.options.context?.id;
-
-                        if (contextRole === "admin") return true;
-                        return value === contextUserID;
-                    }
-                ),
+            id: yup.number().required(t("required")),
         });
+
+    const auth = () =>
+        yup
+            .mixed()
+            .test(
+                "can-delete",
+                t("user-delete-not-allowed"),
+                function (value) {
+                    const contextRole = this.options.context?.role;
+                    const contextUserID = this.options.context?.id;
+
+                    if (contextRole === "admin") return true;
+                    return value === contextUserID;
+                }
+            );
 
     const server = () =>
         yup
@@ -28,5 +30,5 @@ export const deleteUserSchema = (locale: string = "hu") => {
             .required(t("user-not-found"))
             .test("user-exists", t("user-not-found"), (value) => value !== null);
 
-    return { client, server };
+    return { client, server, auth };
 };
