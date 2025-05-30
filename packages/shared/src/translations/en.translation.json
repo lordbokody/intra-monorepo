@@ -43,6 +43,8 @@
     "registration-not-complete": "Registration not completed!",
     "role-not-finalized": "Your role has not been finalized!",
     "user-password-not-allowed": "You can only change your own password!",
-    "role-no-access": "Only admins are allowed to modify roles!"
+    "role-no-access": "Only admins are allowed to modify roles!",
+    "finish-registration": "Finish Registration",
+    "finish": "Finish"
   }
 }
