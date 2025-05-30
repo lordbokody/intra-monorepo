@@ -38,6 +38,11 @@
     "invalid-login": "Invalid login!",
     "forgot-password-email-subject": "Forgot Password",
     "registration-confirmation-email-subject": "Confirm Registration",
-    "user-delete-not-allowed": "You can only delete your own user account!"
+    "user-delete-not-allowed": "You can only delete your own user account!",
+    "no-access": "You don't have access!",
+    "registration-not-complete": "Registration not completed!",
+    "role-not-finalized": "Your role has not been finalized!",
+    "user-password-not-allowed": "You can only change your own password!",
+    "role-no-access": "Only admins are allowed to modify roles!"
   }
 }

@@ -38,6 +38,11 @@
     "invalid-login": "Hibás bejelentkezés!",
     "forgot-password-email-subject": "Elfelejtett jelszó",
     "registration-confirmation-email-subject": "Regisztráció megerősítése",
-    "user-delete-not-allowed": "Csak a saját felhasználódat törölheted!"
+    "user-delete-not-allowed": "Csak a saját felhasználódat törölheted!",
+    "no-access": "Nincs hozzáférésed!",
+    "registration-not-complete": "Nem véglegesített regisztráció!",
+    "role-not-finalized": "Nincs véglegesített szerepköröd!",
+    "user-password-not-allowed": "Csak a saját jelszavadat módosíthatod!",
+    "role-no-access": "Szerepkört csak admin módosíthat!"
   }
 }

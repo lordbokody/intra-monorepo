@@ -1,7 +1,7 @@
 import {getAuthData} from "~encore/auth";
 import {prisma} from "../../database/prisma/database";
 import {APIError} from "encore.dev/api";
-import {GetUserDto, GetUserResponse} from "@intra/shared/types/user.types";
+import {GetUserDto, GetUserResponse, UserDto} from "@intra/shared/types/user.types";
 import {getUserSchema} from "@intra/shared/schemas/user/getUser.schema";
 
 /**
@@ -9,25 +9,22 @@ import {getUserSchema} from "@intra/shared/schemas/user/getUser.schema";
  */
 export const getUserMethod = async (data: GetUserDto): Promise<GetUserResponse> => {
     try {
-        await getUserSchema('hu').validate(data);
-
+        // Lekérjük az authentikációs adatokat
         const role = getAuthData()?.role;
         const registrationStatus = getAuthData()?.registrationStatus;
 
-        if(registrationStatus !== 'registered'){
-            return {
-                success: false,
-                message: "Nem véglegesített regisztráció!",
-            };
-        }
+        // Validáljuk az authentikáció adatokat
+        await getUserSchema('hu').auth().validate(true, {
+            context: {
+                registrationStatus: registrationStatus,
+                role: role,
+            },
+        })
 
-        if(role === 'unverified') {
-            return {
-                success: false,
-                message: "Nincs véglegesített szerepköröd!",
-            };
-        }
+        // Validáljuk a kliens felől érkező adatokat
+        await getUserSchema('hu').client().validate(data);
 
+        // Lekérjük a felhasználót
         const user = await prisma.user.findFirst({
             where: { id: data.id },
             select: {
@@ -40,16 +37,13 @@ export const getUserMethod = async (data: GetUserDto): Promise<GetUserResponse> 
             },
         });
 
-        if (!user) {
-            return {
-                success: false,
-                message: "Felhasználó nem található!",
-            };
-        }
+        // Validáljuk a szerver oldali adatoakt
+        await getUserSchema("hu").server().validate(user);
 
+        // Visszatérünk a válasszal
         return {
             success: true,
-            user: user,
+            user: user as UserDto,
         };
     } catch (error){
         throw APIError.aborted(error as string);

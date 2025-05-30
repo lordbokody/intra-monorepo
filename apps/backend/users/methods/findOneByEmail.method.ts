@@ -8,15 +8,16 @@ import {findOneByEmailSchema} from "@intra/shared/schemas/user/findOneByEmail.sc
  */
 export const findOneByEmailMethod = async (data: FindOneByEmailDto): Promise<FindOneByEmailResponse> => {
     try {
-        await findOneByEmailSchema('hu').validate(data);
+        // Validáljuk a kliens oldali adatokat
+        await findOneByEmailSchema('hu').client().validate(data);
 
+        // Betöltjük a felhasználót
         const user = await prisma.user.findFirst({where: {email: data.email}});
-        if (!user) {
-            return {
-                success: false,
-                message: "Felhasználó nem található!",
-            };
-        }
+
+        // Validáljuk a szerver oldali adatokat
+        await findOneByEmailSchema('hu').server().validate(user)
+
+        // Visszatérünk a válasszal
         return {
             success: true,
         };

@@ -11,50 +11,35 @@ import {checkEmailExists} from "../../utils/checkEmailExists.util";
  */
 export const updateUserMethod = async (data: UpdateUserDto): Promise<UpdateUserResponse> => {
     try {
-        const authRole = getAuthData()?.role;
-        const authId = Number(getAuthData()?.userID);
+        // Lekérjük az authentikációs adatokat
+        const role = getAuthData()?.role;
+        const id = Number(getAuthData()?.userID);
 
-        if(authRole !== 'admin' && authId !== data.id){
-            return {
-                success: false,
-                message: "Csak a saját felhasználód adatait szerkesztheted!",
-            };
-        }
+        // Validáljuk az authentikációs adatokat
+        await updateUserSchema('hu').auth().validate(data, { context: { role, id } });
 
-        if(authRole === 'admin' && authId !== data.id && data.password){
-            return {
-                success: false,
-                message: "Csak a saját jelszavad módosíthatod!",
-            };
-        }
+        // Validáljuk a kliens felől érkező adatokat
+        await updateUserSchema('hu').client(checkEmailExists).validate(data);
 
-        if(authRole !== 'admin' && data.role){
-          return {
-            success: false,
-            message: "Szerepkört csak admin módosíthat!",
-          };
-        }
+        // Lekérjük a felhasználót az adatbázisból
+        const user = await prisma.user.findFirst({ where: { id } });
 
-        await updateUserSchema('hu', checkEmailExists).validate(data);
+        // Validáljuk a szerver oldali adatokat
+        await updateUserSchema('hu').server().validate(user);
 
-        const user = await prisma.user.findFirst({ where: { id: data.id } });
-        if (!user) {
-            return {
-                success: false,
-                message: "Felhasználó nem található!",
-            };
-        }
-        user.name = data.name || user.name;
+        // Elkészítjük a frissítendő adatokat
+        const updateData = {
+            name: data.name || user?.name,
+            password: data.password ? await hashPassword(data.password) : user?.password,
+            email: data.email || user?.email,
+            birthday: data.birthday || user?.birthday,
+            role: data.role || user?.role
+        };
 
-        if(data.password){
-            user.password = await hashPassword(data.password)
-        }
+        // Frissítjük az adatbázist
+        const updated = await prisma.user.update({ data: updateData, where: { id: data.id } });
 
-        user.email = data.email || user.email;
-        user.birthday = data.birthday || user.birthday;
-        user.role = data.role || user.role;
-
-        const updated = await prisma.user.update({ data: user, where: { id: data.id } });
+        // Visszatérünk a válasszal
         return {
             success: true,
             user: updated,
