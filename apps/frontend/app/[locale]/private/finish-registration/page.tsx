@@ -16,81 +16,90 @@ import { sleep } from "@intra/shared/utils/sleep.util";
 import {useLocale, useTranslations} from 'next-intl';
 import { LayoutForm } from "../../../../components/layout/layoutForm/LayoutForm";
 import {signIn, useSession} from "next-auth/react";
-import {finishRegistrationClientSchema} from "../../../../../../packages/shared/src/schemas/auth/finishRegistration.client.schema";
-import {FinishRegistrationResponse} from "@intra/shared/types/auth.types";
+import {finishRegistrationSchema} from "@intra/shared/schemas/auth/finishRegistration.schema"
+import {FinishRegistrationResponse, FinishRegistrationDto} from "@intra/shared/types/auth.types";
 
 export default function RegisterPage() {
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [isForwarding, setIsForwarding] = useState(false);
+    // Létrehozzuk a változókat
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const [isError, setIsError] = useState<boolean>(false);
+    const [isForwarding, setIsForwarding] = useState<boolean>(false);
     const [buttonState, setButtonState] = useState<ButtonStateType>('enabled');
     const router = useRouter();
     const t = useTranslations('all');
     const locale = useLocale();
     const { data: session } = useSession();
 
-    const formik = useFormik({
-        initialValues: {
-            name: session?.user?.name || '',
-            email: session?.user?.email || '',
-            password: '',
-            confirmPassword: '',
-            birthday: '',
-            acceptTerms: false,
-            acceptPrivacy: false
-        },
-        enableReinitialize: true,
-        onSubmit: async (values) => {
-            try {
-                const response = await axiosRequest<FinishRegistrationResponse>({
-                    method: 'patch',
-                    route: `/auth/finishRegistration`,
-                    token: session?.backendJwt,
-                    data: {
-                        name: values.name,
-                        email: values.email,
-                        password: values.password,
-                        birthday: values.birthday
-                    }
-                });
-                if (!response.success) {
-                    console.log('error', response.message)
-                    setIsError(true);
-                    await sleep(3000);
-                    setIsError(false);
-                } else {
-                    const signInResult = await signIn("credentials", {
-                        redirect: false,
-                        token: response.token,
-                        role: response?.user?.role,
-                        registrationStatus: response?.user?.registrationStatus,
-                    });
+    // Beállítjuk a form alapértelmezett adatait
+    const initialValues = {
+        name: session?.user?.name || '',
+        email: session?.user?.email || '',
+        password: '',
+        confirmPassword: '',
+        birthday: '',
+        acceptTerms: false,
+        acceptPrivacy: false
+    }
 
-                    if (signInResult?.ok) {
-                        console.log('session', session)
-                        setIsSuccess(true);
-                        await sleep(3000);
-                        setIsForwarding(true);
-                        router.push('/private/home');
-                    } else {
-                        setIsError(true);
-                        //setErrorText("Authentication failed.");
-                        await sleep(3000);
-                        setIsError(false);
-                    }
+    // Létrehozzuk a form küldésekor futó függvényt
+    const onSubmit = async (values: FinishRegistrationDto): Promise<void> => {
+        try {
+            const response = await axiosRequest<FinishRegistrationResponse>({
+                method: 'patch',
+                route: `/auth/finishRegistration`,
+                token: session?.backendJwt,
+                data: {
+                    name: values.name,
+                    email: values.email,
+                    password: values.password,
+                    birthday: values.birthday
                 }
-            } catch (error) {
-                console.log('error', error)
+            });
+            if (!response.success) {
+                console.log('error', response.message)
                 setIsError(true);
                 await sleep(3000);
                 setIsError(false);
+            } else {
+                const signInResult = await signIn("credentials", {
+                    redirect: false,
+                    token: response.token,
+                    role: response?.user?.role,
+                    registrationStatus: response?.user?.registrationStatus,
+                });
+
+                if (signInResult?.ok) {
+                    console.log('session', session)
+                    setIsSuccess(true);
+                    await sleep(3000);
+                    setIsForwarding(true);
+                    router.push('/private/home');
+                } else {
+                    setIsError(true);
+                    //setErrorText("Authentication failed.");
+                    await sleep(3000);
+                    setIsError(false);
+                }
             }
-        },
-        validationSchema: finishRegistrationClientSchema(locale),
+        } catch (error) {
+            console.log('error', error)
+            setIsError(true);
+            await sleep(3000);
+            setIsError(false);
+        }
+    }
+
+    // Létrehozzuk a formot
+    const formik = useFormik({
+        initialValues,
+        enableReinitialize: true,
+        onSubmit,
+        validationSchema: finishRegistrationSchema(locale).client(),
         validateOnBlur: true,
         validateOnChange: true,
     });
 
+    // A form adatinak változására reagálva állítjuk a form gombjának állapotát
     useEffect(() => {
         const buttonState = getButtonState(formik.isValid, formik.dirty, formik.isSubmitting, isSuccess, isForwarding, isError);
         setButtonState(buttonState);
@@ -100,7 +109,7 @@ export default function RegisterPage() {
         <LayoutForm>
             <FormikProvider value={formik}>
                 <Form className={styles.form} >
-                    <h2 className={styles.label}>Regisztráció véglegesítése</h2>
+                    <h2 className={styles.label}>{t('finish-registration')}</h2>
 
                     <InputText label={t('name')} id="name" name="name" value={formik.values.name} required={true} />
                     <InputEmail label={t('email')} id="email" name="email" value={formik.values.email} required={true} disabled={true} preLoad={true} />
@@ -112,9 +121,7 @@ export default function RegisterPage() {
 
                     <p className={styles.required}>{t('*-required')}</p>
 
-                    <ButtonSubmit state={buttonState}>
-                        Véglegesít
-                    </ButtonSubmit>
+                    <ButtonSubmit state={buttonState}>{t('finish')}</ButtonSubmit>
                 </Form>
             </FormikProvider>
         </LayoutForm>
