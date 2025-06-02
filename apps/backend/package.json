@@ -10,7 +10,7 @@
     "postinstall": "npx prisma generate --schema=database/prisma/schema.prisma"
   },
   "devDependencies": {
-    "@types/node": "^20.5.7",
+    "@types/node": "^22.15.29",
     "prisma": "^6.7.0",
     "typescript": "^5.2.2"
   },
