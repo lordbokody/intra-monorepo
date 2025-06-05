@@ -12,10 +12,16 @@ export interface FinishRegistrationDto {
     name?: string;
     /** Felhasználó jelszava */
     password: string;
+    /** Felhasználó jelszavának megerősítése */
+    confirmPassword: string;
     /** Felhasználó email címe */
     email?: string;
     /** Felhasználó születésnapja */
     birthday: string;
+    /** Felhasználási feltételek elfogadása */
+    acceptTerms: boolean;
+    /** Adatvédelmi nyilatkozat elfogadása */
+    acceptPrivacy: boolean;
 }
 
 export interface FinishRegistrationResponse {
@@ -96,13 +102,19 @@ export interface LoginOAuthResponse {
 
 export interface RegisterDto {
     /** Felhasználó neve */
-    name: string;
+    name?: string;
     /** Felhasználó jelszava */
     password: string;
+    /** Felhasználó jelszavának megerősítése */
+    confirmPassword: string;
     /** Felhasználó email címe */
-    email: string;
+    email?: string;
     /** Felhasználó születésnapja */
     birthday: string;
+    /** Felhasználási feltételek elfogadása */
+    acceptTerms: boolean;
+    /** Adatvédelmi nyilatkozat elfogadása */
+    acceptPrivacy: boolean;
 }
 
 export interface RegisterResponse {
