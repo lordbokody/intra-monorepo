@@ -14,3 +14,5 @@ export type PaginatedParams = {
     page: number;
     count: number;
 };
+
+export type ApplicationLanguage = 'hu' | 'en'

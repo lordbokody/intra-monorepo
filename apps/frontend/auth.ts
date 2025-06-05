@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
-import {axiosRequest} from "./utils/axios";
+import {axiosRequest} from "./app/api/client/axios";
 import Credentials from "next-auth/providers/credentials";
 
 declare module "next-auth" {

@@ -18,9 +18,9 @@ export const registerMethod = async (data: RegisterDto): Promise<RegisterRespons
         // Létrehozzuk a felhasználót
         const user = await prisma.user.create({
             data: {
-                name: data.name,
+                name: data.name as string,
                 password: await hashPassword(data.password),
-                email: data.email,
+                email: data.email as string,
                 birthday: data.birthday,
                 role: "unverified",
                 registrationStatus: "emailNotConfirmed"

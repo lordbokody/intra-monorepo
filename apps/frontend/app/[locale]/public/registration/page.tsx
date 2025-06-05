@@ -1,95 +1,31 @@
 'use client'
 
-import { useFormik, FormikProvider, Form } from 'formik';
-
-import {registerSchemaClient} from "../../../../../../packages/shared/src/schemas/auth/register.client.schema";
+import { FormikProvider, Form } from 'formik';
 import {InputText} from "../../../../components/forms/inputs/InputText";
 import {InputEmail} from "../../../../components/forms/inputs/InputEmail";
 import {InputPassword} from "../../../../components/forms/inputs/InputPassword";
 import {InputDate} from "../../../../components/forms/inputs/InputDate";
 import {InputCheckbox} from "../../../../components/forms/inputs/InputCheckbox";
 import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
-import {getButtonState, ButtonStateType} from "../../../../utils/getButtonState";
-import {axiosRequest} from "../../../../utils/axios";
-import {useEffect, useState} from "react";
-import { useRouter } from 'next/navigation';
-import {RegisterResponse} from "@intra/shared/types/auth.types";
-import {FindOneByEmailResponse} from "@intra/shared/types/user.types";
 import {styles} from "./styles";
-import {sleep} from "@intra/shared/utils/sleep.util";
-import {useLocale, useTranslations} from 'next-intl';
-
+import {useTranslations} from 'next-intl';
+import {useRegistrationForm} from "./form";
 import Link from "next/link";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 
-const checkEmailExists = async (email: string): Promise<boolean> => {
-    const response = await axiosRequest<FindOneByEmailResponse>({
-        method: 'get',
-        route: `/user/find/${email}`,
-    });
-    return !response.success;
-};
-
-
 export default function RegisterPage() {
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [isForwarding, setIsForwarding] = useState(false);
-    const [buttonState, setButtonState] = useState<ButtonStateType>('disabled');
-    const router = useRouter();
+    // Betöltjük a fordításokat
     const t = useTranslations('all');
-    const locale = useLocale();
 
-    const formik = useFormik({
-        initialValues: {
-            name: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            birthday: '',
-            acceptTerms: false,
-            acceptPrivacy: false
-        },
-        onSubmit: async (values, { resetForm }) => {
-            try {
-                const response = await axiosRequest<RegisterResponse>({
-                    method: 'post',
-                    route: `/auth/register`,
-                    data: {
-                        name: values.name,
-                        email: values.email,
-                        password: values.password,
-                        birthday: values.birthday
-                    }
-                });
-                if(!response.success){
-                    setIsError(true);
-                    await sleep(2000);
-                    setIsError(false);
-                } else {
-                    resetForm();
-                    setIsSuccess(true);
-                    await sleep(2000);
-                    setIsForwarding(true);
-                    router.push('/public/success-registration');
-                }
-            } catch (error) {
-                console.log('error', error)
-                setIsError(true);
-                await sleep(2000);
-                setIsError(false);
-            }
-        },
-        validationSchema: registerSchemaClient(locale, checkEmailExists),
-        validateOnBlur: true,
-        validateOnChange: true,
-    });
+    // Betöltjük a formot
+    const {
+        formik,
+        buttonState,
+        errorText,
+        isError
+    } = useRegistrationForm()
 
-    useEffect(() => {
-        const buttonState = getButtonState(formik.isValid, formik.dirty, formik.isSubmitting, isSuccess, isForwarding, isError);
-        setButtonState(buttonState);
-    }, [formik.isValid, formik.dirty, formik.isSubmitting, isSuccess, isError, isForwarding]);
-
+    // Létrehozzuk a sablont
     return (
         <LayoutForm>
             <FormikProvider value={formik}>
@@ -140,6 +76,7 @@ export default function RegisterPage() {
                         required={true}
                     />
                     <p className={styles.required}>{t('*-required')}</p>
+                    <p className={styles.error(isError)}>{errorText}</p>
                     <ButtonSubmit state={buttonState}>
                         {t('registration')}
                     </ButtonSubmit>

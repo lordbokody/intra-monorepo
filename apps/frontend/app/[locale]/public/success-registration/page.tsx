@@ -4,8 +4,10 @@ import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useTranslations} from "next-intl";
 
 export default function SuccessRegistrationPage() {
+    // Betöltjük a fordításokat
     const t = useTranslations('all');
 
+    // Létrehozzuk a sablont
     return (
         <LayoutForm>
             <div className={getOuterDivClassNames()}>

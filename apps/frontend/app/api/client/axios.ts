@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: "https://staging-mke-intra-amf2.encr.app",
@@ -8,7 +9,7 @@ const axiosInstance: AxiosInstance = axios.create({
     },
 });
 
-type AxiosMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
+export type AxiosMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
 
 interface AxiosParams<T = any> {
     method: AxiosMethod;
@@ -16,13 +17,14 @@ interface AxiosParams<T = any> {
     data?: T;
     token?: string;
     params?: never;
+    language?: ApplicationLanguage
 }
 
-export const axiosRequest = async <T>({ method, route, data, token, params }: AxiosParams): Promise<T> => {
+export const axiosRequest = async <T>({ method, route, data, token, params, language }: AxiosParams): Promise<T> => {
 
     const headers = {
         ...axiosInstance.defaults.headers.common,
-        'Accept-Language': 'hu',
+        'Accept-Language': language || 'hu',
         'Authorization': token || '',
     };
 
