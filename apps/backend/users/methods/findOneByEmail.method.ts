@@ -14,12 +14,9 @@ export const findOneByEmailMethod = async (data: FindOneByEmailDto): Promise<Fin
         // Betöltjük a felhasználót
         const user = await prisma.user.findFirst({where: {email: data.email}});
 
-        // Validáljuk a szerver oldali adatokat
-        await findOneByEmailSchema('hu').server().validate(user)
-
         // Visszatérünk a válasszal
         return {
-            success: true,
+            success: !!user,
         };
     } catch (error){
         throw APIError.aborted(error as string);

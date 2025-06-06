@@ -1,5 +1,5 @@
 {
-	"id":   "mke-intra-amf2",
+	"id":   "encore-monorepo-v2yi",
 	"lang": "typescript",
 	"global_cors": {
 	    "allow_headers": ["*"],

@@ -1,8 +1,6 @@
-import { Check } from 'lucide-react';
-import {getOuterDivClassNames, getIconClassNames, getLabelClassNames, getDescriptionClassNames} from "./styles";
+import {styles} from "./styles";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useTranslations} from "next-intl";
-import {styles} from "../success-forgot-password/styles";
 import Link from "next/link";
 
 export default function SuccessRegistrationPage() {
@@ -13,8 +11,8 @@ export default function SuccessRegistrationPage() {
     return (
         <LayoutForm>
             <div className={styles.form}>
-                <h2 className={styles.label}>{t("registrationSuccess")}</h2>
-                <p className={styles.description}>{t("registrationInfo")}</p>
+                <h2 className={styles.label}>{t("forgot-password-email-subject")}</h2>
+                <p className={styles.description}>{t("forgot-password-success")}</p>
                 <div className={styles.linkRow}>
                     <Link className={styles.link} href="/public/login">{t('backToHome')}</Link>
                 </div>

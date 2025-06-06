@@ -2,8 +2,8 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 
 const axiosInstance: AxiosInstance = axios.create({
-    baseURL: "https://staging-mke-intra-amf2.encr.app",
-    //baseURL: "http://localhost:4000",
+    //baseURL: "https://staging-mke-intra-amf2.encr.app",
+    baseURL: "http://127.0.0.1:4000",
     headers: {
         'Content-Type': 'application/json',
     },

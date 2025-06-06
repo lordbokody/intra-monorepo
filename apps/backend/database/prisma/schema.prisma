@@ -11,7 +11,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://mke-intra-amf2:shadow-cvnb9a2japbkrkv94280@127.0.0.1:9500/encore_prisma_test?sslmode=disable"
+  url      = "postgresql://encore-monorepo-v2yi:shadow-d118j72japbhr4h0546g@127.0.0.1:9500/intra_db?sslmode=disable"
 }
 
 model User {

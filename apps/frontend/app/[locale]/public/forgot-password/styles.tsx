@@ -3,5 +3,10 @@ export const styles = {
     label: 'text-2xl font-semibold text-center mb-[50px]',
     linkRow: 'flex justify-between text-sm text-blue-600 mt-2',
     link: 'hover:underline hover:underline-offset-4',
+    error(show: string | boolean | undefined) {
+        const baseClassNames = 'text-xs mt-1 transition-all duration-200 mb-[30px]'
+        const errorClassNames = show ? 'text-red-500 opacity-100' : 'opacity-0'
+        return `${baseClassNames} ${errorClassNames}`
+    },
     description: 'mb-[50px] text-sm text-center text-gray-600'
 }
