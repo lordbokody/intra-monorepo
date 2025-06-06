@@ -1,45 +1,39 @@
-import {useEffect, useState} from "react";
-import {ButtonStateType, getButtonState} from "../../../../utils/getButtonState";
-import {useRouter} from "next/navigation";
+'use client'
+
 import {useLocale} from "next-intl";
-import {useFormik} from "formik";
-import {RegisterDto} from "@intra/shared/types/auth.types";
-import { sleep } from '@intra/shared/utils/sleep.util';
+import { useEffect, useState } from 'react';
+import {ButtonStateType, getButtonState} from "../../../../utils/getButtonState";
+import { ForgotPasswordRequestDto, ForgotPasswordRequestResponse } from "@intra/shared/types/auth.types";
+import {useRouter} from "next/navigation";
+import {sleep} from "@intra/shared/utils/sleep.util";
 import {ApiService} from "../../../api/client/client";
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
-import {registerSchema} from "@intra/shared/schemas/auth/register.schema";
-import {checkEmailExists} from "../../../../utils/checkEmailExists.util";
+import {useFormik} from "formik";
+import {forgotPasswordRequestSchema} from "@intra/shared/schemas/auth/forgotPasswordRequest.schema";
 
-
-export const useRegistrationForm = () => {
-    // Form sikeres beküldését tároló változó
-    const [isSuccess, setIsSuccess] = useState(false);
-
-    // Routeok közötti átirányítási állapot változója
-    const [isForwarding, setIsForwarding] = useState(false);
-
-    // Form submit gombjának állapotát tároló változó
-    const [buttonState, setButtonState] = useState<ButtonStateType>('disabled');
-
+export const useForgotPasswordRequestForm = () => {
     // App router
     const router = useRouter();
 
     // App nyelvi változók
     const locale = useLocale() as ApplicationLanguage;
 
+    // Form sikeres beküldését tároló változó
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
     // Form hibaüzeneteit tároló változók
     const [isError, setIsError] = useState<boolean>(false);
     const [errorText, setErrorText] = useState<string | null>(null);
 
+    // Routeok közötti átirányítási állapot változója
+    const [isForwarding, setIsForwarding] = useState<boolean>(false);
+
+    // Form submit gombjának állapotát tároló változó
+    const [buttonState, setButtonState] = useState<ButtonStateType>('enabled');
+
     // Form alapértelmezett adatai
-    const initialValues: RegisterDto = {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        birthday: '',
-        acceptTerms: false,
-        acceptPrivacy: false
+    const initialValues: ForgotPasswordRequestDto = {
+        email: ''
     }
 
     // Segédfüggvény a formban lévő hibák kezelésére
@@ -53,19 +47,22 @@ export const useRegistrationForm = () => {
     // Segédfüggvény a form sikeres lefutása után
     const handleSuccess = async () => {
         setIsSuccess(true);
-        await sleep(2000);
+        await sleep(500);
         setIsForwarding(true);
-        router.push('/public/success-registration');
+        router.push('/public/success-forgot-password');
     }
 
     // Form submit függvénye
-    const onSubmit = async (values: RegisterDto) => {
+    const onSubmit = async (values: ForgotPasswordRequestDto): Promise<void>  => {
         try {
             // Meghívjuk az API klienst
-            await ApiService.auth.register(
+            const data: ForgotPasswordRequestResponse = await ApiService.auth.forgotPasswordRequest(
                 values,                         // form adatok
                 locale as ApplicationLanguage,  // app nyelv
             )
+
+            // Ha sikertelen a hívás, akkor hibát dobunk
+            if (!data.success) return await handleError(data.message);
 
             // Sikeres futás esetén meghívjuk a szükséges műveletet
             await handleSuccess();
@@ -78,18 +75,26 @@ export const useRegistrationForm = () => {
     // Létrehozzuk a formot
     const formik = useFormik({
         initialValues,
+        enableReinitialize: true,
         onSubmit,
-        validationSchema: registerSchema(locale).client(checkEmailExists(locale)),
+        validationSchema: forgotPasswordRequestSchema(locale).client(),
         validateOnBlur: true,
         validateOnChange: true,
     });
 
     // A form állapotainak változását figyelve állítjuk a submit gombot
     useEffect(() => {
-        const buttonState = getButtonState(formik.isValid, formik.dirty, formik.isSubmitting, isSuccess, isForwarding, isError);
-        setButtonState(buttonState);
+        const state = getButtonState(
+            formik.isValid,
+            formik.dirty,
+            formik.isSubmitting,
+            isSuccess,
+            isForwarding,
+            isError
+        );
+        setButtonState(state);
     }, [formik.isValid, formik.dirty, formik.isSubmitting, isSuccess, isError, isForwarding]);
 
     // Visszatérünk a formmal és a gomb státuszával
-    return { formik, buttonState, errorText, isError }
+    return { formik, buttonState, isError, errorText };
 }

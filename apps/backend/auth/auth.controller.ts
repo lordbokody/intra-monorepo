@@ -1,4 +1,4 @@
-import { api } from "encore.dev/api";
+import {api, Header} from "encore.dev/api";
 import AuthService from "./auth.service"
 import {
     RegisterDto,
@@ -18,6 +18,10 @@ import {
     FinishRegistrationDto,
     FinishRegistrationResponse
 } from "@intra/shared/types/auth.types"
+
+interface Params {
+    language: Header<"Accept-Language">; // parsed from header
+}
 
 /**
  * Felhasználó létrehozására szolgáló végpont.

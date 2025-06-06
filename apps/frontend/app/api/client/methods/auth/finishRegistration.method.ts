@@ -1,4 +1,4 @@
-import {AxiosMethod, axiosRequest} from "../axios";
+import {AxiosMethod, axiosRequest} from "../../axios";
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 import {FinishRegistrationDto, FinishRegistrationResponse} from "@intra/shared/types/auth.types";
 
@@ -12,7 +12,11 @@ export const finishRegistrationMethod = async (data: FinishRegistrationDto, lang
             token,
         }
         return await axiosRequest<FinishRegistrationResponse>(requestData)
-    } catch (error) {
-        throw new Error(error as string);
+    } catch (error: any) {
+        let errorText = error.response?.data?.message || (error as string);
+        if (typeof errorText === 'string') {
+            errorText = errorText.replace(/^ValidationError:\s*/, '');
+        }
+        throw new Error(errorText as string);
     }
 }

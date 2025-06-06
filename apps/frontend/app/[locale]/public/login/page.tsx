@@ -55,7 +55,7 @@ export default function Home() {
                   onClick={() => {
                       return signInWithGoogle()
                   }}/>
-              <ButtonLoginFacebook />
+              {/*<ButtonLoginFacebook />*/}
               <div className={styles.linkRow}>
                   <Link className={styles.link} href="/public/forgot-password">{t("forgotPassword")}</Link>
                   <Link className={styles.link} href="/public/registration">{t("registration")}</Link>
