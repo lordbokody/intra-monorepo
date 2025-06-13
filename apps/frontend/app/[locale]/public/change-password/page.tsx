@@ -2,7 +2,7 @@
 
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import { FormikProvider, Form } from 'formik';
-import {formStyles} from "@intra/ui/styles/formStyles";
+import {formStyles} from "../../../../components/styles/formStyles";
 import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
 import {ButtonSubmit} from "@intra/ui/components/forms/buttons/buttonSubmit/ButtonSubmit";
 import Link from "next/link";
@@ -31,23 +31,29 @@ export default function ChangePasswordPage() {
         buttonState,
         isError,
         errorText
-    } = useChangePasswordForm(token as string)
+    } = useChangePasswordForm(token as string, setPageStatus)
 
     // Létrehozzuk a sablont
     return (
         <LayoutForm>
             <FormikProvider value={formik}>
                 <Form className={formStyles.form} >
+                    {/*Form neve*/}
                     <h2 className={formStyles.label}>{t('change-password')}</h2>
 
                     {/*Render állapot, ha tölt az oldal*/}
                     {pageStatus === 'loading' && (
-                        <div><LoaderCircle/></div>
+                        <div className={formStyles.loadingDiv}>
+                            <LoaderCircle className={formStyles.loadingCircle}/>
+                        </div>
                     )}
 
-                    {/*Render állapot, ha hibás vagy hiányzik a tokenünk*/}
+                    {/*/!*Render állapot, ha hibás vagy hiányzik a tokenünk*!/*/}
                     {(pageStatus === 'invalid' || pageStatus === 'missingToken') && (
-                        <p>hiba</p>
+                        <>
+                            <p className={formStyles.message}>{t("expired-password-change-token")}</p>
+                            <Link href="/public/forgot-password" className={formStyles.linkMessage}>{t("click-here-to-password-change")}</Link>
+                        </>
                     )}
 
                     {/*Render állapot, ha jó a tokenünk*/}
@@ -74,6 +80,15 @@ export default function ChangePasswordPage() {
                         </>
                     )}
 
+                    {/*Sikeres jelszó helyreállítás*/}
+                    {pageStatus === 'succeeded' && (
+                        <>
+                            <p className={formStyles.message}>{t("succeded-password-change")}</p>
+                            <p className={formStyles.description}>{t("you-can-login-now")}</p>
+                        </>
+                    )}
+
+                    {/*Linkek*/}
                     <div className={formStyles.linkRow}>
                         <Link className={formStyles.link} href="/public/login">{t('backToHome')}</Link>
                     </div>

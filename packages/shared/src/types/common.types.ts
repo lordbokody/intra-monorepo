@@ -17,4 +17,4 @@ export type PaginatedParams = {
 
 export type ApplicationLanguage = 'hu' | 'en'
 
-export type PageStatus = 'loading' | 'missingToken' | 'invalid' | 'valid' | 'succeeded';
+export type PageStatus = 'loading' | 'default' | 'missingToken' | 'invalid' | 'valid' | 'succeeded';

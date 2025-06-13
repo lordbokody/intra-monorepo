@@ -50,6 +50,11 @@
     "submit": "Submit",
     "forgot-password-desc": "Enter your email address and we’ll send you a link to reset your password.",
     "forgot-password-success": "The recovery email has been sent successfully!",
-    "change-password": "Change Password"
+    "change-password": "Change Password",
+    "succeded-password-change": "Password changed successfully!",
+    "you-can-login-now": "You can now log in!",
+    "expired-password-change-token": "The password reset email has expired!",
+    "click-here-to-password-change": "Click here to request a new reset email!"
+
   }
 }

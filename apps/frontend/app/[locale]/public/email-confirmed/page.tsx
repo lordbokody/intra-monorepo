@@ -72,7 +72,6 @@ export default function SuccessRegistrationPage() {
             } else {
                 setStatus('error');
             }
-
         }
     }
 

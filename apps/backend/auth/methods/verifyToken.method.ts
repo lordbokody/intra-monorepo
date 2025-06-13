@@ -9,16 +9,24 @@ import {verifyTokenSchema} from "@intra/shared/schemas/auth/verifyToken.schema";
 export const verifyTokenMethod = async (data: VerifyTokenDto): Promise<VerifyTokenResponse> => {
     try {
         // Validáljuk a kliens oldali adatokat
-        await verifyTokenSchema('hu').client().validate(data)
+        await verifyTokenSchema('hu').client().validate(data);
 
         // Ellenőrizzük a tokent
-        const isValid = verifyToken(data.token);
+        verifyToken(data.token);
 
-        // Visszatérünk a válasszal
+        // Visszatérünk a helyes válasszal
         return {
-            success: !!isValid,
+            success: true,
         };
-    } catch (error){
+    } catch (error: any) {
+        // Visszatérünk, ha a token lejárt
+        if(error.message === 'jwt expired'){
+            return {
+                success: false,
+            };
+        }
+
+        // Egyéb hibák
         throw APIError.aborted(error as string);
     }
-}
+};
