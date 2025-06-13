@@ -7,7 +7,7 @@ import { InputPassword } from "../../../../components/forms/inputs/InputPassword
 import { InputDate } from "../../../../components/forms/inputs/InputDate";
 import { InputCheckbox } from "../../../../components/forms/inputs/InputCheckbox";
 import { ButtonSubmit } from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
-import { styles } from "./styles";
+import { formStyles as styles } from "@intra/ui/formStyles";
 import { useTranslations } from 'next-intl';
 import { LayoutForm } from "../../../../components/layout/layoutForm/LayoutForm";
 import { useFinishRegistrationForm } from './form';

@@ -3,7 +3,7 @@
 import { FormikProvider, Form } from 'formik';
 import Link from "next/link";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
-import {styles} from "./styles";
+import { formStyles as styles } from "@intra/ui/formStyles";
 import {InputEmail} from "../../../../components/forms/inputs/InputEmail";
 import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
 import {useTranslations} from "next-intl";

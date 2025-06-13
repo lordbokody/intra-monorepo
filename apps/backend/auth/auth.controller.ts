@@ -16,7 +16,7 @@ import {
     LoginOAuthDto,
     LoginOAuthResponse,
     FinishRegistrationDto,
-    FinishRegistrationResponse
+    FinishRegistrationResponse, VerifyTokenDto, VerifyTokenResponse
 } from "@intra/shared/types/auth.types"
 
 interface Params {
@@ -98,5 +98,14 @@ export const finishRegistration = api(
     {expose: true, auth: true, method: "PATCH", path: "/auth/finishRegistration" },
     async (data: FinishRegistrationDto): Promise<FinishRegistrationResponse> => {
         return await AuthService.finishRegistration(data)
+    }
+)
+/**
+ * Token vizsgálata, hogy érvényes e még, vagy sem
+ */
+export const verifyToken = api(
+    {expose: true, method: "POST", path: "/auth/verifyToken" },
+    async (data: VerifyTokenDto): Promise<VerifyTokenResponse> => {
+        return await AuthService.verifyToken(data)
     }
 )

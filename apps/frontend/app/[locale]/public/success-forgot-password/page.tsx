@@ -1,4 +1,4 @@
-import {styles} from "./styles";
+import { formStyles as styles } from "@intra/ui/formStyles";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useTranslations} from "next-intl";
 import Link from "next/link";

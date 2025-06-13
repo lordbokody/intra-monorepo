@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useField} from "formik";
 import type {TextInputLiveFeedbackProps} from "./types";
-import {styles} from "./styles";
+import {inputStyles} from "../../styles/inputStyles";
 
 export const InputText: React.FC<TextInputLiveFeedbackProps> = ({ label, ...props }) => {
     const [field, meta] = useField(props);
@@ -14,8 +14,8 @@ export const InputText: React.FC<TextInputLiveFeedbackProps> = ({ label, ...prop
     const showError = meta.error && (meta.touched || field.value !== '' || isFocused);
 
     return (
-        <div className={styles.outerDiv}>
-            <label htmlFor={props.id} className={styles.label}>
+        <div className={inputStyles.outerDiv}>
+            <label htmlFor={props.id} className={inputStyles.label}>
                 {props.required ? `${label} *` : label }
             </label>
             <input
@@ -26,9 +26,9 @@ export const InputText: React.FC<TextInputLiveFeedbackProps> = ({ label, ...prop
                 onBlur={handleBlur}
                 aria-describedby={`${props.id}-feedback ${props.id}-help`}
                 type={'text'}
-                className={styles.input(showError, props.disabled)}
+                className={inputStyles.input(showError, props.disabled)}
             />
-            <p id={`${props.id}-feedback`} className={styles.error(showError)} aria-live="polite">
+            <p id={`${props.id}-feedback`} className={inputStyles.error(showError)} aria-live="polite">
                 {showError ? meta.error : ''}
             </p>
         </div>

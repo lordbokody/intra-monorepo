@@ -38,6 +38,8 @@ export interface FinishRegistrationResponse {
 export interface ForgotPasswordChangeDto {
     /** Új jelszó */
     password: string;
+    /** Felhasználó jelszavának megerősítése */
+    confirmPassword: string;
     /** Jelszó helyreállítási token */
     token: string;
 }
@@ -146,4 +148,15 @@ export interface VerifyEmailResponse {
     message?: string;
 }
 
+export interface VerifyTokenDto {
+    /** A vizsgálni kívánt token */
+    token: string;
+}
+
+export interface VerifyTokenResponse {
+    /** Jelzi, hogy a metódus sikeres volt e vagy sem */
+    success: boolean;
+}
+
 export type VerifyEmailStatus = 'loading' | 'success' | 'confirmed' | 'error';
+

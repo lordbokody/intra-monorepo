@@ -3,7 +3,7 @@ import {useField, useFormikContext} from "formik";
 import {useDebounce} from "../../../utils/useDebounce";
 import {LoaderCircle} from "lucide-react";
 import type {TextInputLiveFeedbackProps} from "./types";
-import {styles} from "./styles";
+import {inputStyles} from "../../styles/inputStyles";
 
 export const InputEmail: React.FC<TextInputLiveFeedbackProps> = ({ label, debounce = false, preLoad = false, ...props }) => {
     const [field, meta] = useField(props);
@@ -47,8 +47,8 @@ export const InputEmail: React.FC<TextInputLiveFeedbackProps> = ({ label, deboun
     const showError = meta.error && (meta.touched || isFocused || field.value !== '');
 
     return (
-        <div className={styles.outerDiv}>
-            <label htmlFor={props.id} className={styles.label}>
+        <div className={inputStyles.outerDiv}>
+            <label htmlFor={props.id} className={inputStyles.label}>
                 {props.required ? `${label} *` : label}
             </label>
             <input
@@ -60,11 +60,11 @@ export const InputEmail: React.FC<TextInputLiveFeedbackProps> = ({ label, deboun
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 aria-describedby={`${props.id}-feedback ${props.id}-help`}
-                className={styles.input(showError, props.disabled)}
+                className={inputStyles.input(showError, props.disabled)}
                 autoComplete="off"
             />
-            <LoaderCircle size={18} className={styles.loading(isLoadingIcon)} />
-            <p id={`${props.id}-feedback`} className={styles.error(showError)} aria-live="polite">
+            <LoaderCircle size={18} className={inputStyles.loading(isLoadingIcon)} />
+            <p id={`${props.id}-feedback`} className={inputStyles.error(showError)} aria-live="polite">
                 {showError ? meta.error : ''}
             </p>
         </div>

@@ -22,8 +22,9 @@ import {
     LoginOAuthDto,
     LoginOAuthResponse,
     FinishRegistrationDto,
-    FinishRegistrationResponse
+    FinishRegistrationResponse, VerifyTokenDto, VerifyTokenResponse
 } from "@intra/shared/types/auth.types";
+import {verifyTokenMethod} from "./methods/verifyToken.method";
 
 const AuthService = {
     /**
@@ -73,6 +74,12 @@ const AuthService = {
      */
     finishRegistration: async (data: FinishRegistrationDto): Promise<FinishRegistrationResponse> => {
         return await finishRegistrationMethod(data);
+    },
+    /**
+     * Token vizsgálata, hogy érvényes e még, vagy sem
+     */
+    verifyToken: async (data: VerifyTokenDto): Promise<VerifyTokenResponse> => {
+        return await verifyTokenMethod(data);
     }
 }
 

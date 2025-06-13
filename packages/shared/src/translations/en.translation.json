@@ -34,7 +34,7 @@
     "invalid-registration-status": "Invalid registration status!",
     "invalid-or-expired-token": "Invalid or expired token!",
     "user-email-not-confirmed": "User's email address is not confirmed!",
-    "user-has-no-password": "No password is set! Please log in using Google/Facebook!",
+    "user-has-no-password": "No password is set! Please log in using Google!",
     "invalid-login": "Invalid login!",
     "forgot-password-email-subject": "Forgot Password",
     "registration-confirmation-email-subject": "Confirm Registration",
@@ -46,6 +46,10 @@
     "role-no-access": "Only admins are allowed to modify roles!",
     "finish-registration": "Finish Registration",
     "finish": "Finish",
-    "auth-failed": "Authentication failed!"
+    "auth-failed": "Authentication failed!",
+    "submit": "Submit",
+    "forgot-password-desc": "Enter your email address and we’ll send you a link to reset your password.",
+    "forgot-password-success": "The recovery email has been sent successfully!",
+    "change-password": "Change Password"
   }
 }

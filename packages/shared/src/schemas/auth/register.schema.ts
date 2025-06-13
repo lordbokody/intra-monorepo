@@ -7,8 +7,9 @@ import {
     validatePassword,
 } from "../../utils/validators.util";
 import { createTranslator } from "../../utils/translator.util";
+import {ApplicationLanguage} from "../../types/common.types";
 
-export const registerSchema = (locale: string = "hu") => {
+export const registerSchema = (locale: ApplicationLanguage = "hu") => {
     const t = createTranslator(locale);
 
     const client = (checkEmailExists: Function) =>

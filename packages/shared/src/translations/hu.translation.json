@@ -34,7 +34,7 @@
     "invalid-registration-status": "Hibás regisztrációs státusz!",
     "invalid-or-expired-token": "Hibás vagy lejárt token!",
     "user-email-not-confirmed": "Felhasználó email címe nincs megerősítve!",
-    "user-has-no-password": "Nincs jelszó beállítva! Kérjük jelentkezz be Google/Facebook használatával!",
+    "user-has-no-password": "Nincs jelszó beállítva! Kérjük jelentkezz be Google használatával!",
     "invalid-login": "Hibás bejelentkezés!",
     "forgot-password-email-subject": "Elfelejtett jelszó",
     "registration-confirmation-email-subject": "Regisztráció megerősítése",
@@ -46,6 +46,10 @@
     "role-no-access": "Szerepkört csak admin módosíthat!",
     "finish-registration": "Regisztráció véglegesítése",
     "finish": "Véglegesít",
-    "auth-failed": "Sikertelen hitelesítés!"
+    "auth-failed": "Sikertelen hitelesítés!",
+    "submit": "Elküld",
+    "forgot-password-desc": "Add meg az email címed, és küldünk egy hivatkozást a jelszó visszaállításához.",
+    "forgot-password-success": "A helyreállító email sikeresen kiküldve!",
+    "change-password": "Jelszó megváltoztatása"
   }
 }

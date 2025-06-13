@@ -25,7 +25,7 @@ export const sendForgotPasswordEmailMethod = async (data: SendForgotPasswordEmai
             to: data.email,
             subject: `${process.env.APP_NAME} - ${t('forgot-password-email-subject')}`,
             template: 'forgotPasswordEmail',
-            context: { name: data.name, verificationLink: `http://localhost:4000/${data.token}` },
+            context: { name: data.name, verificationLink: `${process.env.FRONTEND_URL}/public/change-password?token=${data.token}` },
         };
 
         // Elküldjük az emailt

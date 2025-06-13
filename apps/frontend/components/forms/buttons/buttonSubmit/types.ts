@@ -1,5 +1,5 @@
 import React from "react";
-import {ButtonStateType} from "../../../../utils/getButtonState";
+import {ButtonStateType} from "@intra/ui/dist/utils/getButtonState";
 
 export interface ButtonSubmitProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     state: ButtonStateType,

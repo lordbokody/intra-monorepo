@@ -1,10 +1,25 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "globalEnv": [
+    "MY_API_URL",
+    "MY_API_KEY",
+    "SMTP_USER",
+    "SMTP_PASS",
+    "SMTP_HOST",
+    "SMTP_PORT",
+    "SMTP_SECURE",
+    "AUTH_SECRET",
+    "JWT_SECRET",
+    "DEFAULT_LANGUAGE",
+    "APP_NAME",
+    "EMAIL_FROM_EMAIL"
+  ],
+  "globalDependencies": [".env"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "lint": {

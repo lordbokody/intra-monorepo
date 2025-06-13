@@ -2,15 +2,16 @@
 
 import Link from "next/link";
 import { FormikProvider, Form } from 'formik';
-import {InputEmail} from "../../../../components/forms/inputs/InputEmail";
-import {InputPassword} from "../../../../components/forms/inputs/InputPassword";
-import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
-import {styles} from "./styles";
+import {InputEmail} from "@intra/ui/components/forms/inputs/InputEmail";
+import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
+import {ButtonSubmit} from "@intra/ui/components/forms/buttons/buttonSubmit/ButtonSubmit";
+import {formStyles} from "@intra/ui/styles/formStyles";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useTranslations} from "next-intl";
-import {ButtonLoginGoogle} from "../../../../components/forms/buttons/buttonLoginGoogle/ButtonLoginGoogle";
+import {ButtonLoginGoogle} from "@intra/ui/components/forms/buttons/buttonLoginGoogle/ButtonLoginGoogle";
 import ButtonLoginFacebook from "../../../../components/forms/buttons/buttonLoginFacebook/ButtonLoginFacebook";
 import {useLoginForm} from "./form";
+import {Gradient} from "@intra/ui/gradient";
 
 export default function Home() {
     // Betöltjük a fordításokat
@@ -29,10 +30,10 @@ export default function Home() {
     // Létrehozzuk a sablont
     return (
       <LayoutForm>
-          <div className={styles.form}>
+          <div className={formStyles.form}>
               <FormikProvider value={formik}>
                   <Form>
-                      <h2 className={styles.label}>{t("login")}</h2>
+                      <h2 className={formStyles.label}>{t("login")}</h2>
                       <InputEmail
                           label={t("email")}
                           id="email"
@@ -43,7 +44,7 @@ export default function Home() {
                           id="password"
                           name="password"
                       />
-                      <p className={styles.error(isError)}>{errorText}</p>
+                      <p className={formStyles.error(isError)}>{errorText}</p>
                       <ButtonSubmit state={buttonState}>
                           {t("login")}
                       </ButtonSubmit>
@@ -56,9 +57,9 @@ export default function Home() {
                       return signInWithGoogle()
                   }}/>
               {/*<ButtonLoginFacebook />*/}
-              <div className={styles.linkRow}>
-                  <Link className={styles.link} href="/public/forgot-password">{t("forgotPassword")}</Link>
-                  <Link className={styles.link} href="/public/registration">{t("registration")}</Link>
+              <div className={formStyles.linkRow}>
+                  <Link className={formStyles.link} href="/public/forgot-password">{t("forgotPassword")}</Link>
+                  <Link className={formStyles.link} href="/public/registration">{t("registration")}</Link>
               </div>
           </div>
       </LayoutForm>

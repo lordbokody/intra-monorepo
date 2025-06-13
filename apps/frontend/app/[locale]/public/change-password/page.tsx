@@ -1,39 +1,85 @@
-import Image from "next/image";
+"use client"
+
+import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
+import { FormikProvider, Form } from 'formik';
+import {formStyles} from "@intra/ui/styles/formStyles";
+import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
+import {ButtonSubmit} from "@intra/ui/components/forms/buttons/buttonSubmit/ButtonSubmit";
+import Link from "next/link";
+import {useTranslations} from "next-intl";
+import {useChangePasswordForm} from "./form";
+import {useChangePasswordMiddleware} from "./middleware";
+import {useState} from "react";
+import type {PageStatus} from "@intra/shared/types/common.types";
+import {LoaderCircle} from "lucide-react";
 
 export default function ChangePasswordPage() {
+    // Oldal állapota
+    const [pageStatus, setPageStatus] = useState<PageStatus>('loading');
+
+    // Middleware, ahol ellenőrizzük a token érvényességét
+    const {
+        token
+    } = useChangePasswordMiddleware(setPageStatus)
+
+    // Betöltjük a fordításokat
+    const t = useTranslations('all');
+
+    // Betöltjük a formot
+    const {
+        formik,
+        buttonState,
+        isError,
+        errorText
+    } = useChangePasswordForm(token as string)
+
+    // Létrehozzuk a sablont
     return (
-                <form className="bg-white shadow-md rounded-xl p-6 w-full flex flex-col gap-4">
-                    <h2 className="text-2xl font-semibold text-center text-gray-800">Change Password</h2>
-                    <div className="flex flex-col gap-1">
-                        <label htmlFor="new-password" className="text-sm font-medium text-gray-700">
-                            New Password
-                        </label>
-                        <input
-                            id="new-password"
-                            type="password"
-                            placeholder="Enter new password"
-                            className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
+        <LayoutForm>
+            <FormikProvider value={formik}>
+                <Form className={formStyles.form} >
+                    <h2 className={formStyles.label}>{t('change-password')}</h2>
+
+                    {/*Render állapot, ha tölt az oldal*/}
+                    {pageStatus === 'loading' && (
+                        <div><LoaderCircle/></div>
+                    )}
+
+                    {/*Render állapot, ha hibás vagy hiányzik a tokenünk*/}
+                    {(pageStatus === 'invalid' || pageStatus === 'missingToken') && (
+                        <p>hiba</p>
+                    )}
+
+                    {/*Render állapot, ha jó a tokenünk*/}
+                    {pageStatus === 'valid' && (
+                        <>
+                            <InputPassword
+                                label={t('password')}
+                                id="password"
+                                name="password"
+                                required={true}
+                            />
+                            <InputPassword
+                                label={t('confirmPassword')}
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                required={true}
+                            />
+
+                            <p className={formStyles.required}>{t('*-required')}</p>
+                            <p className={formStyles.error(isError)}>{errorText}</p>
+                            <ButtonSubmit state={buttonState}>
+                                {t('submit')}
+                            </ButtonSubmit>
+                        </>
+                    )}
+
+                    <div className={formStyles.linkRow}>
+                        <Link className={formStyles.link} href="/public/login">{t('backToHome')}</Link>
                     </div>
-                    <div className="flex flex-col gap-1">
-                        <label htmlFor="confirm-password" className="text-sm font-medium text-gray-700">
-                            Confirm New Password
-                        </label>
-                        <input
-                            id="confirm-password"
-                            type="password"
-                            placeholder="Re-enter new password"
-                            className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-                    >
-                        Update Password
-                    </button>
-                </form>
+                </Form>
+            </FormikProvider>
+        </LayoutForm>
+
     );
 }
