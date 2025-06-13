@@ -11,7 +11,7 @@ import {ApiService} from "../../../api/client/client";
 import {useFormik} from "formik";
 import {forgotPasswordChangeSchema} from "@intra/shared/schemas/auth/forgotPasswordChange.schema";
 
-export const useChangePasswordForm = (token: string) => {
+export const useChangePasswordForm = (token: string, setPageStatus: Function) => {
     // Form sikeres beküldését tároló változó
     const [isSuccess, setIsSuccess] = useState(false);
 
@@ -51,7 +51,7 @@ export const useChangePasswordForm = (token: string) => {
         setIsSuccess(true);
         await sleep(2000);
         setIsForwarding(true);
-        router.push('/public/success-change-password');
+        setPageStatus('succeeded')
     }
 
     // Form submit függvénye

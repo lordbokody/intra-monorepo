@@ -7,13 +7,18 @@ import {InputPassword} from "../../../../components/forms/inputs/InputPassword";
 import {InputDate} from "../../../../components/forms/inputs/InputDate";
 import {InputCheckbox} from "../../../../components/forms/inputs/InputCheckbox";
 import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
-import { formStyles as styles } from "@intra/ui/formStyles";
+import {formStyles} from "../../../../components/styles/formStyles";
 import {useTranslations} from 'next-intl';
 import {useRegistrationForm} from "./form";
 import Link from "next/link";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
+import {useState} from "react";
+import {PageStatus} from "@intra/shared/types/common.types";
 
 export default function RegisterPage() {
+    // Oldal állapota
+    const [pageStatus, setPageStatus] = useState<PageStatus>('default');
+
     // Betöltjük a fordításokat
     const t = useTranslations('all');
 
@@ -23,65 +28,81 @@ export default function RegisterPage() {
         buttonState,
         errorText,
         isError
-    } = useRegistrationForm()
+    } = useRegistrationForm(setPageStatus)
 
     // Létrehozzuk a sablont
     return (
         <LayoutForm>
             <FormikProvider value={formik}>
-                <Form className={styles.form} >
-                    <h2 className={styles.label}>{t('registration')}</h2>
+                <Form className={formStyles.form} >
+                    {/*Form neve*/}
+                    <h2 className={formStyles.label}>{t('registration')}</h2>
 
-                    <InputText
-                        label={t('name')}
-                        id="name"
-                        name="name"
-                        required={true}
-                    />
-                    <InputEmail
-                        label={t('email')}
-                        id="email"
-                        name="email"
-                        required={true}
-                        debounce={true}
-                    />
-                    <InputPassword
-                        label={t('password')}
-                        id="password"
-                        name="password"
-                        required={true}
-                    />
-                    <InputPassword
-                        label={t('confirmPassword')}
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        required={true}
-                    />
-                    <InputDate
-                        label={t('birthday')}
-                        id="birthday"
-                        name="birthday"
-                        required={true}
-                    />
-                    <InputCheckbox
-                        label={t('acceptTerms')}
-                        id="acceptTerms"
-                        name="acceptTerms"
-                        required={true}
-                    />
-                    <InputCheckbox
-                        label={t('acceptPrivacy')}
-                        id="acceptPrivacy"
-                        name="acceptPrivacy"
-                        required={true}
-                    />
-                    <p className={styles.required}>{t('*-required')}</p>
-                    <p className={styles.error(isError)}>{errorText}</p>
-                    <ButtonSubmit state={buttonState}>
-                        {t('registration')}
-                    </ButtonSubmit>
-                    <div className={styles.linkRow}>
-                        <Link className={styles.link} href="/public/login">{t('backToHome')}</Link>
+                    {/*Alapértelmezett állapot*/}
+                    {pageStatus === 'default' && (
+                        <>
+                            <InputText
+                                label={t('name')}
+                                id="name"
+                                name="name"
+                                required={true}
+                            />
+                            <InputEmail
+                                label={t('email')}
+                                id="email"
+                                name="email"
+                                required={true}
+                                debounce={true}
+                            />
+                            <InputPassword
+                                label={t('password')}
+                                id="password"
+                                name="password"
+                                required={true}
+                            />
+                            <InputPassword
+                                label={t('confirmPassword')}
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                required={true}
+                            />
+                            <InputDate
+                                label={t('birthday')}
+                                id="birthday"
+                                name="birthday"
+                                required={true}
+                            />
+                            <InputCheckbox
+                                label={t('acceptTerms')}
+                                id="acceptTerms"
+                                name="acceptTerms"
+                                required={true}
+                            />
+                            <InputCheckbox
+                                label={t('acceptPrivacy')}
+                                id="acceptPrivacy"
+                                name="acceptPrivacy"
+                                required={true}
+                            />
+                            <p className={formStyles.required}>{t('*-required')}</p>
+                            <p className={formStyles.error(isError)}>{errorText}</p>
+                            <ButtonSubmit state={buttonState}>
+                                {t('registration')}
+                            </ButtonSubmit>
+                        </>
+                    )}
+
+                    {/*Sikeres form kitöltés*/}
+                    {pageStatus === 'succeeded' && (
+                        <>
+                            <p className={formStyles.message}>{t("registrationSuccess")}</p>
+                            <p className={formStyles.description}>{t("registrationInfo")}</p>
+                        </>
+                    )}
+
+                    {/*Linkek*/}
+                    <div className={formStyles.linkRow}>
+                        <Link className={formStyles.link} href="/public/login">{t('backToHome')}</Link>
                     </div>
                 </Form>
             </FormikProvider>

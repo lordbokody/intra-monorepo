@@ -21,15 +21,6 @@ export const forgotPasswordChangeSchema = (locale: ApplicationLanguage = "hu") =
             token: yup
                 .string()
                 .required(t("required"))
-                .test(
-                    "is-valid-token",
-                    t("invalid-or-expired-token"),
-                    (value) => {
-                        if (!value) return false;
-                        const userID = verifyToken(value);
-                        return !!userID;
-                    }
-                ),
         });
 
     const server = () =>

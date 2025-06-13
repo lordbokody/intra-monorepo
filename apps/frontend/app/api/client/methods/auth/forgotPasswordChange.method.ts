@@ -5,7 +5,7 @@ import {axiosRequest, AxiosMethod} from "../../axios";
 export const forgotPasswordChangeMethod = async (data: ForgotPasswordChangeDto, language: ApplicationLanguage) => {
     try {
         const requestData = {
-            method: 'post' as AxiosMethod,
+            method: 'put' as AxiosMethod,
             route: '/auth/forgotPasswordChange',
             data,
             language

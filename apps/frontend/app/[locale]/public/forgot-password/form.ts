@@ -4,17 +4,13 @@ import {useLocale} from "next-intl";
 import { useEffect, useState } from 'react';
 import {ButtonStateType, getButtonState} from "../../../../utils/getButtonState";
 import { ForgotPasswordRequestDto, ForgotPasswordRequestResponse } from "@intra/shared/types/auth.types";
-import {useRouter} from "next/navigation";
 import {sleep} from "@intra/shared/utils/sleep.util";
 import {ApiService} from "../../../api/client/client";
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 import {useFormik} from "formik";
 import {forgotPasswordRequestSchema} from "@intra/shared/schemas/auth/forgotPasswordRequest.schema";
 
-export const useForgotPasswordRequestForm = () => {
-    // App router
-    const router = useRouter();
-
+export const useForgotPasswordRequestForm = (setPageStatus: Function) => {
     // App nyelvi változók
     const locale = useLocale() as ApplicationLanguage;
 
@@ -49,7 +45,7 @@ export const useForgotPasswordRequestForm = () => {
         setIsSuccess(true);
         await sleep(500);
         setIsForwarding(true);
-        router.push('/public/success-forgot-password');
+        setPageStatus('succeeded')
     }
 
     // Form submit függvénye

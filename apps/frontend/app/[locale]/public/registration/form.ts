@@ -11,7 +11,7 @@ import {registerSchema} from "@intra/shared/schemas/auth/register.schema";
 import {checkEmailExists} from "../../../../utils/checkEmailExists.util";
 
 
-export const useRegistrationForm = () => {
+export const useRegistrationForm = (setPageStatus: Function) => {
     // Form sikeres beküldését tároló változó
     const [isSuccess, setIsSuccess] = useState(false);
 
@@ -20,9 +20,6 @@ export const useRegistrationForm = () => {
 
     // Form submit gombjának állapotát tároló változó
     const [buttonState, setButtonState] = useState<ButtonStateType>('disabled');
-
-    // App router
-    const router = useRouter();
 
     // App nyelvi változók
     const locale = useLocale() as ApplicationLanguage;
@@ -55,7 +52,7 @@ export const useRegistrationForm = () => {
         setIsSuccess(true);
         await sleep(2000);
         setIsForwarding(true);
-        router.push('/public/success-registration');
+        setPageStatus('succeeded');
     }
 
     // Form submit függvénye

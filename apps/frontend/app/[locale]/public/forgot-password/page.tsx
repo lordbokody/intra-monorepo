@@ -8,9 +8,14 @@ import {InputEmail} from "../../../../components/forms/inputs/InputEmail";
 import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
 import {useTranslations} from "next-intl";
 import {useForgotPasswordRequestForm} from "./form";
+import {useState} from "react";
+import type {PageStatus} from "@intra/shared/types/common.types";
 
 
 export default function ForgotPasswordPage() {
+    // Oldal állapota
+    const [pageStatus, setPageStatus] = useState<PageStatus>('default');
+
     // Betöltjük a fordításokat
     const t = useTranslations('all');
 
@@ -20,7 +25,7 @@ export default function ForgotPasswordPage() {
         isError,
         errorText,
         buttonState
-    } = useForgotPasswordRequestForm()
+    } = useForgotPasswordRequestForm(setPageStatus)
 
     // Létrehozzuk a sablont
     return (
@@ -28,20 +33,36 @@ export default function ForgotPasswordPage() {
             <div className={styles.form}>
                 <FormikProvider value={formik}>
                     <Form>
+                        {/*Form neve*/}
                         <h2 className={styles.label}>{t("forgot-password-email-subject")}</h2>
-                        <p className={styles.description}>{t("forgot-password-desc")}</p>
-                        <InputEmail
-                            label={t("email")}
-                            id="email"
-                            name="email"
-                        />
-                        <p className={styles.error(isError)}>{errorText}</p>
-                        <ButtonSubmit state={buttonState}>{t("submit")}</ButtonSubmit>
+
+                        {/*Alapértelmezett állapot*/}
+                        {pageStatus === 'default' && (
+                            <>
+                                <p className={styles.description}>{t("forgot-password-desc")}</p>
+                                <InputEmail
+                                    label={t("email")}
+                                    id="email"
+                                    name="email"
+                                />
+                                <p className={styles.error(isError)}>{errorText}</p>
+                                <ButtonSubmit state={buttonState}>{t("submit")}</ButtonSubmit>
+                            </>
+                        )}
+
+                        {/*Sikeres form kitöltés*/}
+                        {pageStatus === 'succeeded' && (
+                            <>
+                                <p className={styles.description}>{t("forgot-password-success")}</p>
+                            </>
+                        )}
+
+                        {/*Linkek */}
+                        <div className={styles.linkRow}>
+                            <Link className={styles.link} href="/public/login">{t('backToHome')}</Link>
+                        </div>
                     </Form>
                 </FormikProvider>
-                <div className={styles.linkRow}>
-                    <Link className={styles.link} href="/public/login">{t('backToHome')}</Link>
-                </div>
             </div>
         </LayoutForm>
 

@@ -50,6 +50,10 @@
     "submit": "Elküld",
     "forgot-password-desc": "Add meg az email címed, és küldünk egy hivatkozást a jelszó visszaállításához.",
     "forgot-password-success": "A helyreállító email sikeresen kiküldve!",
-    "change-password": "Jelszó megváltoztatása"
+    "change-password": "Jelszó megváltoztatása",
+    "succeded-password-change": "A jelszó sikeresen megváltoztatva!",
+    "you-can-login-now": "Most már be tudsz jelentkezni!",
+    "expired-password-change-token": "A jelszó helyreállító email érvényessége lejárt!",
+    "click-here-to-password-change": "Kattints ide új helyreállító email kéréséhez!"
   }
 }
