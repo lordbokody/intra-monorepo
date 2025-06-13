@@ -1,8 +1,9 @@
 import * as yup from "yup";
 import { createTranslator } from "../../utils/translator.util";
 import { comparePassword } from "../../utils/password.util";
+import {ApplicationLanguage} from "../../types/common.types";
 
-export const loginSchema = (locale: string = "hu") => {
+export const loginSchema = (locale: ApplicationLanguage = "hu") => {
     const t = createTranslator(locale);
 
     const client = () =>

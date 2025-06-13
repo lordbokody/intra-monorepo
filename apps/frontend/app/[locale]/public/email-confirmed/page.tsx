@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import {useRouter, useSearchParams} from 'next/navigation';
 import type {VerifyEmailDto, VerifyEmailResponse, VerifyEmailStatus} from "@intra/shared/types/auth.types";
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
-import {styles} from "./styles";
+import { formStyles as styles } from "@intra/ui/formStyles";
 import {sleep} from "@intra/shared/utils/sleep.util";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useLocale, useTranslations} from "next-intl";
 import {ApiService} from "../../../api/client/client";
+import Link from "next/link";
 
 export default function SuccessRegistrationPage() {
     // Az email megerősítésének státusza
@@ -60,18 +61,18 @@ export default function SuccessRegistrationPage() {
             if (data.success) {
                 // Ha sikeres akkor jelezzük
                 setStatus('success')
-            } else {
-                // Ha már meg van erősítve az email cím jelezzük
-                if(data.message === t('emailConfirmationConfirmed')){
-                    setStatus('confirmed');
-                }
             }
 
             // Sikeres futás esetén hívjuk a segédfüggvényt
             await handleSuccess();
-        } catch (error) {
+        } catch (error: any) {
             // Hiba esetén hibát dobunk
-            setStatus('error');
+            if(error.message === t('emailConfirmationConfirmed')){
+                setStatus('confirmed');
+            } else {
+                setStatus('error');
+            }
+
         }
     }
 
@@ -87,12 +88,11 @@ export default function SuccessRegistrationPage() {
     // Visszatérünk a sablonnal
     return (
         <LayoutForm>
-            <div className={styles.card(status)}>
-                {styles.icon(status)}
-                <div>
-                    <p className={styles.label(status)}>
-                        {getLabel(status)}
-                    </p>
+            <div className={styles.form}>
+                <h2 className={styles.label}>{t("registration-confirmation-email-subject")}</h2>
+                <p className={styles.description}>{getLabel(status)}</p>
+                <div className={styles.linkRow}>
+                    <Link className={styles.link} href="/public/login">{t('backToHome')}</Link>
                 </div>
             </div>
         </LayoutForm>

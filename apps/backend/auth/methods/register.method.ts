@@ -39,6 +39,7 @@ export const registerMethod = async (data: RegisterDto): Promise<RegisterRespons
             success: true,
         };
     } catch (error){
+        console.log('errorka', error)
         throw APIError.aborted(error as string);
     }
 }

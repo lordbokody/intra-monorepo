@@ -1,7 +1,8 @@
 import * as yup from "yup";
 import { createTranslator } from "../../utils/translator.util";
+import {ApplicationLanguage} from "../../types/common.types";
 
-export const getAllUsersSchema = (locale: string = "hu") => {
+export const getAllUsersSchema = (locale: ApplicationLanguage = "hu") => {
     const t = createTranslator(locale);
 
     const server = () =>

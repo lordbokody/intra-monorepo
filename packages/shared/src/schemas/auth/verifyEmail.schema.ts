@@ -1,8 +1,9 @@
 import * as yup from "yup";
 import { createTranslator } from "../../utils/translator.util";
-import {verifyEmailConfirmationToken} from "../../utils/token.util";
+import {verifyToken} from "../../utils/token.util";
+import {ApplicationLanguage} from "../../types/common.types";
 
-export const verifyEmailSchema = (locale: string = "hu") => {
+export const verifyEmailSchema = (locale: ApplicationLanguage = "hu") => {
     const t = createTranslator(locale);
 
     const client = () =>
@@ -15,7 +16,7 @@ export const verifyEmailSchema = (locale: string = "hu") => {
                     t("invalid-or-expired-token"),
                     (value) => {
                         if (!value) return false;
-                        const userID = verifyEmailConfirmationToken(value);
+                        const userID = verifyToken(value);
                         return !!userID;
                     }
                 ),

@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@repo/ui": "*",
+    "@intra/ui": "*",
     "axios": "^1.9.0",
     "country-flag-icons": "^1.5.19",
+    "dotenv": "^16.5.0",
     "formik": "^2.4.6",
     "gsap": "^3.13.0",
     "js-cookie": "^3.0.5",

@@ -1,5 +1,5 @@
 import React from "react";
-import {ButtonStateType} from "../../../../utils/getButtonState";
+import {ButtonStateType} from "@intra/ui/dist/utils/getButtonState";
 import {Check, LoaderCircle, X} from "lucide-react";
 
 export const getButtonClassNames = (state: ButtonStateType) => {

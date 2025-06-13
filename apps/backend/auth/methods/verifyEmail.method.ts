@@ -1,4 +1,4 @@
-import {verifyEmailConfirmationToken} from "@intra/shared/utils/token.util";
+import {verifyToken} from "@intra/shared/utils/token.util";
 import {prisma} from "../../database/prisma/database";
 import {APIError} from "encore.dev/api";
 import {VerifyEmailDto, VerifyEmailResponse} from "@intra/shared/types/auth.types";
@@ -14,7 +14,7 @@ export const verifyEmailMethod = async (data: VerifyEmailDto): Promise<VerifyEma
         await verifyEmailSchema('hu').client().validate(data);
 
         // Betöltjük a felhasználót
-        const userID = verifyEmailConfirmationToken(data.token);
+        const userID = verifyToken(data.token);
         const user = await prisma.user.findFirst({where: {id: userID as number}});
 
         // Validáljuk a szerver oldali adatokat

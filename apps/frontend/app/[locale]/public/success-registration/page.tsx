@@ -1,8 +1,6 @@
-import { Check } from 'lucide-react';
-import {getOuterDivClassNames, getIconClassNames, getLabelClassNames, getDescriptionClassNames} from "./styles";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useTranslations} from "next-intl";
-import {styles} from "../success-forgot-password/styles";
+import { formStyles as styles } from "@intra/ui/formStyles";
 import Link from "next/link";
 
 export default function SuccessRegistrationPage() {

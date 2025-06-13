@@ -8,7 +8,7 @@ export const generateEmailConfirmationToken = (userID: number): string => {
   return jwt.sign({ userID }, process.env.JWT_SECRET as string, { expiresIn: "24h" });
 }
 
-export const verifyEmailConfirmationToken = (token: string): number | null => {
+export const verifyToken = (token: string): number | null => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
     return decoded.userID

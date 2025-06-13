@@ -11,14 +11,19 @@ import {
     getMenuEntryMobileClassNames,
     getHamburgerMenuClassNames,
     getHamburgerIconClassNames,
-    getHamburgerWrapperClassNames, getLanguageIconClassNames
+    getHamburgerWrapperClassNames,
+    getLanguageIconClassNames
 } from "./styles";
 import Link from "next/link";
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
 import { HU, GB } from 'country-flag-icons/react/3x2';
 
-export default function TopMenu() {
+type TopMenuProps = {
+    title: string;
+};
+
+export default function TopMenu({ title }: TopMenuProps) {
     const [isOpen, setIsOpen] = useState(false);
     const t = useTranslations('all');
     const locale = useLocale();
@@ -29,7 +34,7 @@ export default function TopMenu() {
 
     return (
         <nav className={getNavClassNames()}>
-            <div className={getLogoClassNames()}>he</div>
+            <Link key={title} href={`/${locale}`} className={getLogoClassNames()}>{title}</Link>
 
             <div className={getMenuDesktopClassNames()}>
                 {menuItems.map((item) => (
@@ -39,7 +44,6 @@ export default function TopMenu() {
                 ))}
                 {locale === 'hu' ? <GB className={getLanguageIconClassNames()}/> : <HU className={getLanguageIconClassNames()}/> }
             </div>
-
 
             <div className={getHamburgerWrapperClassNames()}>
                 <button onClick={() => setIsOpen(!isOpen)} className={getHamburgerMenuClassNames()}>

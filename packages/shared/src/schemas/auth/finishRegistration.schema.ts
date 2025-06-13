@@ -6,8 +6,9 @@ import {
     validateMinimumYear,
 } from "../../utils/validators.util";
 import { createTranslator } from "../../utils/translator.util";
+import {ApplicationLanguage} from "../../types/common.types";
 
-export const finishRegistrationSchema = (locale: string = "hu") => {
+export const finishRegistrationSchema = (locale: ApplicationLanguage = "hu") => {
     const t = createTranslator(locale);
 
     const client = () =>

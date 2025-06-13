@@ -18,7 +18,7 @@ export const useFinishRegistrationForm = () => {
     const router = useRouter();
 
     // App nyelvi változók
-    const locale = useLocale();
+    const locale = useLocale() as ApplicationLanguage;
     const t = useTranslations("all");
 
     // Auth sessiont

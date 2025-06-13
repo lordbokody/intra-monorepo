@@ -1,4 +1,4 @@
-import {verifyEmailConfirmationToken} from "@intra/shared/utils/token.util";
+import {verifyToken} from "@intra/shared/utils/token.util";
 import {prisma} from "../../database/prisma/database";
 import {APIError} from "encore.dev/api";
 import {forgotPasswordChangeSchema} from "@intra/shared/schemas/auth/forgotPasswordChange.schema";
@@ -14,7 +14,7 @@ export const forgotPasswordChangeMethod = async (data: ForgotPasswordChangeDto):
         await forgotPasswordChangeSchema('hu').client().validate(data);
 
         // Megkeressük a felhasználót
-        const userID = verifyEmailConfirmationToken(data.token);
+        const userID = verifyToken(data.token);
         const user = await prisma.user.findFirst({where: {id: userID as number}});
 
         // Validáljuk, hogy a felhasználó rendben van e

@@ -27,16 +27,28 @@ export async function middleware(request: NextRequest) {
 
     const urlLocale = locale || 'hu';
 
-        if (session && registrationStatus === 'partialRegistration' && pathname !== `/${urlLocale}/private/finish-registration`) {
-        return NextResponse.redirect(new URL(`/${urlLocale}/private/finish-registration`, origin));
-    }
+    const redirect = (path: string) => NextResponse.redirect(new URL(`/${urlLocale}${path}`, origin));
 
-    if (isProtected && !session && pathname !== `/${urlLocale}/public/login`) {
-        return NextResponse.redirect(new URL(`${urlLocale}/public/login`, origin));
-    }
+    if (!session) {
+        // Case 1: No session and at root path → redirect to login
+        if (pathname === `/${urlLocale}`) {
+            return redirect('/public/login');
+        }
 
-    if (isPublic && registrationStatus === 'registered' && pathname !== `/${urlLocale}/private/home`) {
-        return NextResponse.redirect(new URL(`${urlLocale}/private/home`, origin));
+        // Case 2: Trying to access a protected route → redirect to login
+        if (isProtected && pathname !== `/${urlLocale}/public/login`) {
+            return redirect('/public/login');
+        }
+    } else {
+        // Case 3: Partial registration → redirect to finish-registration
+        if (registrationStatus === 'partialRegistration' && pathname !== `/${urlLocale}/private/finish-registration`) {
+            return redirect('/private/finish-registration');
+        }
+
+        // Case 4: Fully registered user accessing a public route → redirect to private home
+        if (isPublic && registrationStatus === 'registered' && pathname !== `/${urlLocale}/private/home`) {
+            return redirect('/private/home');
+        }
     }
 
     return response;
