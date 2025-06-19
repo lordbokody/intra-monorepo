@@ -25,8 +25,9 @@ export const useChangePasswordMiddleware = (setPageStatus: Function) => {
 
     // Middleware futásának függvénye
     const handleMiddleware = async () => {
-        setIsLoaded(true);
         try {
+            setIsLoaded(true);
+
             const requestData: VerifyTokenDto = {
                 token: token as string
             }
@@ -45,16 +46,23 @@ export const useChangePasswordMiddleware = (setPageStatus: Function) => {
         }
     }
 
-    // Middleware futtatása
-    useEffect(() => {
-        if(!isLoaded) {
-            if (!token) {
-                setPageStatus('missingToken')
-            } else {
-                handleMiddleware()
+    // Token lekérésének segédfüggvénye
+    const handleToken = () => {
+        const timer = setTimeout(async () => {
+            if(!isLoaded) {
+                if (!token) {
+                    setPageStatus('missingToken')
+                } else {
+                    await handleMiddleware()
+                }
             }
-        }
-    }, [token])
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }
+
+    // Ha megvan a tokenünk meghívjuk a lekérést
+    useEffect(() => { handleToken() }, [token]);
 
     // Visszatérünk a tokennel, amit majd felhasználunk a formban
     return { token }

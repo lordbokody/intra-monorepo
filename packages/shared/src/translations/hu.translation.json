@@ -21,7 +21,6 @@
     "backToHome": "Vissza a főoldalra",
     "*-required": "* A csillaggal jelölt mezők kitöltése kötelező!",
     "home": "Főoldal",
-    "emailConfirmationLoading": "Email megerősítése folyamatban...",
     "emailConfirmationSuccess": "Sikeres email megerősítés!",
     "emailConfirmationConfirmed": "Felhasználó email címe már megerősítve!",
     "error": "Hiba!",
@@ -54,6 +53,8 @@
     "succeded-password-change": "A jelszó sikeresen megváltoztatva!",
     "you-can-login-now": "Most már be tudsz jelentkezni!",
     "expired-password-change-token": "A jelszó helyreállító email érvényessége lejárt!",
-    "click-here-to-password-change": "Kattints ide új helyreállító email kéréséhez!"
+    "click-here-to-password-change": "Kattints ide új helyreállító email kéréséhez!",
+    "expired-email-confirmation-token": "A megerősítő email érvényessége lejárt!",
+    "get-net-email-confirmation": "Kattints ide új megerősítő email kéréséhez!"
   }
 }

@@ -1,54 +1,38 @@
 'use client'
 
 import { useState, useEffect } from "react";
-import {useRouter, useSearchParams} from 'next/navigation';
-import type {VerifyEmailDto, VerifyEmailResponse, VerifyEmailStatus} from "@intra/shared/types/auth.types";
-import type {ApplicationLanguage} from "@intra/shared/types/common.types";
+import {useSearchParams} from 'next/navigation';
+import type {VerifyEmailDto, VerifyEmailResponse} from "@intra/shared/types/auth.types";
+import type {ApplicationLanguage, PageStatus} from "@intra/shared/types/common.types";
 import { formStyles as styles } from "@intra/ui/formStyles";
-import {sleep} from "@intra/shared/utils/sleep.util";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useLocale, useTranslations} from "next-intl";
 import {ApiService} from "../../../api/client/client";
 import Link from "next/link";
+import {formStyles} from "../../../../components/styles/formStyles";
+import {LoaderCircle} from "lucide-react";
 
 export default function SuccessRegistrationPage() {
-    // Az email megerősítésének státusza
-    const [status, setStatus] = useState<VerifyEmailStatus>('loading');
-
-    // Url paraméter betöltése
-    const searchParams = useSearchParams();
-    const token = searchParams.get('token');
-
-    // App router
-    const router = useRouter();
+    // Oldal állapota
+    const [pageStatus, setPageStatus] = useState<PageStatus>('loading');
 
     // App nyelvének változói
     const t = useTranslations('all');
     const locale = useLocale();
 
-    // Az oldal státuszainak üzenetei
-    const getLabel = (status: VerifyEmailStatus) => {
-        switch (status) {
-            case "loading":
-                return t("emailConfirmationLoading")
-            case 'success':
-                return t("emailConfirmationSuccess")
-            case 'confirmed':
-                return t("emailConfirmationConfirmed")
-            case 'error':
-                return t("error")
-        }
-    }
+    // Url paraméter betöltése
+    const searchParams = useSearchParams();
+    const token = searchParams.get('token');
 
-    // Sikeres api hívás segédfüggvénye
-    const handleSuccess = async () => {
-        await sleep(2000);
-        router.push('/public/login');
-    }
+    // Api lekérés futott e állapotának tárolása
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
     // Api hívás függvénye
     const verifyEmail = async () => {
         try {
+            // Jelezzük a lefutást
+            setIsLoaded(true)
+
             // Létrehozzuk az api request adatait
             const requestData = { token }
 
@@ -60,36 +44,75 @@ export default function SuccessRegistrationPage() {
 
             if (data.success) {
                 // Ha sikeres akkor jelezzük
-                setStatus('success')
+                setPageStatus('succeeded')
             }
-
-            // Sikeres futás esetén hívjuk a segédfüggvényt
-            await handleSuccess();
         } catch (error: any) {
             // Hiba esetén hibát dobunk
             if(error.message === t('emailConfirmationConfirmed')){
-                setStatus('confirmed');
+                setPageStatus('valid');
             } else {
-                setStatus('error');
+                setPageStatus('invalid');
             }
         }
     }
 
-    // Ha a token az url-ből létrejön meghívjuk az api-t
+    // Ha megvan a tokenünk meghívjuk a lekérést
     useEffect(() => {
-        const timer = setTimeout(async () => {
-            await verifyEmail()
-        }, 2000);
-
-        return () => clearTimeout(timer);
+        if(!isLoaded) {
+            if (!token) {
+                setPageStatus('missingToken')
+            } else {
+                (async () => {
+                    await verifyEmail();
+                })();
+            }
+        }
     }, [token]);
 
     // Visszatérünk a sablonnal
     return (
         <LayoutForm>
             <div className={styles.form}>
+                {/*Form neve*/}
                 <h2 className={styles.label}>{t("registration-confirmation-email-subject")}</h2>
-                <p className={styles.description}>{getLabel(status)}</p>
+
+                {/*Render állapot, ha tölt az oldal*/}
+                {pageStatus === 'loading' && (
+                    <div className={formStyles.loadingDiv}>
+                        <LoaderCircle className={formStyles.loadingCircle}/>
+                    </div>
+                )}
+
+                {/*/!*Render állapot az email megerősítésről - már megerősítve */}
+                {pageStatus === 'valid' && (
+                    <>
+                        <p className={formStyles.description}>{t("emailConfirmationConfirmed")}</p>
+                    </>
+                )}
+
+                {/*/!*Render állapot az email megerősítésről - sikeres */}
+                {pageStatus === 'succeeded' && (
+                    <>
+                        <p className={formStyles.description}>{t("emailConfirmationSuccess")}</p>
+                    </>
+                )}
+
+                {/*/!*Render állapot ha hiba történt */}
+                {pageStatus === 'invalid' && (
+                    <>
+                        <p className={formStyles.message}>{t("expired-email-confirmation-token")}</p>
+                        <p onClick={() => setPageStatus('default')} className={formStyles.linkMessage}>{t("get-net-email-confirmation")}</p>
+                    </>
+                )}
+
+                {/*Render állapot ha új megerősítőt kér*/}
+                {pageStatus === 'default' && (
+                    <>
+                        <p>uj kell he</p>
+                    </>
+                )}
+
+                {/*Linkek*/}
                 <div className={styles.linkRow}>
                     <Link className={styles.link} href="/public/login">{t('backToHome')}</Link>
                 </div>
