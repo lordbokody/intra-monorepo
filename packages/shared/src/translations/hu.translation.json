@@ -55,6 +55,9 @@
     "expired-password-change-token": "A jelszó helyreállító email érvényessége lejárt!",
     "click-here-to-password-change": "Kattints ide új helyreállító email kéréséhez!",
     "expired-email-confirmation-token": "A megerősítő email érvényessége lejárt!",
-    "get-net-email-confirmation": "Kattints ide új megerősítő email kéréséhez!"
+    "get-net-email-confirmation": "Kattints ide új megerősítő email kéréséhez!",
+    "confirm-email": "Email megerősítés",
+    "confirm-email-desc": "Add meg az email címed, és küldünk egy hivatkozást a fiókod megerősítéséhez.",
+    "confirm-email-success": "A megerősítő email sikeresen kiküldve!"
   }
 }

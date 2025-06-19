@@ -16,7 +16,7 @@ export const forgotPasswordRequestSchema = (locale: ApplicationLanguage = "hu") 
             .required(t("user-not-found"))
             .test("user-exists", t("user-not-found"), (value) => value !== null)
             .test(
-                "email-confirmed",
+                "email-confirmation",
                 t("user-email-not-confirmed"),
                 (value: any) => value?.registrationStatus === "registered"
             )

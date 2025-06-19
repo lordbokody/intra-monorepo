@@ -6,7 +6,7 @@ import {
     LoginDto,
     RegisterDto,
     ForgotPasswordRequestDto,
-    ForgotPasswordChangeDto, VerifyTokenDto
+    ForgotPasswordChangeDto, VerifyTokenDto, ReVerifyEmailDto
 } from "@intra/shared/types/auth.types";
 import {FindOneByEmailDto} from "@intra/shared/types/user.types";
 import {verifyEmailMethod} from "./methods/auth/verifyEmail.method";
@@ -16,6 +16,7 @@ import {findOneByEmailMethod} from "./methods/user/findOneByEmail.method";
 import {forgotPasswordRequestMethod} from "./methods/auth/forgotPasswordRequest.method";
 import {forgotPasswordChangeMethod} from "./methods/auth/forgotPasswordChange.method";
 import {verifyTokenMethod} from "./methods/auth/verifyToken.method";
+import {reverifyEmailMethod} from "./methods/auth/reverifyEmail.method";
 
 export const ApiService = {
     // Authentikációra szolgáló endpointok
@@ -40,6 +41,9 @@ export const ApiService = {
         },
         verifyToken: async (data: VerifyTokenDto, language: ApplicationLanguage) => {
             return await verifyTokenMethod(data, language);
+        },
+        reverifyEmail: async (data: ReVerifyEmailDto, language: ApplicationLanguage) => {
+            return await reverifyEmailMethod(data, language);
         }
     },
     // Felhasználókkal kapcsolatos endpointok

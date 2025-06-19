@@ -101,14 +101,7 @@ export default function SuccessRegistrationPage() {
                 {pageStatus === 'invalid' && (
                     <>
                         <p className={formStyles.message}>{t("expired-email-confirmation-token")}</p>
-                        <p onClick={() => setPageStatus('default')} className={formStyles.linkMessage}>{t("get-net-email-confirmation")}</p>
-                    </>
-                )}
-
-                {/*Render állapot ha új megerősítőt kér*/}
-                {pageStatus === 'default' && (
-                    <>
-                        <p>uj kell he</p>
+                        <Link href={'/public/resend-email'} className={formStyles.linkMessage}>{t("get-net-email-confirmation")}</Link>
                     </>
                 )}
 
