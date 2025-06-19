@@ -21,7 +21,7 @@ export const routing = defineRouting({
             hu: '/privat/fooldal',
             en: '/private/home'
         }
-        /*'/public/email-confirmed': {
+        /*'/public/email-confirmation': {
             hu: 'email-megerosites',
             en: 'email-confirmation'
         }*/

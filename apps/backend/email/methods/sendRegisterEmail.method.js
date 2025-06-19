@@ -14,7 +14,7 @@ export const sendRegisterEmailMethod = async (data) => {
             to: data.email,
             subject: 'MKE Intra - Regisztráció megerősítése',
             template: 'confirmEmail',
-            context: { name: data.name, verificationLink: `${process.env.FRONTEND_URL}/public/email-confirmed?token=${data.token}` },
+            context: { name: data.name, verificationLink: `${process.env.FRONTEND_URL}/public/email-confirmation?token=${data.token}` },
         };
         await emailTransporter.sendMail(mailOptions);
         return {

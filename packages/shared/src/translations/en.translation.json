@@ -55,6 +55,9 @@
     "expired-password-change-token": "The password reset email has expired!",
     "click-here-to-password-change": "Click here to request a new reset email!",
     "expired-email-confirmation-token": "The confirmation email has expired!",
-    "get-net-email-confirmation": "Click here to request a new confirmation email!"
+    "get-net-email-confirmation": "Click here to request a new confirmation email!",
+    "confirm-email": "Email confirmation",
+    "confirm-email-desc": "Enter your email address and we'll send you a link to confirm your account.",
+    "confirm-email-success": "The confirmation email has been sent successfully!"
   }
 }

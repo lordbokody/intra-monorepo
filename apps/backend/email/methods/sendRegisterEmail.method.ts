@@ -25,7 +25,7 @@ export const sendRegisterEmailMethod = async (data: SendRegisterEmailDto): Promi
             to: data.email,
             subject: `${process.env.APP_NAME} - ${t('registration-confirmation-email-subject')}`,
             template: 'confirmEmail',
-            context: { name: data.name, verificationLink: `${process.env.FRONTEND_URL}/public/email-confirmed?token=${data.token}` },
+            context: { name: data.name, verificationLink: `${process.env.FRONTEND_URL}/public/email-confirmation?token=${data.token}` },
         };
 
         // Elküldjük az emailt
