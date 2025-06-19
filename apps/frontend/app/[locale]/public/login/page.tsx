@@ -9,7 +9,6 @@ import {formStyles} from "../../../../components/styles/formStyles";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useTranslations} from "next-intl";
 import {ButtonLoginGoogle} from "@intra/ui/components/forms/buttons/buttonLoginGoogle/ButtonLoginGoogle";
-import ButtonLoginFacebook from "../../../../components/forms/buttons/buttonLoginFacebook/ButtonLoginFacebook";
 import {useLoginForm} from "./form";
 import {Gradient} from "@intra/ui/gradient";
 
@@ -30,6 +29,7 @@ export default function Home() {
     // Létrehozzuk a sablont
     return (
       <LayoutForm>
+          {/*<Gradient conic={true} className={"w-full h-full"}/>*/}
           <div className={formStyles.form}>
               <FormikProvider value={formik}>
                   <Form>
@@ -56,7 +56,6 @@ export default function Home() {
                   onClick={() => {
                       return signInWithGoogle()
                   }}/>
-              {/*<ButtonLoginFacebook />*/}
               <div className={formStyles.linkRow}>
                   <Link className={formStyles.link} href="/public/forgot-password">{t("forgotPassword")}</Link>
                   <Link className={formStyles.link} href="/public/registration">{t("registration")}</Link>

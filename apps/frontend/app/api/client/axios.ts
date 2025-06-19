@@ -21,7 +21,6 @@ interface AxiosParams<T = any> {
 }
 
 export const axiosRequest = async <T>({ method, route, data, token, params, language }: AxiosParams): Promise<T> => {
-
     const headers = {
         ...axiosInstance.defaults.headers.common,
         'Accept-Language': language || 'hu',

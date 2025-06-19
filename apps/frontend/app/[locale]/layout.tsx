@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '../../i18n/routing';
 import { Geist, Geist_Mono } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
-import './globals.css'
+import "./globals.css"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
