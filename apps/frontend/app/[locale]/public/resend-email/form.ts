@@ -10,6 +10,9 @@ import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 import {useFormik} from "formik";
 import {forgotPasswordRequestSchema} from "@intra/shared/schemas/auth/forgotPasswordRequest.schema";
 
+/**
+ * Megerősítő email újraküldő oldal formja
+ */
 export const useResendEmailForm = (setPageStatus: Function) => {
     // App nyelvi változók
     const locale = useLocale() as ApplicationLanguage;
@@ -34,17 +37,31 @@ export const useResendEmailForm = (setPageStatus: Function) => {
 
     // Segédfüggvény a formban lévő hibák kezelésére
     const handleError = async (message?: string) => {
+        // Beállítjuk, hogy hiba van
         setIsError(true);
+
+        // Beállítjuk a hibaüzenetet
         setErrorText(message || null);
+
+        //Várunk 3 másodpercet
         await sleep(3000);
+
+        // Kikapcsoljuk, hogy hiba van
         setIsError(false);
     };
 
     // Segédfüggvény a form sikeres lefutása után
     const handleSuccess = async () => {
+        // Beállítjuk, hogy sikeres a futás
         setIsSuccess(true);
-        await sleep(500);
+
+        // Várunk 2 másodpercet
+        await sleep(2000);
+
+        // Beállítjuk, hogy átirányítás alatt vagyunk
         setIsForwarding(true);
+
+        // Jelezzük a felületen, hogy sikeres a futás
         setPageStatus('succeeded')
     }
 
@@ -52,7 +69,7 @@ export const useResendEmailForm = (setPageStatus: Function) => {
     const onSubmit = async (values: ReVerifyEmailDto): Promise<void>  => {
         try {
             // Meghívjuk az API klienst
-            const data: ReVerifyEmailResponse = await ApiService.auth.reverifyEmail(
+            const data: ReVerifyEmailResponse = await ApiService.auth.reVerifyEmail(
                 values,                         // form adatok
                 locale as ApplicationLanguage,  // app nyelv
             )

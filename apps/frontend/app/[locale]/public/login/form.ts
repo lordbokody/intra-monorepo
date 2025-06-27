@@ -11,6 +11,9 @@ import {LoginDto, LoginResponse} from "@intra/shared/types/auth.types";
 import {ApiService} from "../../../api/client/client";
 import {ApplicationLanguage} from "@intra/shared/types/common.types";
 
+/**
+ * Login oldalhoz tartozó form
+ */
 export const useLoginForm = () => {
     // Form sikeres beküldését tároló változó
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -47,51 +50,69 @@ export const useLoginForm = () => {
 
     // Segédfüggvény a formban lévő hibák kezelésére
     const handleError = async (message?: string) => {
+        // Beállítjuk, hogy hiba van
         setIsError(true);
+
+        // Beállítjuk a hibaüzenetet
         setErrorText(message || null);
+
+        //Várunk 3 másodpercet
         await sleep(3000);
+
+        // Kikapcsoljuk, hogy hiba van
         setIsError(false);
     };
 
     // Segédfüggvény a form sikeres lefutása után
     const handleSuccess = async () => {
+        // Beállítjuk, hogy sikeres a futás
         setIsSuccess(true);
-        await sleep(3000);
+
+        // Várunk 2 másodpercet
+        await sleep(2000);
+
+        // Beállítjuk, hogy átirányítás alatt vagyunk
         setIsForwarding(true);
-        router.push('/private/home');
+
+        // Átirányítjuk az új routera
+        router.push(`/${locale}/private/home`);
     }
 
+    // Form submit függvénye
+    const onSubmit = async (values: LoginDto): Promise<void> => {
+        try {
+            // Meghívjuk az API klienst
+            const data: LoginResponse = await ApiService.auth.login(
+                values,
+                locale as ApplicationLanguage
+            )
+
+            // Ha sikertelen a hívás, akkor hibát dobunk
+            if (!data.success) return await handleError(data.message);
+
+            // Bejelentkezünk az auth session-be
+            const signInResult = await signIn("credentials", {
+                redirect: false,
+                token: data.token,
+                role: data?.user?.role,
+                registrationStatus: data?.user?.registrationStatus,
+            });
+
+            // Ha sikertelen az auth session bejelentkezés, akkor hibát dobunk
+            if (!signInResult?.ok) return await handleError(t("auth-failed"));
+
+            // Sikeres futás esetén meghívjuk a szükséges műveletet
+            await handleSuccess();
+        } catch (error) {
+            // Ha sikertelen a hívás, akkor hibát dobunk
+            await handleError((error as Error).message);
+        }
+    }
+
+    // Létrehozzuk a formot
     const formik = useFormik({
         initialValues,
-        onSubmit: async (values) => {
-            try {
-                // Meghívjuk az API klienst
-                const data: LoginResponse = await ApiService.auth.login(
-                    values,
-                    locale as ApplicationLanguage
-                )
-
-                // Ha sikertelen a hívás, akkor hibát dobunk
-                if (!data.success) return await handleError(data.message);
-
-                // Bejelentkezünk az auth session-be
-                const signInResult = await signIn("credentials", {
-                    redirect: false,
-                    token: data.token,
-                    role: data?.user?.role,
-                    registrationStatus: data?.user?.registrationStatus,
-                });
-
-                // Ha sikertelen az auth session bejelentkezés, akkor hibát dobunk
-                if (!signInResult?.ok) return await handleError(t("auth-failed"));
-
-                // Sikeres futás esetén meghívjuk a szükséges műveletet
-                await handleSuccess();
-            } catch (error) {
-                // Ha sikertelen a hívás, akkor hibát dobunk
-                await handleError((error as Error).message);
-            }
-        },
+        onSubmit,
         validateOnBlur: true,
         validateOnChange: true,
     });

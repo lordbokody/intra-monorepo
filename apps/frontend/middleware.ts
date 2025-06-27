@@ -1,59 +1,76 @@
-import { auth } from "./auth";
-import createIntlMiddleware from 'next-intl/middleware';
-import { NextRequest, NextResponse } from 'next/server';
-import { routing } from './i18n/routing';
+import createMiddleware from 'next-intl/middleware';
+import {NextRequest} from 'next/server';
+import {routing} from "./i18n/routing";
+import {auth} from "./auth";
+import {hasLocale} from "next-intl";
 
-const protectedRoutes = ['/private', '/privat'];
-const publicRoutes = ['/public', '/publikus'];
+/**
+ * Frontend app middleware
+ */
+export default async function middleware(request: NextRequest) {
+    // Szétdaraboljuk az urlt a localera és a többi szegmensre
+    const [, locale, ...segments] = request.nextUrl.pathname.split('/');
 
-const intlMiddleware = createIntlMiddleware(routing);
+    // Csak akkor futtatjuk a függvényt ha van locale
+    // Ha nincs locale, akkor automatikusan átirányít, és újra triggert kap a middleware,
+    // ezért nem szeretnénk hogy az if-en belüli dolgok többször fussanak
+    if(locale){
+        // Betöltjük a sessiont
+        const session = await auth()
 
-export async function middleware(request: NextRequest) {
-    const { pathname, origin, locale } = request.nextUrl;
+        // Ha nincs session
+        if(!session){
+            // Ha az url-ben szereplő locale nem támogatott átirányítjuk a magyar login oldalra
+            if (!hasLocale(routing.locales, locale)) {
+                request.nextUrl.pathname = `/hu/public/login`;
+            }
 
-    // Get session (works in middleware)
-    const session = await auth();
+            // Ha a szegmensek értéke nulla akkor átirányítjuk a loginra
+            if(segments.length === 0){
+                request.nextUrl.pathname = `/${locale}/public/login`;
+            }
 
-    const backendJwt = session?.backendJwt;
-    const registrationStatus = session?.registrationStatus;
+            // Ha védett útvonalon vagyunk átirányítjuk a loginra
+            if(segments[0] === 'private'){
+                request.nextUrl.pathname = `/${locale}/public/login`;
+            }
+            // Ha van session
+        } else {
+            // Ha az url-ben szereplő locale nem támogatott átirányítjuk a magyar belső főoldalra
+            if (!hasLocale(routing.locales, locale)) {
+                request.nextUrl.pathname = `/hu/private/home`;
+            }
 
-    const response = intlMiddleware(request);
+            // Betöltjük a sessionből a felhasználó regisztrációjának státuszát
+            const registrationStatus = session?.registrationStatus;
 
-    // Extract the path without locale
-    const [, , restPath = ""] = pathname.match(/^\/([^/]+)(.*)/) || [];
+            // Ha részleges a regiszrációja, de nem azon az oldalon van, akkor átirányítjuk oda
+            if(registrationStatus === 'partialRegistration' && segments[1] !== 'finish-registration'){
+                request.nextUrl.pathname = `/${locale}/private/finish-registration`;
+            }
 
-    const isProtected = protectedRoutes.some(route => restPath.startsWith(route));
-    const isPublic = publicRoutes.some(route => restPath.startsWith(route));
+            // Ha regisztrált de publikus útvonalon jár, akkor átirányítjuk a védett főoldalra
+            if(registrationStatus === 'registered' && segments[0] === 'public'){
+                request.nextUrl.pathname = `/${locale}/private/home`;
+            }
 
-    const urlLocale = locale || 'hu';
-
-    const redirect = (path: string) => NextResponse.redirect(new URL(`/${urlLocale}${path}`, origin));
-
-    if (!session) {
-        // Case 1: No session and at root path → redirect to login
-        if (pathname === `/${urlLocale}`) {
-            return redirect('/public/login');
-        }
-
-        // Case 2: Trying to access a protected route → redirect to login
-        if (isProtected && pathname !== `/${urlLocale}/public/login`) {
-            return redirect('/public/login');
-        }
-    } else {
-        // Case 3: Partial registration → redirect to finish-registration
-        if (registrationStatus === 'partialRegistration' && pathname !== `/${urlLocale}/private/finish-registration`) {
-            return redirect('/private/finish-registration');
-        }
-
-        // Case 4: Fully registered user accessing a public route → redirect to private home
-        if (isPublic && registrationStatus === 'registered' && pathname !== `/${urlLocale}/private/home`) {
-            return redirect('/private/home');
+            // Ha regisztrált de a véglegesítő oldalon jár, akkor átirányítjuk a védett főoldalra
+            if(registrationStatus === 'registered' && segments[0] === 'private' && segments[1] === 'finish-registration'){
+                request.nextUrl.pathname = `/${locale}/private/home`;
+            }
         }
     }
 
-    return response;
+    // Létrehozzuk a middlewaret
+    const handleI18nRouting = createMiddleware(routing);
+
+    // Visszatérünk az értékkel
+    return handleI18nRouting(request);
 }
 
+/**
+ * Middleware config, ahol beállítjuk, hogy milyen szabályok szerint fusson a middleware függvényünk
+ */
 export const config = {
-    matcher: '/((?!api|trpc|_next|_vercel|.*\\..*).*)',
+    matcher: ['/', '/(hu|en)', '/(hu|en)/:path*'],
 };

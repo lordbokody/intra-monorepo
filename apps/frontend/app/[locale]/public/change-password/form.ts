@@ -11,6 +11,9 @@ import {ApiService} from "../../../api/client/client";
 import {useFormik} from "formik";
 import {forgotPasswordChangeSchema} from "@intra/shared/schemas/auth/forgotPasswordChange.schema";
 
+/**
+ * Jelszó változtató oldalhoz tartozó form
+ */
 export const useChangePasswordForm = (token: string, setPageStatus: Function) => {
     // Form sikeres beküldését tároló változó
     const [isSuccess, setIsSuccess] = useState(false);
@@ -40,17 +43,31 @@ export const useChangePasswordForm = (token: string, setPageStatus: Function) =>
 
     // Segédfüggvény a formban lévő hibák kezelésére
     const handleError = async (message?: string) => {
+        // Beállítjuk, hogy hiba van
         setIsError(true);
+
+        // Beállítjuk a hibaüzenetet
         setErrorText(message || null);
+
+        //Várunk 3 másodpercet
         await sleep(3000);
+
+        // Kikapcsoljuk, hogy hiba van
         setIsError(false);
     };
 
     // Segédfüggvény a form sikeres lefutása után
     const handleSuccess = async () => {
+        // Beállítjuk, hogy sikeres a futás
         setIsSuccess(true);
+
+        // Várunk 2 másodpercet
         await sleep(2000);
+
+        // Beállítjuk, hogy átirányítás alatt vagyunk
         setIsForwarding(true);
+
+        // Jelezzük a felületen, hogy sikeres a futás
         setPageStatus('succeeded')
     }
 

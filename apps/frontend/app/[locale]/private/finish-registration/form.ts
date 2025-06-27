@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import {useLocale, useTranslations} from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
-
 import { finishRegistrationSchema } from '@intra/shared/schemas/auth/finishRegistration.schema';
 import { sleep } from '@intra/shared/utils/sleep.util';
 import { getButtonState, ButtonStateType } from '../../../../utils/getButtonState';
@@ -13,6 +12,9 @@ import { FinishRegistrationDto, FinishRegistrationResponse } from '@intra/shared
 import {ApiService} from "../../../api/client/client";
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 
+/**
+ * Regisztráció befejezése oldalhoz tartozó form
+ */
 export const useFinishRegistrationForm = () => {
     // App router
     const router = useRouter();
@@ -50,18 +52,32 @@ export const useFinishRegistrationForm = () => {
 
     // Segédfüggvény a formban lévő hibák kezelésére
     const handleError = async (message?: string) => {
+        // Beállítjuk, hogy hiba van
         setIsError(true);
+
+        // Beállítjuk a hibaüzenetet
         setErrorText(message || null);
+
+        //Várunk 3 másodpercet
         await sleep(3000);
+
+        // Kikapcsoljuk, hogy hiba van
         setIsError(false);
     };
 
     // Segédfüggvény a form sikeres lefutása után
     const handleSuccess = async () => {
+        // Beállítjuk, hogy sikeres a futás
         setIsSuccess(true);
+
+        // Várunk 3 másodpercet
         await sleep(3000);
+
+        // Beállítjuk, hogy átirányítás alatt vagyunk
         setIsForwarding(true);
-        router.push('/private/home');
+
+        // Átirányítjuk a felhasználót az új routera
+        router.push(`/${locale}/private/home`);
     }
 
     // Form submit függvénye

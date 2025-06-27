@@ -6,13 +6,16 @@ import {formStyles} from "../../../../components/styles/formStyles";
 import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
 import {ButtonSubmit} from "@intra/ui/components/forms/buttons/buttonSubmit/ButtonSubmit";
 import Link from "next/link";
-import {useTranslations} from "next-intl";
+import {useLocale, useTranslations} from "next-intl";
 import {useChangePasswordForm} from "./form";
 import {useChangePasswordMiddleware} from "./middleware";
 import {useState} from "react";
 import type {PageStatus} from "@intra/shared/types/common.types";
 import {LoaderCircle} from "lucide-react";
 
+/**
+ * Jelszó változtató oldal
+ */
 export default function ChangePasswordPage() {
     // Oldal állapota
     const [pageStatus, setPageStatus] = useState<PageStatus>('loading');
@@ -23,6 +26,7 @@ export default function ChangePasswordPage() {
     } = useChangePasswordMiddleware(setPageStatus)
 
     // Betöltjük a fordításokat
+    const locale = useLocale();
     const t = useTranslations('all');
 
     // Betöltjük a formot
@@ -52,7 +56,7 @@ export default function ChangePasswordPage() {
                     {(pageStatus === 'invalid' || pageStatus === 'missingToken') && (
                         <>
                             <p className={formStyles.message}>{t("expired-password-change-token")}</p>
-                            <Link href="/public/forgot-password" className={formStyles.linkMessage}>{t("click-here-to-password-change")}</Link>
+                            <Link href={`/${locale}/public/forgot-password`} className={formStyles.linkMessage}>{t("click-here-to-password-change")}</Link>
                         </>
                     )}
 
@@ -90,7 +94,7 @@ export default function ChangePasswordPage() {
 
                     {/*Linkek*/}
                     <div className={formStyles.linkRow}>
-                        <Link className={formStyles.link} href="/public/login">{t('backToHome')}</Link>
+                        <Link className={formStyles.link} href={`/${locale}/public/login`}>{t('backToHome')}</Link>
                     </div>
                 </Form>
             </FormikProvider>
