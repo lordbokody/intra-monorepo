@@ -56,8 +56,18 @@
     "click-here-to-password-change": "Click here to request a new reset email!",
     "expired-email-confirmation-token": "The confirmation email has expired!",
     "get-net-email-confirmation": "Click here to request a new confirmation email!",
-    "confirm-email": "Email confirmation",
+    "confirm-email": "Email Confirmation",
     "confirm-email-desc": "Enter your email address and we'll send you a link to confirm your account.",
-    "confirm-email-success": "The confirmation email has been sent successfully!"
+    "confirm-email-success": "The confirmation email has been sent successfully!",
+    "email-confirm-welcome": "Welcome",
+    "email-confirm-message": "We're glad to have you on board. Click the button below to verify your email:",
+    "email-confirm-button": "Verify Email",
+    "email-confirm-ignore": "If you did not sign up, please ignore this email.",
+    "email-forgot-title": "Reset Your Password",
+    "email-forgot-dear": "Dear",
+    "email-forgot-message": " We received a request to reset your password.",
+    "email-forgot-click": "Click the button below to choose a new password:",
+    "email-forgot-button": "Reset Password",
+    "email-forgot-ignore": "If you didn’t request a password reset, you can safely ignore this email."
   }
 }

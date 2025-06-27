@@ -1,45 +1,48 @@
-import {api, Header} from "encore.dev/api";
-import AuthService from "./auth.service"
+import {api} from "encore.dev/api";
 import {
-    RegisterDto,
     RegisterResponse,
-    VerifyEmailDto,
     VerifyEmailResponse,
-    ReVerifyEmailDto,
     ReVerifyEmailResponse,
-    LoginDto,
     LoginResponse,
-    ForgotPasswordRequestDto,
     ForgotPasswordRequestResponse,
-    ForgotPasswordChangeDto,
     ForgotPasswordChangeResponse,
-    LoginOAuthDto,
     LoginOAuthResponse,
-    FinishRegistrationDto,
-    FinishRegistrationResponse, VerifyTokenDto, VerifyTokenResponse
+    FinishRegistrationResponse, VerifyTokenResponse
 } from "@intra/shared/types/auth.types"
 
-interface Params {
-    language: Header<"Accept-Language">; // parsed from header
-}
+import {registerMethod, RegisterParams} from "./methods/register.method";
+import {verifyEmailMethod, VerifyEmailParams} from "./methods/verifyEmail.method";
+import {reVerifyEmailMethod, ReVerifyEmailParams} from "./methods/reVerifyEmail.method";
+import {loginMethod, LoginParams} from "./methods/login.method";
+import {forgotPasswordRequestMethod, ForgotPasswordRequestParams} from "./methods/forgotPasswordRequest.method";
+import {forgotPasswordChangeMethod, ForgotPasswordChangeParams} from "./methods/forgotPasswordChange.method";
+import {loginOAuthMethod, LoginOAuthParams} from "./methods/loginOAuth.method";
+import {finishRegistrationMethod, FinishRegistrationParams} from "./methods/finishRegistration.method";
+import {verifyTokenMethod, VerifyTokenParams} from "./methods/verifyToken.method";
 
 /**
  * Felhasználó létrehozására szolgáló végpont.
  */
 export const register = api(
-    { expose: true, method: "POST", path: "/auth/register" },
-    async (data: RegisterDto): Promise<RegisterResponse> => {
-        return await AuthService.register(data);
-    },
+    // api paraméterek
+    { expose: true, method: "POST", path: "/auth/register"},
+    // api függvény
+    async (data: RegisterParams): Promise<RegisterResponse> => {
+        // Meghívjuk a metódust
+        return await registerMethod(data)
+    }
 );
 
 /**
  * Felhasználó email címének megerősítésére szolgáló végpont.
  */
 export const verifyEmail = api(
-    {expose: true, method: "PATCH", path: "/auth/verifyEmail" },
-    async (data: VerifyEmailDto): Promise<VerifyEmailResponse> => {
-        return await AuthService.verifyEmail(data)
+    // api paraméterek
+    { expose: true, method: "PATCH", path: "/auth/verifyEmail" },
+    // api függvény
+    async (data: VerifyEmailParams): Promise<VerifyEmailResponse> => {
+        // Meghívjuk a metódust
+        return await verifyEmailMethod(data)
     }
 )
 
@@ -47,9 +50,12 @@ export const verifyEmail = api(
  * Újabb felhasználói megerősítő email kiküldésére szolgáló végpont.
  */
 export const reVerifyEmail = api(
-    {expose: true, method: "POST", path: "/auth/reverifyEmail" },
-    async (data: ReVerifyEmailDto): Promise<ReVerifyEmailResponse> => {
-        return await AuthService.reVerifyEmail(data)
+    // api paraméterek
+    { expose: true, method: "POST", path: "/auth/reverifyEmail" },
+    // api függvény
+    async (data: ReVerifyEmailParams): Promise<ReVerifyEmailResponse> => {
+        // Meghívjuk a metódust
+        return await reVerifyEmailMethod(data)
     }
 )
 
@@ -57,9 +63,12 @@ export const reVerifyEmail = api(
  * Bejelentkezésre szólgálú végpont.
  */
 export const login = api(
-    {expose: true, method: "POST", path: "/auth/login" },
-    async (data: LoginDto): Promise<LoginResponse> => {
-        return await AuthService.login(data)
+    // api paraméterek
+    { expose: true, method: "POST", path: "/auth/login" },
+    // api függvény
+    async (data: LoginParams): Promise<LoginResponse> => {
+        // Meghívjuk a metódust
+        return await loginMethod(data)
     }
 )
 
@@ -67,9 +76,12 @@ export const login = api(
  * Elfelejtett jelszó megújítására szolgáló végpont.
  */
 export const forgotPasswordRequest = api(
-    {expose: true, method: "POST", path: "/auth/forgotPasswordRequest" },
-    async (data: ForgotPasswordRequestDto): Promise<ForgotPasswordRequestResponse> => {
-        return await AuthService.forgotPasswordRequest(data)
+    // api paraméterek
+    { expose: true, method: "POST", path: "/auth/forgotPasswordRequest" },
+    // api függvény
+    async (data: ForgotPasswordRequestParams): Promise<ForgotPasswordRequestResponse> => {
+        // Meghívjuk a metódust
+        return await forgotPasswordRequestMethod(data)
     }
 )
 
@@ -77,35 +89,48 @@ export const forgotPasswordRequest = api(
  * Elfelejtett jelszó módosítására szolgáló végpont.
  */
 export const forgotPasswordChange = api(
-    {expose: true, method: "PUT", path: "/auth/forgotPasswordChange" },
-    async (data: ForgotPasswordChangeDto): Promise<ForgotPasswordChangeResponse> => {
-        return await AuthService.forgotPasswordChange(data)
+    // api paraméterek
+    { expose: true, method: "PUT", path: "/auth/forgotPasswordChange" },
+    // api függvény
+    async (data: ForgotPasswordChangeParams): Promise<ForgotPasswordChangeResponse> => {
+        // Meghívjuk a metódust
+        return await forgotPasswordChangeMethod(data)
     }
 )
 /**
  * OAuth belépésre/regisztrációra szolgáló végpont.
  */
 export const loginOAuth = api(
-    {expose: true, method: "POST", path: "/auth/loginOAuth" },
-    async (data: LoginOAuthDto): Promise<LoginOAuthResponse> => {
-        return await AuthService.loginOAuth(data)
+    // api paraméterek
+    { expose: true, method: "POST", path: "/auth/loginOAuth" },
+    // api függvény
+    async (data: LoginOAuthParams): Promise<LoginOAuthResponse> => {
+        // Meghívjuk a metódust
+        return await loginOAuthMethod(data)
     }
 )
+
 /**
  * Részleges regisztráció befejezése
  */
 export const finishRegistration = api(
-    {expose: true, auth: true, method: "PATCH", path: "/auth/finishRegistration" },
-    async (data: FinishRegistrationDto): Promise<FinishRegistrationResponse> => {
-        return await AuthService.finishRegistration(data)
+    // api paraméterek
+    { expose: true, auth: true, method: "PATCH", path: "/auth/finishRegistration" },
+    // api függvény
+    async (data: FinishRegistrationParams): Promise<FinishRegistrationResponse> => {
+        // Meghívjuk a metódust
+        return await finishRegistrationMethod(data)
     }
 )
 /**
  * Token vizsgálata, hogy érvényes e még, vagy sem
  */
 export const verifyToken = api(
-    {expose: true, method: "POST", path: "/auth/verifyToken" },
-    async (data: VerifyTokenDto): Promise<VerifyTokenResponse> => {
-        return await AuthService.verifyToken(data)
+    // api paraméterek
+    { expose: true, method: "POST", path: "/auth/verifyToken" },
+    // api függvény
+    async (data: VerifyTokenParams): Promise<VerifyTokenResponse> => {
+        // Meghívjuk a metódust
+        return await verifyTokenMethod(data)
     }
 )

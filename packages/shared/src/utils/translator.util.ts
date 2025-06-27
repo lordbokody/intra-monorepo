@@ -1,5 +1,6 @@
 import hu from "../translations/hu.translation.json"
 import en from '../translations/en.translation.json';
+import {ApplicationLanguage} from "../types/common.types";
 
 type TranslationMap = {
     [key: string]: string;
@@ -14,7 +15,7 @@ const translations: Record<string, LocaleStrings> = {
     en,
 };
 
-export function createTranslator(locale: string): (key: string) => string {
+export function createTranslator(locale: ApplicationLanguage): (key: string) => string {
     const messages = translations[locale];
 
     if (!messages) {
