@@ -8,18 +8,22 @@ import {InputDate} from "../../../../components/forms/inputs/InputDate";
 import {InputCheckbox} from "../../../../components/forms/inputs/InputCheckbox";
 import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
 import {formStyles} from "../../../../components/styles/formStyles";
-import {useTranslations} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {useRegistrationForm} from "./form";
 import Link from "next/link";
 import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import {useState} from "react";
 import {PageStatus} from "@intra/shared/types/common.types";
 
+/**
+ * Regisztrációs oldal
+ */
 export default function RegisterPage() {
     // Oldal állapota
     const [pageStatus, setPageStatus] = useState<PageStatus>('default');
 
     // Betöltjük a fordításokat
+    const locale = useLocale();
     const t = useTranslations('all');
 
     // Betöltjük a formot
@@ -41,6 +45,7 @@ export default function RegisterPage() {
                     {/*Alapértelmezett állapot*/}
                     {pageStatus === 'default' && (
                         <>
+                            {/*Input mezők*/}
                             <InputText
                                 label={t('name')}
                                 id="name"
@@ -84,8 +89,12 @@ export default function RegisterPage() {
                                 name="acceptPrivacy"
                                 required={true}
                             />
+
+                            {/*Információs szövegek*/}
                             <p className={formStyles.required}>{t('*-required')}</p>
                             <p className={formStyles.error(isError)}>{errorText}</p>
+
+                            {/*Submit gomb*/}
                             <ButtonSubmit state={buttonState}>
                                 {t('registration')}
                             </ButtonSubmit>
@@ -102,7 +111,7 @@ export default function RegisterPage() {
 
                     {/*Linkek*/}
                     <div className={formStyles.linkRow}>
-                        <Link className={formStyles.link} href="/public/login">{t('backToHome')}</Link>
+                        <Link className={formStyles.link} href={`/${locale}/public/login`}>{t('backToHome')}</Link>
                     </div>
                 </Form>
             </FormikProvider>

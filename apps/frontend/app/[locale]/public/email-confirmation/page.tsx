@@ -12,6 +12,9 @@ import Link from "next/link";
 import {formStyles} from "../../../../components/styles/formStyles";
 import {LoaderCircle} from "lucide-react";
 
+/**
+ * Email megerősítésére szolgáló oldal
+ */
 export default function SuccessRegistrationPage() {
     // Oldal állapota
     const [pageStatus, setPageStatus] = useState<PageStatus>('loading');
@@ -58,10 +61,13 @@ export default function SuccessRegistrationPage() {
 
     // Ha megvan a tokenünk meghívjuk a lekérést
     useEffect(() => {
+        // Csak akkor futtatjuk, ha még nem kapott triggert
         if(!isLoaded) {
             if (!token) {
+                // Ha nincs token jelezzük az oldalon
                 setPageStatus('missingToken')
             } else {
+                // Ha van token meghívjuk a hozzá tartozó függvényt
                 (async () => {
                     await verifyEmail();
                 })();
@@ -101,13 +107,13 @@ export default function SuccessRegistrationPage() {
                 {pageStatus === 'invalid' && (
                     <>
                         <p className={formStyles.message}>{t("expired-email-confirmation-token")}</p>
-                        <Link href={'/public/resend-email'} className={formStyles.linkMessage}>{t("get-net-email-confirmation")}</Link>
+                        <Link href={`/${locale}/public/resend-email`} className={formStyles.linkMessage}>{t("get-net-email-confirmation")}</Link>
                     </>
                 )}
 
                 {/*Linkek*/}
                 <div className={styles.linkRow}>
-                    <Link className={styles.link} href="/public/login">{t('backToHome')}</Link>
+                    <Link className={styles.link} href={`/${locale}/public/login`}>{t('backToHome')}</Link>
                 </div>
             </div>
         </LayoutForm>

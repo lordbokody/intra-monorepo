@@ -6,16 +6,20 @@ import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
 import { formStyles as styles } from "@intra/ui/formStyles";
 import {InputEmail} from "../../../../components/forms/inputs/InputEmail";
 import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
-import {useTranslations} from "next-intl";
+import {useLocale, useTranslations} from "next-intl";
 import {useResendEmailForm} from "./form";
 import {useState} from "react";
 import type {PageStatus} from "@intra/shared/types/common.types";
 
+/**
+ * Megerősítő email újraküldő oldal
+ */
 export default function ResendEmailPage() {
     // Oldal állapota
     const [pageStatus, setPageStatus] = useState<PageStatus>('default');
 
     // Betöltjük a fordításokat
+    const locale = useLocale();
     const t = useTranslations('all');
 
     // Betöltjük a formot
@@ -38,13 +42,20 @@ export default function ResendEmailPage() {
                         {/*Alapértelmezett állapot*/}
                         {pageStatus === 'default' && (
                             <>
+                                {/*Leírás*/}
                                 <p className={styles.description}>{t("confirm-email-desc")}</p>
+
+                                {/*Input mező*/}
                                 <InputEmail
                                     label={t("email")}
                                     id="email"
                                     name="email"
                                 />
+
+                                {/*Tájékoztató szövegek*/}
                                 <p className={styles.error(isError)}>{errorText}</p>
+
+                                {/*Submit gomb*/}
                                 <ButtonSubmit state={buttonState}>{t("submit")}</ButtonSubmit>
                             </>
                         )}
@@ -58,7 +69,7 @@ export default function ResendEmailPage() {
 
                         {/*Linkek */}
                         <div className={styles.linkRow}>
-                            <Link className={styles.link} href="/public/login">{t('backToHome')}</Link>
+                            <Link className={styles.link} href={`/${locale}/public/login`}>{t('backToHome')}</Link>
                         </div>
                     </Form>
                 </FormikProvider>

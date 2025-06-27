@@ -10,7 +10,9 @@ import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 import {registerSchema} from "@intra/shared/schemas/auth/register.schema";
 import {checkEmailExists} from "../../../../utils/checkEmailExists.util";
 
-
+/**
+ * Regisztráció oldalhoz tartozó form
+ */
 export const useRegistrationForm = (setPageStatus: Function) => {
     // Form sikeres beküldését tároló változó
     const [isSuccess, setIsSuccess] = useState(false);
@@ -41,18 +43,32 @@ export const useRegistrationForm = (setPageStatus: Function) => {
 
     // Segédfüggvény a formban lévő hibák kezelésére
     const handleError = async (message?: string) => {
+        // Beállítjuk, hogy hiba van
         setIsError(true);
+
+        // Beállítjuk a hibaüzenetet
         setErrorText(message || null);
+
+        //Várunk 3 másodpercet
         await sleep(3000);
+
+        // Kikapcsoljuk, hogy hiba van
         setIsError(false);
     };
 
     // Segédfüggvény a form sikeres lefutása után
     const handleSuccess = async () => {
+        // Beállítjuk, hogy sikeres a futás
         setIsSuccess(true);
+
+        // Várunk 2 másodpercet
         await sleep(2000);
+
+        // Beállítjuk, hogy átirányítás alatt vagyunk
         setIsForwarding(true);
-        setPageStatus('succeeded');
+
+        // Jelezzük a felületen, hogy sikeres a futás
+        setPageStatus('succeeded')
     }
 
     // Form submit függvénye
