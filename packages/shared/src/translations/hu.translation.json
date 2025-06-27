@@ -58,6 +58,15 @@
     "get-net-email-confirmation": "Kattints ide új megerősítő email kéréséhez!",
     "confirm-email": "Email megerősítés",
     "confirm-email-desc": "Add meg az email címed, és küldünk egy hivatkozást a fiókod megerősítéséhez.",
-    "confirm-email-success": "A megerősítő email sikeresen kiküldve!"
+    "email-confirm-welcome": "Üdvözlünk",
+    "email-confirm-message": "Örülünk, hogy csatlakoztál hozzánk. Az e-mail címed megerősítéséhez kattints az alábbi gombra:",
+    "email-confirm-button": "E-mail megerősítése",
+    "email-confirm-ignore": "Ha nem te regisztráltál, kérjük, hagyd figyelmen kívül ezt az e-mailt.",
+    "email-forgot-title": "Jelszó visszaállítása",
+    "email-forgot-dear": "Kedves",
+    "email-forgot-message": " Jelszó visszaállítására vonatkozó kérelmet kaptunk.",
+    "email-forgot-click": "Kattints az alábbi gombra, hogy új jelszót állíthass be:",
+    "email-forgot-button": "Jelszó visszaállítása",
+    "email-forgot-ignore": "Ha nem te kérted a jelszó visszaállítását, nyugodtan hagyd figyelmen kívül ezt az e-mailt."
   }
 }

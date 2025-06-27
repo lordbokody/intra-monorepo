@@ -6,14 +6,26 @@ import {registerSchema} from "@intra/shared/schemas/auth/register.schema";
 import {hashPassword} from "@intra/shared/utils/password.util";
 import {sendRegisterEmail} from "../../email/email.controller";
 import {checkEmailExists} from "../../utils/checkEmailExists.util";
+import {ApplicationLanguage} from "@intra/shared/types/common.types";
+import {Header, Method} from "encore.dev/api";
+
+/**
+ * Kiegészítjük a Dto-t a Header nyelvi értékével
+ */
+export interface RegisterParams extends RegisterDto {
+    locale: Header<"Accept-Language">;
+}
 
 /**
 * Felhasználó létrehozására szolgáló metódus.
 */
-export const registerMethod = async (data: RegisterDto): Promise<RegisterResponse> => {
+export const registerMethod = async (data: RegisterParams): Promise<RegisterResponse> => {
     try {
+        // Létrehozzuk a validáló sémát
+        const validationSchema = registerSchema(data.locale as ApplicationLanguage)
+
         // Validáljuk a kliens felől érkező adatokat
-        await registerSchema('hu').client(checkEmailExists).validate(data);
+        await validationSchema.client(checkEmailExists).validate(data);
 
         // Létrehozzuk a felhasználót
         const user = await prisma.user.create({
@@ -39,7 +51,7 @@ export const registerMethod = async (data: RegisterDto): Promise<RegisterRespons
             success: true,
         };
     } catch (error){
-        console.log('errorka', error)
+        // Hibakezelés
         throw APIError.aborted(error as string);
     }
 }

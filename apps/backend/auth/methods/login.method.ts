@@ -1,23 +1,34 @@
 import {loginSchema} from "@intra/shared/schemas/auth/login.schema";
 import {prisma} from "../../database/prisma/database";
 import {generateLoginToken} from "@intra/shared/utils/token.util";
-import {APIError} from "encore.dev/api";
+import {APIError, Header} from "encore.dev/api";
 import {LoginDto, LoginResponse} from "@intra/shared/types/auth.types";
 import {RegistrationStatus, Role} from "@intra/shared/types/user.types";
+import {ApplicationLanguage} from "@intra/shared/types/common.types";
+
+/**
+ * Kiegészítjük a Dto-t a Header nyelvi értékével
+ */
+export interface LoginParams extends LoginDto {
+    locale: Header<"Accept-Language">;
+}
 
 /**
  * Bejelentkezésre szólgálú metódus.
  */
-export const loginMethod = async (data: LoginDto): Promise<LoginResponse> => {
+export const loginMethod = async (data: LoginParams): Promise<LoginResponse> => {
     try {
+        // Létrehozzuk a validáló sémát
+        const validationSchema = loginSchema(data.locale as ApplicationLanguage)
+
         // Validáljuk a kliens felől érkező adatokat
-        await loginSchema('hu').client().validate(data);
+        await validationSchema.client().validate(data);
 
         // Megkeressük a felhasználót
         const user = await prisma.user.findFirst({where: {email: data.email}});
 
         // Validáljuk, hogy a felhasználó rendben van e
-        await loginSchema("hu").server().validate(user, {
+        await validationSchema.server().validate(user, {
             context: { inputPassword: data.password },
         });
 
@@ -31,6 +42,7 @@ export const loginMethod = async (data: LoginDto): Promise<LoginResponse> => {
             user: safeUser
         };
     } catch (error){
+        // Hibakezelés
         throw APIError.aborted(error as string);
     }
 }
