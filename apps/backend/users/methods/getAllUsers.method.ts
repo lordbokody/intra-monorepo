@@ -1,20 +1,31 @@
-import {APIError} from "encore.dev/api";
+import {APIError, Header} from "encore.dev/api";
 import {getOffset, paginatedData} from "@intra/shared/utils/pagination.util";
 import {prisma} from "../../database/prisma/database";
 import {getAuthData} from "~encore/auth";
 import {UserDto, GetAllUsersDto, GetAllUsersResponse} from "@intra/shared/types/user.types";
 import {getAllUsersSchema} from "@intra/shared/schemas/user/getAllUsers.schema";
+import {ApplicationLanguage} from "@intra/shared/types/common.types";
+
+/**
+ * Kiegészítjük a Dto-t a Header nyelvi értékével
+ */
+export interface GetAllUsersParams extends GetAllUsersDto {
+    locale: Header<"Accept-Language">;
+}
 
 /**
  * Összes felhasználó adatinak lekérésére szolgáló metódus.
  */
-export const getAllUsersMethod = async (data: GetAllUsersDto): Promise<GetAllUsersResponse> => {
+export const getAllUsersMethod = async (data: GetAllUsersParams): Promise<GetAllUsersResponse> => {
     try {
         // Lekérjük az authentikációs adatokat
         const role = getAuthData()?.role;
 
+        // Létrehozzuk a validáló sémát
+        const validationSchema = getAllUsersSchema(data.locale as ApplicationLanguage)
+
         // Validáljuk a szerver oldali adatokat
-        await getAllUsersSchema('hu').server().validate(true, {
+        await validationSchema.server().validate(true, {
             context: { role },
         });
 
@@ -58,6 +69,7 @@ export const getAllUsersMethod = async (data: GetAllUsersDto): Promise<GetAllUse
             pagination,
         };
     } catch (error) {
+        // Hibakezelés
         throw APIError.aborted(error as string);
     }
 }

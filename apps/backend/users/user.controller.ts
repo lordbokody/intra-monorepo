@@ -1,25 +1,27 @@
 import { api } from "encore.dev/api";
-import UserService from "./user.service";
 import {
-    FindOneByEmailDto,
     FindOneByEmailResponse,
-    GetUserDto,
     GetUserResponse,
-    GetAllUsersDto,
     GetAllUsersResponse,
-    UpdateUserDto,
     UpdateUserResponse,
-    DeleteUserDto,
     DeleteUserResponse
 } from "@intra/shared/types/user.types";
+import {findOneByEmailMethod, FindOneByEmailParams} from "./methods/findOneByEmail.method";
+import {getUserMethod, GetUserParams} from "./methods/getUser.method";
+import {getAllUsersMethod, GetAllUsersParams} from "./methods/getAllUsers.method";
+import {updateUserMethod, UpdateUserParams} from "./methods/updateUser.method";
+import {deleteUserMethod, DeleteUserParams} from "./methods/deleteUser.method";
 
 /**
  * Felhasználó megkeresésére szolgáló metódus email cím alapján.
  */
 export const findOneByEmail = api(
-    {expose: true, method: "GET", path: "/user/find/:email" },
-    async (data: FindOneByEmailDto): Promise<FindOneByEmailResponse> => {
-        return await UserService.findOneByEmail(data)
+    // api paraméterek
+    { expose: true, method: "GET", path: "/user/find/:email" },
+    // api függvény
+    async (data: FindOneByEmailParams): Promise<FindOneByEmailResponse> => {
+        // Meghívjuk a metódust
+        return await findOneByEmailMethod(data)
     }
 )
 
@@ -27,9 +29,12 @@ export const findOneByEmail = api(
  * Adott felhasználó adatainak lekérésére szolgáló metódus.
  */
 export const getUser = api(
+    // api paraméterek
     { expose: true, auth: true, method: "GET", path: "/user/:id" },
-    async (data: GetUserDto): Promise<GetUserResponse> => {
-        return await UserService.getUser(data);
+    // api függvény
+    async (data: GetUserParams): Promise<GetUserResponse> => {
+        // Meghívjuk a metódust
+        return await getUserMethod(data)
     }
 )
 
@@ -37,9 +42,12 @@ export const getUser = api(
  * Összes felhasználó adatinak lekérésére szolgáló metódus.
  */
 export const getAllUsers = api(
+    // api paraméterek
     { expose: true, auth: true, method: "GET", path: "/user/all" },
-    async (data: GetAllUsersDto): Promise<GetAllUsersResponse> => {
-        return await UserService.getAllUsers(data);
+    // api függvény
+    async (data: GetAllUsersParams): Promise<GetAllUsersResponse> => {
+        // Meghívjuk a metódust
+        return await getAllUsersMethod(data)
     },
 )
 
@@ -47,9 +55,12 @@ export const getAllUsers = api(
  * Adott felhasználó adatinak módosítása
  */
 export const updateUser = api(
+    // api paraméterek
     { expose: true, auth: true, method: "PATCH", path: "/user/:id" },
-    async (data: UpdateUserDto): Promise<UpdateUserResponse> => {
-        return await UserService.updateUser(data);
+    // api függvény
+    async (data: UpdateUserParams): Promise<UpdateUserResponse> => {
+        // Meghívjuk a metódust
+        return await updateUserMethod(data)
     }
 )
 
@@ -57,8 +68,11 @@ export const updateUser = api(
  * Adott felhasználó adatinak módosítása
  */
 export const deleteUser = api(
+    // api paraméterek
     { expose: true, auth: true, method: "DELETE", path: "/user/:id" },
-    async (data: DeleteUserDto): Promise<DeleteUserResponse> => {
-        return await UserService.deleteUser(data);
+    // api függvény
+    async (data: DeleteUserParams): Promise<DeleteUserResponse> => {
+        // Meghívjuk a metódust
+        return await deleteUserMethod(data)
     }
 );
