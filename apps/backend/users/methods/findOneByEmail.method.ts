@@ -1,15 +1,26 @@
 import {prisma} from "../../database/prisma/database";
-import {APIError} from "encore.dev/api";
+import {APIError, Header} from "encore.dev/api";
 import {FindOneByEmailDto, FindOneByEmailResponse} from "@intra/shared/types/user.types";
 import {findOneByEmailSchema} from "@intra/shared/schemas/user/findOneByEmail.schema";
+import {ApplicationLanguage} from "@intra/shared/types/common.types";
+
+/**
+ * Kiegészítjük a Dto-t a Header nyelvi értékével
+ */
+export interface FindOneByEmailParams extends FindOneByEmailDto {
+    locale?: Header<"Accept-Language">;
+}
 
 /**
  * Felhasználó megkeresésére szolgáló metódus email cím alapján.
  */
-export const findOneByEmailMethod = async (data: FindOneByEmailDto): Promise<FindOneByEmailResponse> => {
+export const findOneByEmailMethod = async (data: FindOneByEmailParams): Promise<FindOneByEmailResponse> => {
     try {
+        // Létrehozzuk a validáló sémát
+        const validationSchema = findOneByEmailSchema(data.locale as ApplicationLanguage)
+
         // Validáljuk a kliens oldali adatokat
-        await findOneByEmailSchema('hu').client().validate(data);
+        await validationSchema.client().validate(data);
 
         // Betöltjük a felhasználót
         const user = await prisma.user.findFirst({where: {email: data.email}});
@@ -19,6 +30,7 @@ export const findOneByEmailMethod = async (data: FindOneByEmailDto): Promise<Fin
             success: !!user,
         };
     } catch (error){
+        // Hibakezelé
         throw APIError.aborted(error as string);
     }
 }

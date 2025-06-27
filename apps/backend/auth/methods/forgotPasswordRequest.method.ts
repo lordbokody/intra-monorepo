@@ -34,7 +34,8 @@ export const forgotPasswordRequestMethod = async (data: ForgotPasswordRequestPar
         await sendForgotPasswordEmail({
             token: generateEmailConfirmationToken(user?.id as number),
             name: user?.name as string,
-            email: user?.email as string
+            email: user?.email as string,
+            locale: data.locale as ApplicationLanguage,
         })
 
         // Visszatérünk a válasszal

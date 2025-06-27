@@ -43,7 +43,8 @@ export const registerMethod = async (data: RegisterParams): Promise<RegisterResp
         await sendRegisterEmail({
             token: generateEmailConfirmationToken(user.id),
             name: user.name,
-            email: user.email
+            email: user.email,
+            locale: data.locale as ApplicationLanguage,
         });
 
         // Visszatérünk a válasszal

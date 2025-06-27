@@ -1,20 +1,31 @@
 import {getAuthData} from "~encore/auth";
 import {prisma} from "../../database/prisma/database";
-import {APIError} from "encore.dev/api";
+import {APIError, Header} from "encore.dev/api";
 import {GetUserDto, GetUserResponse, UserDto} from "@intra/shared/types/user.types";
 import {getUserSchema} from "@intra/shared/schemas/user/getUser.schema";
+import {ApplicationLanguage} from "@intra/shared/types/common.types";
+
+/**
+ * Kiegészítjük a Dto-t a Header nyelvi értékével
+ */
+export interface GetUserParams extends GetUserDto {
+    locale: Header<"Accept-Language">;
+}
 
 /**
  * Adott felhasználó adatainak lekérésére szolgáló metódus.
  */
-export const getUserMethod = async (data: GetUserDto): Promise<GetUserResponse> => {
+export const getUserMethod = async (data: GetUserParams): Promise<GetUserResponse> => {
     try {
         // Lekérjük az authentikációs adatokat
         const role = getAuthData()?.role;
         const registrationStatus = getAuthData()?.registrationStatus;
 
-        // Validáljuk az authentikáció adatokat
-        await getUserSchema('hu').auth().validate(true, {
+        // Létrehozzuk a validáló sémát
+        const validationSchema = getUserSchema(data.locale as ApplicationLanguage)
+
+            // Validáljuk az authentikáció adatokat
+        await validationSchema.auth().validate(true, {
             context: {
                 registrationStatus: registrationStatus,
                 role: role,
@@ -22,7 +33,7 @@ export const getUserMethod = async (data: GetUserDto): Promise<GetUserResponse> 
         })
 
         // Validáljuk a kliens felől érkező adatokat
-        await getUserSchema('hu').client().validate(data);
+        await validationSchema.client().validate(data);
 
         // Lekérjük a felhasználót
         const user = await prisma.user.findFirst({
@@ -38,7 +49,7 @@ export const getUserMethod = async (data: GetUserDto): Promise<GetUserResponse> 
         });
 
         // Validáljuk a szerver oldali adatoakt
-        await getUserSchema("hu").server().validate(user);
+        await validationSchema.server().validate(user);
 
         // Visszatérünk a válasszal
         return {
@@ -46,6 +57,7 @@ export const getUserMethod = async (data: GetUserDto): Promise<GetUserResponse> 
             user: user as UserDto,
         };
     } catch (error){
+        // Hibakezelés
         throw APIError.aborted(error as string);
     }
 }
