@@ -9,7 +9,7 @@ import { InputCheckbox } from "../../../../components/forms/inputs/InputCheckbox
 import { ButtonSubmit } from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
 import { formStyles as styles } from "@intra/ui/formStyles";
 import { useTranslations } from 'next-intl';
-import { LayoutForm } from "../../../../components/layout/layoutForm/LayoutForm";
+import { FormCard } from "../../../../components/layout/FormCard/FormCard";
 import { useFinishRegistrationForm } from './form';
 
 /**
@@ -29,7 +29,7 @@ export default function RegisterPage() {
 
     // Létrehozzuk a sablont
     return (
-        <LayoutForm>
+        <FormCard>
             <FormikProvider value={formik}>
                 <Form className={styles.form}>
                     {/*Oldal címe*/}
@@ -52,6 +52,6 @@ export default function RegisterPage() {
                     <ButtonSubmit state={buttonState}>{t('finish')}</ButtonSubmit>
                 </Form>
             </FormikProvider>
-        </LayoutForm>
+        </FormCard>
     );
 }

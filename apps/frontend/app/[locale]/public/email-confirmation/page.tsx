@@ -5,7 +5,7 @@ import {useSearchParams} from 'next/navigation';
 import type {VerifyEmailDto, VerifyEmailResponse} from "@intra/shared/types/auth.types";
 import type {ApplicationLanguage, PageStatus} from "@intra/shared/types/common.types";
 import { formStyles as styles } from "@intra/ui/formStyles";
-import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
+import {FormCard} from "../../../../components/layout/FormCard/FormCard";
 import {useLocale, useTranslations} from "next-intl";
 import {ApiService} from "../../../api/client/client";
 import Link from "next/link";
@@ -77,7 +77,7 @@ export default function SuccessRegistrationPage() {
 
     // Visszatérünk a sablonnal
     return (
-        <LayoutForm>
+        <FormCard>
             <div className={styles.form}>
                 {/*Form neve*/}
                 <h2 className={styles.label}>{t("registration-confirmation-email-subject")}</h2>
@@ -116,6 +116,6 @@ export default function SuccessRegistrationPage() {
                     <Link className={styles.link} href={`/${locale}/public/login`}>{t('backToHome')}</Link>
                 </div>
             </div>
-        </LayoutForm>
+        </FormCard>
     );
 }

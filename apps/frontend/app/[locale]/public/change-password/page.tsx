@@ -1,6 +1,6 @@
 "use client"
 
-import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
+import {FormCard} from "../../../../components/layout/FormCard/FormCard";
 import { FormikProvider, Form } from 'formik';
 import {formStyles} from "../../../../components/styles/formStyles";
 import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
@@ -39,7 +39,7 @@ export default function ChangePasswordPage() {
 
     // Létrehozzuk a sablont
     return (
-        <LayoutForm>
+        <FormCard>
             <FormikProvider value={formik}>
                 <Form className={formStyles.form} >
                     {/*Form neve*/}
@@ -98,7 +98,7 @@ export default function ChangePasswordPage() {
                     </div>
                 </Form>
             </FormikProvider>
-        </LayoutForm>
+        </FormCard>
 
     );
 }
