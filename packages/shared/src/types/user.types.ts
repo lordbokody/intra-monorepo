@@ -1,4 +1,4 @@
-import {Paginated} from "./common.types";
+import {Paginated, RegistrationStatus, Role} from "./common.types";
 
 export interface UserDto {
     /** Felhasználó id-ja */
@@ -14,10 +14,6 @@ export interface UserDto {
     /** Felhasználó szerepköre */
     role: Role;
 }
-
-export type RegistrationStatus = 'emailNotConfirmed' | 'partialRegistration' | 'registered';
-
-export type Role = 'unverified' | 'student' | 'admin';
 
 export interface DeleteUserDto {
     /** Felhasználó id-ja */

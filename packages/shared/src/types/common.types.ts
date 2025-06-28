@@ -7,6 +7,10 @@ import {FieldHookConfig} from "formik";
 
 export type ApplicationLanguage = 'hu' | 'en'
 
+export type RegistrationStatus = 'emailNotConfirmed' | 'partialRegistration' | 'registered';
+
+export type Role = 'unverified' | 'student' | 'admin';
+
 /**
  * Backend typeok
  */

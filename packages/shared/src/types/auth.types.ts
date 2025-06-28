@@ -1,10 +1,12 @@
 import {UserDto} from "./user.types";
+import {RegistrationStatus} from "./common.types";
+import {Role} from "./common.types";
 
 export interface AuthData {
     userID: string;
     email: string;
-    role: string;
-    registrationStatus: string;
+    role: Role;
+    registrationStatus: RegistrationStatus;
 }
 
 export interface FinishRegistrationDto {
@@ -95,11 +97,11 @@ export interface LoginOAuthResponse {
     /** Hibaüzenet sikertelen metódus esetén */
     message?: string;
     /** Regisztráció státusza*/
-    registrationStatus?: 'partialRegistration' | 'registered' | 'emailNotConfirmed';
+    registrationStatus?: RegistrationStatus;
     /** Token */
     token?: string;
     /** Szerepkör */
-    role?: 'unverified' | 'student' | 'admin';
+    role?: Role;
 }
 
 export interface RegisterDto {
