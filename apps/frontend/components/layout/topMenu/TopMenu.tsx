@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Menu } from "lucide-react";
-import {styles} from "./styles";
+import {topMenuStyles} from "../../styles/topMenuStyles";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useLocale } from 'next-intl';
@@ -52,41 +52,41 @@ export default function TopMenu({ title }: TopMenuProps) {
     }
 
     return (
-        <nav className={styles.nav}>
+        <nav className={topMenuStyles.nav}>
             {/*Weboldal neve és link a főoldalra*/}
-            <Link key={title} href={`/${locale}`} className={styles.logo}>
+            <Link key={title} href={`/${locale}`} className={topMenuStyles.logo}>
                 {title}
             </Link>
 
             {/*Asztali nézet menü*/}
-            <div className={styles.menuDesktop}>
+            <div className={topMenuStyles.menuDesktop}>
                 {/*Menü elemek*/}
                 {menuItems.map((item) => (
-                    <Link key={item.label} href={item.href} className={styles.menuEntryDesktop}>
+                    <Link key={item.label} href={item.href} className={topMenuStyles.menuEntryDesktop}>
                         {item.label}
                     </Link>
                 ))}
 
                 {/*Nyelv váltó gomb*/}
                 {locale === 'hu' ? (
-                    <GB onClick={changeLanguage} className={styles.languageIcon} />
+                    <GB onClick={changeLanguage} className={topMenuStyles.languageIcon} />
                 ) : (
-                    <HU onClick={changeLanguage} className={styles.languageIcon} />
+                    <HU onClick={changeLanguage} className={topMenuStyles.languageIcon} />
                 )}
             </div>
 
             {/*Hamburger menü mobilon*/}
-            <div className={styles.hamburgerWrapper}>
-                <button onClick={() => setIsOpen(!isOpen)} className={styles.hamburgerMenu}>
-                    <Menu className={styles.hamburgerIcon} />
+            <div className={topMenuStyles.hamburgerWrapper}>
+                <button onClick={() => setIsOpen(!isOpen)} className={topMenuStyles.hamburgerMenu}>
+                    <Menu className={topMenuStyles.hamburgerIcon} />
                 </button>
             </div>
 
             {/*Ha kivan nyitva a hamburger menü akkor mutatjuk mobilon a menü elemeket*/}
             {isOpen && (
-                <div className={styles.menuMobile}>
+                <div className={topMenuStyles.menuMobile}>
                     {menuItems.map((item) => (
-                        <Link key={item.label} href={item.href} className={styles.menuEntryMobile}>
+                        <Link key={item.label} href={item.href} className={topMenuStyles.menuEntryMobile}>
                             {item.label}
                         </Link>
                     ))}

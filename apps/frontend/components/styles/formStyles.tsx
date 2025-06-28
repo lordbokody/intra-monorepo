@@ -1,3 +1,6 @@
+/**
+ * Formokhoz tartozó stílusok
+ */
 export const formStyles = {
     form: 'bg-white shadow-md rounded-xl p-6 w-full flex flex-col gap-4',
     label: 'text-2xl font-semibold text-center mb-[50px]',

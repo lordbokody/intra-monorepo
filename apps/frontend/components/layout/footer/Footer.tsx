@@ -1,3 +1,7 @@
+
+/**
+ * Footer komponens
+ */
 export default function Footer() {
 
     return (

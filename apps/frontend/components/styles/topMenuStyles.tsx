@@ -1,4 +1,7 @@
-export const styles = {
+/**
+ * Top menü komponenshez tartozó stílusok
+ */
+export const topMenuStyles = {
     nav: 'bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center fixed top-0 left-0 w-full z-10 shadow-md',
     logo: 'text-xl font-bold text-gray-800',
     menuDesktop: 'hidden md:flex space-x-8',

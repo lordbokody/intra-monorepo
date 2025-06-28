@@ -1,18 +1,23 @@
 import React from "react";
-import {getButtonClassNames, getButtonChildren} from "./styles";
-import {ButtonSubmitProps} from "./types";
+import {buttonStyles} from "../../../styles/buttonStyles";
+import {ButtonSubmitProps} from "@intra/ui/components/forms/buttons/buttonSubmit/types";
 
+/**
+ * Submit gomb komponens, amit formokban használunk
+ */
 export const ButtonSubmit: React.FC<ButtonSubmitProps> = ({ state, children, ...props }) => {
+    // Beállítjuk, hogy tiltva van e a gomb
     const isDisabled = state !== 'enabled';
 
+    // Visszatérünk a komponenssel
     return (
         <button
             type="submit"
-            className={getButtonClassNames(state)}
+            className={buttonStyles.state(state)}
             disabled={isDisabled}
             {...props}
         >
-            {getButtonChildren(state, children)}
+            {buttonStyles.children(state, children)}
         </button>
     );
 };

@@ -2,7 +2,7 @@
 
 import { FormikProvider, Form } from 'formik';
 import Link from "next/link";
-import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
+import {FormCard} from "../../../../components/layout/FormCard/FormCard";
 import { formStyles as styles } from "@intra/ui/formStyles";
 import {InputEmail} from "../../../../components/forms/inputs/InputEmail";
 import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
@@ -32,7 +32,7 @@ export default function ForgotPasswordPage() {
 
     // Létrehozzuk a sablont
     return (
-        <LayoutForm>
+        <FormCard>
             <div className={styles.form}>
                 <FormikProvider value={formik}>
                     <Form>
@@ -67,7 +67,7 @@ export default function ForgotPasswordPage() {
                     </Form>
                 </FormikProvider>
             </div>
-        </LayoutForm>
+        </FormCard>
 
     );
 }

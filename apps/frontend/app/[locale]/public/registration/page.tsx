@@ -11,7 +11,7 @@ import {formStyles} from "../../../../components/styles/formStyles";
 import {useLocale, useTranslations} from 'next-intl';
 import {useRegistrationForm} from "./form";
 import Link from "next/link";
-import {LayoutForm} from "../../../../components/layout/layoutForm/LayoutForm";
+import {FormCard} from "../../../../components/layout/FormCard/FormCard";
 import {useState} from "react";
 import {PageStatus} from "@intra/shared/types/common.types";
 
@@ -36,7 +36,7 @@ export default function RegisterPage() {
 
     // Létrehozzuk a sablont
     return (
-        <LayoutForm>
+        <FormCard>
             <FormikProvider value={formik}>
                 <Form className={formStyles.form} >
                     {/*Form neve*/}
@@ -115,6 +115,6 @@ export default function RegisterPage() {
                     </div>
                 </Form>
             </FormikProvider>
-        </LayoutForm>
+        </FormCard>
     )
 }

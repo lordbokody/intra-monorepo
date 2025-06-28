@@ -1,3 +1,6 @@
+/**
+ * Input komponensekhez tartozó stílusok
+ */
 export const inputStyles = {
     // COMMON
     outerDiv: 'flex flex-col gap-1 relative',
