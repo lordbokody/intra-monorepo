@@ -6,7 +6,8 @@ import {
     LoginDto,
     RegisterDto,
     ForgotPasswordRequestDto,
-    ForgotPasswordChangeDto, VerifyTokenDto, ReVerifyEmailDto
+    ForgotPasswordChangeDto, VerifyTokenDto, ReVerifyEmailDto,
+    LoginOAuthDto
 } from "@intra/shared/types/auth.types";
 import {FindOneByEmailDto} from "@intra/shared/types/user.types";
 import {verifyEmailMethod} from "./methods/auth/verifyEmail.method";
@@ -17,10 +18,11 @@ import {forgotPasswordRequestMethod} from "./methods/auth/forgotPasswordRequest.
 import {forgotPasswordChangeMethod} from "./methods/auth/forgotPasswordChange.method";
 import {verifyTokenMethod} from "./methods/auth/verifyToken.method";
 import {reVerifyEmailMethod} from "./methods/auth/reverifyEmail.method";
+import {loginOAuthMethod} from "./methods/auth/loginOAuth.method";
 
 /**
  * Api service
- * FONTOS
+ * FONTOS:
  * Aszerint kell rendezni az objektumokat hogy kövesse a backend serviceit!!!
  */
 export const ApiService = {
@@ -37,6 +39,10 @@ export const ApiService = {
         // Bejelentkezés
         login: async (data: LoginDto, language: ApplicationLanguage) => {
             return await loginMethod(data, language);
+        },
+        // Bejelentkezés oauth
+        loginOAuth: async (data: LoginOAuthDto, language: ApplicationLanguage) => {
+            return await loginOAuthMethod(data, language);
         },
         // Regisztráció
         register: async (data: RegisterDto, language: ApplicationLanguage) => {
