@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
 import { finishRegistrationSchema } from '@intra/shared/schemas/auth/finishRegistration.schema';
 import { sleep } from '@intra/shared/utils/sleep.util';
-import { getButtonState } from '../../../../utils/getButtonState';
+import { getButtonState } from '../../../../../../packages/ui/src/utils/getButtonState';
 import {ButtonStateType} from "@intra/shared/types/common.types";
 import { FinishRegistrationDto, FinishRegistrationResponse } from '@intra/shared/types/auth.types';
 import {ApiService} from "../../../api/client/client";

@@ -1,7 +1,6 @@
 import {useEffect, useMemo, useRef} from "react";
 import {debounce} from "lodash";
 
-
 /**
  * A lodash debounce kibővítése Next.js-re
  * Valamilyen belső Next.js működés miatt a lodash debounce nem jól működik, ezért ebben a formában lehet csak használni

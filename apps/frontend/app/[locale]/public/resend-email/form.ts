@@ -2,7 +2,7 @@
 
 import {useLocale} from "next-intl";
 import { useEffect, useState } from 'react';
-import {getButtonState} from "../../../../utils/getButtonState";
+import {getButtonState} from "../../../../../../packages/ui/src/utils/getButtonState";
 import {ButtonStateType} from "@intra/shared/types/common.types";
 import { ReVerifyEmailDto, ReVerifyEmailResponse } from "@intra/shared/types/auth.types";
 import {sleep} from "@intra/shared/utils/sleep.util";
