@@ -13,7 +13,9 @@
     "JWT_SECRET",
     "DEFAULT_LANGUAGE",
     "APP_NAME",
-    "EMAIL_FROM_EMAIL"
+    "EMAIL_FROM_EMAIL",
+    "SLEEP_TIME_SUCCESS",
+    "SLEEP_TIME_ERROR"
   ],
   "globalDependencies": [".env"],
   "tasks": {

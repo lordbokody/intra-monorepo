@@ -5,11 +5,11 @@ import {useSearchParams} from 'next/navigation';
 import type {VerifyEmailDto, VerifyEmailResponse} from "@intra/shared/types/auth.types";
 import type {ApplicationLanguage, PageStatus} from "@intra/shared/types/common.types";
 import {formStyles} from "@intra/ui/components/styles/formStyles";
-import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
-import {useLocale, useTranslations} from "next-intl";
+import {FormCard} from "@intra/ui/components/layout/FormCard/FormCard";
 import {ApiService} from "../../../api/client/client";
 import Link from "next/link";
 import {LoaderCircle} from "lucide-react";
+import {useAppTranslations} from "@intra/ui/utils/useAppTranslations";
 
 /**
  * Email megerősítésére szolgáló oldal
@@ -19,8 +19,7 @@ export default function SuccessRegistrationPage() {
     const [pageStatus, setPageStatus] = useState<PageStatus>('loading');
 
     // App nyelvének változói
-    const t = useTranslations('all');
-    const locale = useLocale();
+    const { locale, t } = useAppTranslations();
 
     // Url paraméter betöltése
     const searchParams = useSearchParams();

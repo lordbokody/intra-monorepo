@@ -8,12 +8,12 @@ import {InputDate} from "@intra/ui/components/forms/inputs/InputDate";
 import {InputCheckbox} from "@intra/ui/components/forms/inputs/InputCheckbox";
 import {ButtonSubmit} from "@intra/ui/components/forms/buttons/ButtonSubmit";
 import {formStyles} from "@intra/ui/components/styles/formStyles";
-import {useLocale, useTranslations} from 'next-intl';
 import {useRegistrationForm} from "./form";
 import Link from "next/link";
-import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
+import {FormCard} from "@intra/ui/components/layout/FormCard/FormCard";
 import {useState} from "react";
 import {PageStatus} from "@intra/shared/types/common.types";
+import {useAppTranslations} from "@intra/ui/utils/useAppTranslations";
 
 /**
  * Regisztrációs oldal
@@ -23,8 +23,7 @@ export default function RegisterPage() {
     const [pageStatus, setPageStatus] = useState<PageStatus>('default');
 
     // Betöltjük a fordításokat
-    const locale = useLocale();
-    const t = useTranslations('all');
+    const { locale, t } = useAppTranslations();
 
     // Betöltjük a formot
     const {

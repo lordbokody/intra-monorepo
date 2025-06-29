@@ -8,16 +8,16 @@ import { InputDate } from "@intra/ui/components/forms/inputs/InputDate";
 import { InputCheckbox } from "@intra/ui/components/forms/inputs/InputCheckbox";
 import { ButtonSubmit } from "@intra/ui/components/forms/buttons/ButtonSubmit";
 import {formStyles} from "@intra/ui/components/styles/formStyles";
-import { useTranslations } from 'next-intl';
-import { FormCard } from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
+import { FormCard } from "@intra/ui/components/layout/FormCard/FormCard";
 import { useFinishRegistrationForm } from './form';
+import {useAppTranslations} from "@intra/ui/utils/useAppTranslations";
 
 /**
  * Regisztráció befejezése oldal
  */
 export default function RegisterPage() {
     // Betöltjük a fordításokat
-    const t = useTranslations('all');
+    const { t } = useAppTranslations();
 
     // Betöltjük a formot
     const {

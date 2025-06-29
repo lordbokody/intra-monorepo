@@ -16,6 +16,11 @@ type TopMenuProps = {
     title: string;
 };
 
+type TopMenuItem = {
+    name: string,
+    href: string,
+}
+
 /**
  * Top menü komponens
  */
@@ -32,8 +37,8 @@ export default function TopMenu({ title }: TopMenuProps) {
     const router = useRouter()
 
     // Beállítjuk a menü elemeket
-    const menuItems = [
-        // { label: t("home"), href: `/${locale}/public/login` },
+    const menuItems: TopMenuItem[] = [
+        { name: t("home"), href: `/${locale}/public/login` },
     ];
 
     // Segédfüggvény a nyelv megváltoztatására
@@ -62,8 +67,8 @@ export default function TopMenu({ title }: TopMenuProps) {
             <div className={topMenuStyles.menuDesktop}>
                 {/*Menü elemek*/}
                 {menuItems.map((item) => (
-                    <Link key={item.label} href={item.href} className={topMenuStyles.menuEntryDesktop}>
-                        {item.label}
+                    <Link key={item.name} href={item.href} className={topMenuStyles.menuEntryDesktop}>
+                        {item.name}
                     </Link>
                 ))}
 
@@ -86,8 +91,8 @@ export default function TopMenu({ title }: TopMenuProps) {
             {isOpen && (
                 <div className={topMenuStyles.menuMobile}>
                     {menuItems.map((item) => (
-                        <Link key={item.label} href={item.href} className={topMenuStyles.menuEntryMobile}>
-                            {item.label}
+                        <Link key={item.name} href={item.href} className={topMenuStyles.menuEntryMobile}>
+                            {item.name}
                         </Link>
                     ))}
                 </div>

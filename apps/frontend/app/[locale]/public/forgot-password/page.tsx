@@ -2,14 +2,14 @@
 
 import { FormikProvider, Form } from 'formik';
 import Link from "next/link";
-import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
+import {FormCard} from "@intra/ui/components/layout/FormCard/FormCard";
 import {formStyles} from "@intra/ui/components/styles/formStyles";
 import {InputEmail} from "@intra/ui/components/forms/inputs/InputEmail";
 import {ButtonSubmit} from "@intra/ui/components/forms/buttons/ButtonSubmit";
-import {useLocale, useTranslations} from "next-intl";
 import {useForgotPasswordRequestForm} from "./form";
 import {useState} from "react";
 import type {PageStatus} from "@intra/shared/types/common.types";
+import {useAppTranslations} from "@intra/ui/utils/useAppTranslations";
 
 /**
  * Elfelejtett jelszó oldal
@@ -19,8 +19,7 @@ export default function ForgotPasswordPage() {
     const [pageStatus, setPageStatus] = useState<PageStatus>('default');
 
     // Betöltjük a fordításokat
-    const locale = useLocale();
-    const t = useTranslations('all');
+    const { locale, t } = useAppTranslations();
 
     // Betöltjük a formot
     const {
