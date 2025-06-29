@@ -1,6 +1,6 @@
 import jwt, {JwtPayload} from "jsonwebtoken";
 import dotenv from 'dotenv';
-import {RegistrationStatus} from "../types/user.types";
+import {RegistrationStatus} from "../types/common.types";
 
 dotenv.config();
 

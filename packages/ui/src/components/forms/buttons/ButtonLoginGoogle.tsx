@@ -1,6 +1,6 @@
 "use client"
 
-import {buttonStyles} from "../../../styles/buttonStyles";
+import {buttonStyles} from "../../styles/buttonStyles";
 import React from "react";
 import {useTranslations} from "next-intl";
 import {ButtonSubmitProps} from "@intra/shared/types/common.types";

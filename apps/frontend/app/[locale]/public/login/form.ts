@@ -1,7 +1,8 @@
 'use client'
 
 import {useEffect, useState} from "react";
-import {ButtonStateType, getButtonState} from "../../../../utils/getButtonState";
+import {getButtonState} from "../../../../utils/getButtonState";
+import {ButtonStateType} from "@intra/shared/types/common.types";
 import {useRouter} from "next/navigation";
 import {useLocale, useTranslations} from "next-intl";
 import {signIn} from "next-auth/react";

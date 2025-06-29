@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "@repo/tailwind-config";
+@import "@intra/ui/styles.css";
+@source "../../../node_modules/@intra/ui";
 
 :root {
   --background: #ffffff;

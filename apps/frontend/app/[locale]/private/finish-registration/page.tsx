@@ -1,15 +1,15 @@
 'use client'
 
 import { FormikProvider, Form } from 'formik';
-import { InputText } from "../../../../components/forms/inputs/InputText";
-import { InputEmail } from "../../../../components/forms/inputs/InputEmail";
-import { InputPassword } from "../../../../components/forms/inputs/InputPassword";
-import { InputDate } from "../../../../components/forms/inputs/InputDate";
-import { InputCheckbox } from "../../../../components/forms/inputs/InputCheckbox";
-import { ButtonSubmit } from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
-import { formStyles as styles } from "@intra/ui/formStyles";
+import { InputText } from "@intra/ui/components/forms/inputs/InputText";
+import { InputEmail } from "@intra/ui/components/forms/inputs/InputEmail";
+import { InputPassword } from "@intra/ui/components/forms/inputs/InputPassword";
+import { InputDate } from "@intra/ui/components/forms/inputs/InputDate";
+import { InputCheckbox } from "@intra/ui/components/forms/inputs/InputCheckbox";
+import { ButtonSubmit } from "@intra/ui/components/forms/buttons/ButtonSubmit";
+import {formStyles} from "@intra/ui/components/styles/formStyles";
 import { useTranslations } from 'next-intl';
-import { FormCard } from "../../../../components/layout/FormCard/FormCard";
+import { FormCard } from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
 import { useFinishRegistrationForm } from './form';
 
 /**
@@ -31,9 +31,9 @@ export default function RegisterPage() {
     return (
         <FormCard>
             <FormikProvider value={formik}>
-                <Form className={styles.form}>
+                <Form className={formStyles.form}>
                     {/*Oldal címe*/}
-                    <h2 className={styles.label}>{t('finish-registration')}</h2>
+                    <h2 className={formStyles.label}>{t('finish-registration')}</h2>
 
                     {/*Input mezők*/}
                     <InputText label={t('name')} id="name" name="name" value={formik.values.name} required />
@@ -45,8 +45,8 @@ export default function RegisterPage() {
                     <InputCheckbox label={t('acceptPrivacy')} id="acceptPrivacy" name="acceptPrivacy" value={formik.values.acceptPrivacy} required />
 
                     {/*Információs szövegek*/}
-                    <p className={styles.required}>{t('*-required')}</p>
-                    <p className={styles.error(isError)}>{errorText}</p>
+                    <p className={formStyles.required}>{t('*-required')}</p>
+                    <p className={formStyles.error(isError)}>{errorText}</p>
 
                     {/*Form elküldésének gombja*/}
                     <ButtonSubmit state={buttonState}>{t('finish')}</ButtonSubmit>

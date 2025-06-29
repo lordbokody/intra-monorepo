@@ -4,12 +4,11 @@ import { useState, useEffect } from "react";
 import {useSearchParams} from 'next/navigation';
 import type {VerifyEmailDto, VerifyEmailResponse} from "@intra/shared/types/auth.types";
 import type {ApplicationLanguage, PageStatus} from "@intra/shared/types/common.types";
-import { formStyles as styles } from "@intra/ui/formStyles";
-import {FormCard} from "../../../../components/layout/FormCard/FormCard";
+import {formStyles} from "@intra/ui/components/styles/formStyles";
+import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
 import {useLocale, useTranslations} from "next-intl";
 import {ApiService} from "../../../api/client/client";
 import Link from "next/link";
-import {formStyles} from "../../../../components/styles/formStyles";
 import {LoaderCircle} from "lucide-react";
 
 /**
@@ -78,9 +77,9 @@ export default function SuccessRegistrationPage() {
     // Visszatérünk a sablonnal
     return (
         <FormCard>
-            <div className={styles.form}>
+            <div className={formStyles.form}>
                 {/*Form neve*/}
-                <h2 className={styles.label}>{t("registration-confirmation-email-subject")}</h2>
+                <h2 className={formStyles.label}>{t("registration-confirmation-email-subject")}</h2>
 
                 {/*Render állapot, ha tölt az oldal*/}
                 {pageStatus === 'loading' && (
@@ -112,8 +111,8 @@ export default function SuccessRegistrationPage() {
                 )}
 
                 {/*Linkek*/}
-                <div className={styles.linkRow}>
-                    <Link className={styles.link} href={`/${locale}/public/login`}>{t('backToHome')}</Link>
+                <div className={formStyles.linkRow}>
+                    <Link className={formStyles.link} href={`/${locale}/public/login`}>{t('backToHome')}</Link>
                 </div>
             </div>
         </FormCard>

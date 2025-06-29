@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  transpilePackages: [
+    "@intra/ui",
+  ],
 };
 
 const withNextIntl = createNextIntlPlugin();

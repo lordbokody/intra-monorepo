@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import TopMenu from "../../../components/layout/topMenu/TopMenu";
-import Footer from "../../../components/layout/footer/Footer";
+import TopMenu from "../../../../../packages/ui/src/components/layout/topMenu/TopMenu";
+import Footer from "../../../../../packages/ui/src/components/layout/footer/Footer";
 
 /**
  * Oldal címe

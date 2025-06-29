@@ -1,17 +1,17 @@
 'use client'
 
 import { FormikProvider, Form } from 'formik';
-import {InputText} from "../../../../components/forms/inputs/InputText";
-import {InputEmail} from "../../../../components/forms/inputs/InputEmail";
-import {InputPassword} from "../../../../components/forms/inputs/InputPassword";
-import {InputDate} from "../../../../components/forms/inputs/InputDate";
-import {InputCheckbox} from "../../../../components/forms/inputs/InputCheckbox";
-import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
-import {formStyles} from "../../../../components/styles/formStyles";
+import {InputText} from "@intra/ui/components/forms/inputs/InputText";
+import {InputEmail} from "@intra/ui/components/forms/inputs/InputEmail";
+import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
+import {InputDate} from "@intra/ui/components/forms/inputs/InputDate";
+import {InputCheckbox} from "@intra/ui/components/forms/inputs/InputCheckbox";
+import {ButtonSubmit} from "@intra/ui/components/forms/buttons/ButtonSubmit";
+import {formStyles} from "@intra/ui/components/styles/formStyles";
 import {useLocale, useTranslations} from 'next-intl';
 import {useRegistrationForm} from "./form";
 import Link from "next/link";
-import {FormCard} from "../../../../components/layout/FormCard/FormCard";
+import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
 import {useState} from "react";
 import {PageStatus} from "@intra/shared/types/common.types";
 

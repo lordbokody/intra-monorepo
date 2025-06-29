@@ -2,10 +2,10 @@
 
 import { FormikProvider, Form } from 'formik';
 import Link from "next/link";
-import {FormCard} from "../../../../components/layout/FormCard/FormCard";
-import { formStyles as styles } from "@intra/ui/formStyles";
-import {InputEmail} from "../../../../components/forms/inputs/InputEmail";
-import {ButtonSubmit} from "../../../../components/forms/buttons/buttonSubmit/ButtonSubmit";
+import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
+import {formStyles} from "@intra/ui/components/styles/formStyles";
+import {InputEmail} from "@intra/ui/components/forms/inputs/InputEmail";
+import {ButtonSubmit} from "@intra/ui/components/forms/buttons/ButtonSubmit";
 import {useLocale, useTranslations} from "next-intl";
 import {useResendEmailForm} from "./form";
 import {useState} from "react";
@@ -33,17 +33,17 @@ export default function ResendEmailPage() {
     // Létrehozzuk a sablont
     return (
         <FormCard>
-            <div className={styles.form}>
+            <div className={formStyles.form}>
                 <FormikProvider value={formik}>
                     <Form>
                         {/*Form neve*/}
-                        <h2 className={styles.label}>{t("confirm-email")}</h2>
+                        <h2 className={formStyles.label}>{t("confirm-email")}</h2>
 
                         {/*Alapértelmezett állapot*/}
                         {pageStatus === 'default' && (
                             <>
                                 {/*Leírás*/}
-                                <p className={styles.description}>{t("confirm-email-desc")}</p>
+                                <p className={formStyles.description}>{t("confirm-email-desc")}</p>
 
                                 {/*Input mező*/}
                                 <InputEmail
@@ -53,7 +53,7 @@ export default function ResendEmailPage() {
                                 />
 
                                 {/*Tájékoztató szövegek*/}
-                                <p className={styles.error(isError)}>{errorText}</p>
+                                <p className={formStyles.error(isError)}>{errorText}</p>
 
                                 {/*Submit gomb*/}
                                 <ButtonSubmit state={buttonState}>{t("submit")}</ButtonSubmit>
@@ -63,13 +63,13 @@ export default function ResendEmailPage() {
                         {/*Sikeres form kitöltés*/}
                         {pageStatus === 'succeeded' && (
                             <>
-                                <p className={styles.description}>{t("confirm-email-success")}</p>
+                                <p className={formStyles.description}>{t("confirm-email-success")}</p>
                             </>
                         )}
 
                         {/*Linkek */}
-                        <div className={styles.linkRow}>
-                            <Link className={styles.link} href={`/${locale}/public/login`}>{t('backToHome')}</Link>
+                        <div className={formStyles.linkRow}>
+                            <Link className={formStyles.link} href={`/${locale}/public/login`}>{t('backToHome')}</Link>
                         </div>
                     </Form>
                 </FormikProvider>

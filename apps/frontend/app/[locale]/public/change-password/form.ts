@@ -2,7 +2,8 @@
 
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
-import {ButtonStateType, getButtonState} from "../../../../utils/getButtonState";
+import {getButtonState} from "../../../../utils/getButtonState";
+import {ButtonStateType} from "@intra/shared/types/common.types";
 import {useLocale} from "next-intl";
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 import {ForgotPasswordChangeDto} from "@intra/shared/types/auth.types"

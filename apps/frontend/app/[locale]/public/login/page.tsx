@@ -4,11 +4,11 @@ import Link from "next/link";
 import { FormikProvider, Form } from 'formik';
 import {InputEmail} from "@intra/ui/components/forms/inputs/InputEmail";
 import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
-import {ButtonSubmit} from "@intra/ui/components/forms/buttons/buttonSubmit/ButtonSubmit";
-import {formStyles} from "../../../../components/styles/formStyles";
-import {FormCard} from "../../../../components/layout/FormCard/FormCard";
+import {ButtonSubmit} from "@intra/ui/components/forms/buttons/ButtonSubmit";
+import {formStyles} from "@intra/ui/components/styles/formStyles";
+import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
 import {useLocale, useTranslations} from "next-intl";
-import {ButtonLoginGoogle} from "@intra/ui/components/forms/buttons/buttonLoginGoogle/ButtonLoginGoogle";
+import {ButtonLoginGoogle} from "@intra/ui/components/forms/buttons/ButtonLoginGoogle";
 import {useLoginForm} from "./form";
 
 /**
