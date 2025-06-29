@@ -33,7 +33,7 @@ export default function TopMenu({ title }: TopMenuProps) {
 
     // Beállítjuk a menü elemeket
     const menuItems = [
-        { label: t("home"), href: `/${locale}/public/login` },
+        // { label: t("home"), href: `/${locale}/public/login` },
     ];
 
     // Segédfüggvény a nyelv megváltoztatására

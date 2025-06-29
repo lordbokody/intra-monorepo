@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import TopMenu from "../../../../../packages/ui/src/components/layout/topMenu/TopMenu";
-import Footer from "../../../../../packages/ui/src/components/layout/footer/Footer";
+import TopMenu from "@intra/ui/components/layout/topMenu/TopMenu";
+import Footer from "@intra/ui/components/layout/footer/Footer";
+import SideMenu from "@intra/ui/components/layout/SideMenu/SideMenu";
+import {getLocale} from "next-intl/server";
 
 /**
  * Oldal címe
@@ -21,21 +23,36 @@ export const metadata: Metadata = {
 /**
  * Publikus útvonalak layoutja
  */
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
+export default async function RootLayout({
+                                       children,
+                                   }: Readonly<{
+    children: React.ReactNode;
 }>) {
-  return (
-      <div>
-          {/*Top menü*/}
-          <TopMenu title={title} />
+    const locale = await getLocale();
 
-          {/*Main content*/}
-          <main>{children}</main>
+    return (
+        <div>
+            {/*Top menü*/}
+            <TopMenu title={title} />
 
-          {/*Footer*/}
-          <Footer/>
-      </div>
-  );
+            <div className="flex mt-[53px]">
+                {/*Baloldali menü*/}
+                <div className="w-1/5">
+                    <SideMenu locale={locale}/>
+                </div>
+
+                {/*Main content*/}
+                <div className="w-4/5">
+                    <main>{children}</main>
+                </div>
+            </div>
+
+
+
+
+
+            {/*Footer*/}
+            <Footer/>
+        </div>
+    );
 }

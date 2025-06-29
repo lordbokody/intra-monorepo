@@ -1,6 +1,9 @@
-
+import {FormCard} from "@intra/ui/components/layout/FormCard/FormCard";
 export default function Home() {
     return (
-        <div>he</div>
+        <FormCard>
+            <div>he</div>
+        </FormCard>
+
     )
 }
