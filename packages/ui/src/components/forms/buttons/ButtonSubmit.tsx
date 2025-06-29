@@ -1,6 +1,6 @@
 import React from "react";
-import {buttonStyles} from "../../../styles/buttonStyles";
-import {ButtonSubmitProps} from "@intra/ui/components/forms/buttons/buttonSubmit/types";
+import {buttonStyles} from "../../styles/buttonStyles";
+import {ButtonSubmitProps} from "@intra/shared/types/common.types";
 
 /**
  * Submit gomb komponens, amit formokban használunk

@@ -1,8 +1,8 @@
 "use client"
 
-import {FormCard} from "../../../../components/layout/FormCard/FormCard";
+import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
 import { FormikProvider, Form } from 'formik';
-import {formStyles} from "../../../../components/styles/formStyles";
+import {formStyles} from "@intra/ui/components/styles/formStyles";
 import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
 import {ButtonSubmit} from "@intra/ui/components/forms/buttons/buttonSubmit/ButtonSubmit";
 import Link from "next/link";

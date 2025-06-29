@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {ButtonStateType, getButtonState} from "../../../../utils/getButtonState";
-import {useRouter} from "next/navigation";
+import {getButtonState} from "../../../../utils/getButtonState";
+import {ButtonStateType} from "@intra/shared/types/common.types";
 import {useLocale} from "next-intl";
 import {useFormik} from "formik";
 import {RegisterDto} from "@intra/shared/types/auth.types";

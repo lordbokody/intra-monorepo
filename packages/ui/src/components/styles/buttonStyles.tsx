@@ -1,4 +1,4 @@
-import {ButtonStateType} from "@intra/ui/utils/getButtonState";
+import {ButtonStateType} from "@intra/shared/types/common.types";
 import React from "react";
 import {Check, LoaderCircle, X} from "lucide-react";
 
