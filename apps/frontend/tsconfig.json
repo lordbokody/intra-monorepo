@@ -4,8 +4,11 @@
     "plugins": [
       {
         "name": "next"
-      }
-    ]
+      },
+    ],
+    "paths": {
+      "@intra/ui/*": ["../../packages/ui/src/*"]
+    }
   },
   "include": [
     "**/*.ts",

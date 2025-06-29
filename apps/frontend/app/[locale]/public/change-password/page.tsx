@@ -1,17 +1,17 @@
 "use client"
 
-import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
+import {FormCard} from "@intra/ui/components/layout/FormCard/FormCard";
 import { FormikProvider, Form } from 'formik';
 import {formStyles} from "@intra/ui/components/styles/formStyles";
 import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
-import {ButtonSubmit} from "@intra/ui/components/forms/buttons/buttonSubmit/ButtonSubmit";
+import {ButtonSubmit} from "@intra/ui/components/forms/buttons/ButtonSubmit";
 import Link from "next/link";
-import {useLocale, useTranslations} from "next-intl";
 import {useChangePasswordForm} from "./form";
 import {useChangePasswordMiddleware} from "./middleware";
 import {useState} from "react";
 import type {PageStatus} from "@intra/shared/types/common.types";
 import {LoaderCircle} from "lucide-react";
+import {useAppTranslations} from "@intra/ui/utils/useAppTranslations";
 
 /**
  * Jelszó változtató oldal
@@ -26,8 +26,7 @@ export default function ChangePasswordPage() {
     } = useChangePasswordMiddleware(setPageStatus)
 
     // Betöltjük a fordításokat
-    const locale = useLocale();
-    const t = useTranslations('all');
+    const { locale, t } = useAppTranslations();
 
     // Betöltjük a formot
     const {

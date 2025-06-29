@@ -6,18 +6,17 @@ import {InputEmail} from "@intra/ui/components/forms/inputs/InputEmail";
 import {InputPassword} from "@intra/ui/components/forms/inputs/InputPassword";
 import {ButtonSubmit} from "@intra/ui/components/forms/buttons/ButtonSubmit";
 import {formStyles} from "@intra/ui/components/styles/formStyles";
-import {FormCard} from "../../../../../../packages/ui/src/components/layout/FormCard/FormCard";
-import {useLocale, useTranslations} from "next-intl";
+import {FormCard} from "@intra/ui/components/layout/FormCard/FormCard";
 import {ButtonLoginGoogle} from "@intra/ui/components/forms/buttons/ButtonLoginGoogle";
 import {useLoginForm} from "./form";
+import {useAppTranslations} from "@intra/ui/utils/useAppTranslations";
 
 /**
  * Login oldal
  */
 export default function Home() {
     // Betöltjük a fordításokat
-    const locale = useLocale();
-    const t = useTranslations('all');
+    const { locale, t } = useAppTranslations();
 
     // Betöltjük a formot
     const {

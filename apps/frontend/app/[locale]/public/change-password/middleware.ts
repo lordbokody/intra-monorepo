@@ -1,18 +1,18 @@
 "use client"
 
 import {useSearchParams} from "next/navigation";
-import {useLocale} from "next-intl";
 import {useEffect, useState} from "react";
 import {ApiService} from "../../../api/client/client";
 import type {VerifyTokenDto, VerifyTokenResponse} from "@intra/shared/types/auth.types";
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
+import {useAppTranslations} from "@intra/ui/utils/useAppTranslations";
 
 /**
  * Jelszó változtató oldalhoz tartozó belső middleware, ahol az urlben található tokent ellenőrizzük
  */
 export const useChangePasswordMiddleware = (setPageStatus: Function) => {
     // Betöltjük a fordításokat
-    const locale = useLocale();
+    const { locale } = useAppTranslations();
 
     // Url paraméter betöltése
     const searchParams = useSearchParams();
