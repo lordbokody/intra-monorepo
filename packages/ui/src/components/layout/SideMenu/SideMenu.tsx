@@ -7,8 +7,15 @@ type SideMenuProps = {
     locale: string;
 };
 
+type MenuItem = {
+    name: string,
+    icon: any,
+    href: string,
+    onClick?: () => void,
+}
+
 export default function SideMenu({ locale }: SideMenuProps) {
-    const menuItems = [
+    const menuItems: MenuItem[] = [
         { name: "Főoldal", icon: Home, href: `/${locale}/private/home` },
         // { name: "Profilom", icon: User, href: `/${locale}/profile` },
         // { name: "Beállítások", icon: Settings, href: `/${locale}/settings` },
