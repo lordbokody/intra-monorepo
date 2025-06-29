@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useField, useFormikContext} from "formik";
-import {useDebounce} from "frontend/utils/useDebounce";
+import {useDebounce} from "../../../utils/useDebounce";
 import {LoaderCircle} from "lucide-react";
 import {InputProps} from "@intra/shared/types/common.types";
 import {inputStyles} from "../../styles/inputStyles";

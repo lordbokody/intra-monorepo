@@ -1,6 +1,6 @@
 import {FindOneByEmailDto, FindOneByEmailResponse} from "@intra/shared/types/user.types";
 import {ApplicationLanguage} from "@intra/shared/types/common.types";
-import {ApiService} from "../app/api/client/client";
+import {ApiService} from "../client";
 
 /**
  * Email ellenőrző Segédfüggvény a kliens oldali yup validátorokhoz

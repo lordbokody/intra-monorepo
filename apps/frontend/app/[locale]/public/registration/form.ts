@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getButtonState} from "../../../../utils/getButtonState";
+import {getButtonState} from "../../../../../../packages/ui/src/utils/getButtonState";
 import {ButtonStateType} from "@intra/shared/types/common.types";
 import {useLocale} from "next-intl";
 import {useFormik} from "formik";
@@ -8,7 +8,7 @@ import { sleep } from '@intra/shared/utils/sleep.util';
 import {ApiService} from "../../../api/client/client";
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 import {registerSchema} from "@intra/shared/schemas/auth/register.schema";
-import {checkEmailExists} from "../../../../utils/checkEmailExists.util";
+import {checkEmailExists} from "../../../api/client/helpers/checkEmailExists.helper";
 
 /**
  * Regisztráció oldalhoz tartozó form
