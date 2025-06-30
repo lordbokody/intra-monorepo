@@ -1,7 +1,7 @@
 "use client"
 
 import {useFormik} from "formik";
-import {RegisterDto} from "@intra/shared/types/auth.types";
+import {RegisterDto, RegisterResponse} from "@intra/shared/types/auth.types";
 import {ApiService} from "../../../api/client/client";
 import type {ApplicationLanguage} from "@intra/shared/types/common.types";
 import {registerSchema} from "@intra/shared/schemas/auth/register.schema";
@@ -31,10 +31,15 @@ export const useRegistrationForm = (setPageStatus: Function) => {
     const onSubmit = async (values: RegisterDto) => {
         try {
             // Meghívjuk az API klienst
-            await ApiService.auth.register(
+            const data: RegisterResponse = await ApiService.auth.register(
                 values,                         // form adatok
                 locale as ApplicationLanguage,  // app nyelv
             )
+
+            // Ha sikertelen a hívás, akkor hibát dobunk
+            if (!data.success){
+                return await handleError(data.message as string);
+            }
 
             // Sikeres futás esetén meghívjuk a szükséges műveletet
             await handleSuccess(() => {

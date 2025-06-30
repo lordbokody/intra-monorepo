@@ -124,6 +124,8 @@ export interface RegisterDto {
 export interface RegisterResponse {
     /** Jelzi, hogy a metódus sikeres volt e vagy sem */
     success: boolean;
+    /** Hibaüzenet sikertelen metódus esetén */
+    message?: string;
 }
 
 export interface ReVerifyEmailDto {
