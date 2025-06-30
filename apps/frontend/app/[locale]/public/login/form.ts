@@ -80,8 +80,7 @@ export const useLoginForm = () => {
         validateOnBlur: true,
         validateOnChange: true,
     });
-
-    // A form állapotainak változását figyelve állítjuk a submit gombot
+    
     // Betöltjük a form státuszát kezelő hookot
     const {
         isError,
