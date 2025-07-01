@@ -1,5 +1,18 @@
 import {Paginated, RegistrationStatus, Role} from "./common.types";
 
+export interface User {
+    /** Felhasználó neve */
+    name: string;
+    /** Felhasználó email címe */
+    email: string;
+    /** Felhasználó születésnapja */
+    birthday: string | null;
+    /** Regisztráció státusza */
+    registrationStatus: RegistrationStatus;
+    /** Felhasználó szerepköre */
+    role: Role;
+}
+
 export interface UserDto {
     /** Felhasználó id-ja */
     id: number;

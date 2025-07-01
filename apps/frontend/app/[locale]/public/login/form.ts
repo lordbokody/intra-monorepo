@@ -80,7 +80,7 @@ export const useLoginForm = () => {
         validateOnBlur: true,
         validateOnChange: true,
     });
-    
+
     // Betöltjük a form státuszát kezelő hookot
     const {
         isError,

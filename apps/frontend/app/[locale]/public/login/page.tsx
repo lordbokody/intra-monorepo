@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import Link from "next/link";
 import { FormikProvider, Form } from 'formik';
@@ -10,6 +10,8 @@ import {FormCard} from "@intra/ui/components/layout/FormCard/FormCard";
 import {ButtonLoginGoogle} from "@intra/ui/components/forms/buttons/ButtonLoginGoogle";
 import {useLoginForm} from "./form";
 import {useAppTranslations} from "@intra/ui/utils/useAppTranslations";
+import {customRedirect} from "../../../../i18n/navigation";
+import {sleep} from "@intra/shared/utils/sleep.util";
 
 /**
  * Login oldal
@@ -27,6 +29,15 @@ export default function Home() {
         buttonGoogleState,
         signInWithGoogle
     } = useLoginForm()
+
+    const beforeRouteChange = async () => {
+        console.log('before route change start')
+        await sleep(3000)
+        console.log('before route change end')
+    }
+
+    const redirectToForgotPassword = () =>
+        customRedirect(beforeRouteChange, `/public/forgot-password`, locale);
 
     // Létrehozzuk a sablont
     return (
@@ -68,7 +79,7 @@ export default function Home() {
 
               {/*Linkek*/}
               <div className={formStyles.linkRow}>
-                  <Link className={formStyles.link} href={`/${locale}/public/forgot-password`}>{t("forgotPassword")}</Link>
+                  <a className={formStyles.link} onClick={async () => { await redirectToForgotPassword() }}>{t("forgotPassword")}</a>
                   <Link className={formStyles.link} href={`/${locale}/public/registration`}>{t("registration")}</Link>
               </div>
           </div>

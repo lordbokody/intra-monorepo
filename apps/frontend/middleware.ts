@@ -31,7 +31,7 @@ export default async function middleware(request: NextRequest) {
             }
 
             // Ha védett útvonalon vagyunk átirányítjuk a loginra
-            if(segments[0] === 'private'){
+            if(segments[0] === 'private' || segments[0] === 'admin'){
                 request.nextUrl.pathname = `/${locale}/public/login`;
             }
             // Ha van session
@@ -56,6 +56,11 @@ export default async function middleware(request: NextRequest) {
 
             // Ha regisztrált de a véglegesítő oldalon jár, akkor átirányítjuk a védett főoldalra
             if(registrationStatus === 'registered' && segments[0] === 'private' && segments[1] === 'finish-registration'){
+                request.nextUrl.pathname = `/${locale}/private/home`;
+            }
+
+            // Ha nem adminként próbál belépni az admin felületre akkor küldjük a védett főoldalra
+            if(session?.role !== 'admin' && segments[0] === 'admin'){
                 request.nextUrl.pathname = `/${locale}/private/home`;
             }
         }

@@ -2,7 +2,7 @@ import TopMenu from "@intra/ui/components/layout/topMenu/TopMenu";
 import Footer from "@intra/ui/components/layout/footer/Footer";
 import SideMenu from "@intra/ui/components/layout/SideMenu/SideMenu";
 import {getLocale} from "next-intl/server";
-import {auth, signOut} from "../../../auth";
+import {auth} from "../../../auth";
 
 /**
  * Oldal címe
@@ -24,17 +24,18 @@ const title = 'Intra'
  * Privát útvonalak layoutja
  */
 export default async function PrivateLayout({
-                                       children,
-                                   }: Readonly<{
+                                                children,
+                                            }: Readonly<{
     children: React.ReactNode;
 }>) {
     const locale = await getLocale()
     const session = await auth()
 
+    console.log('session', session)
+
     const menuItems = [
         { name: 'Főoldal', href: `${locale}/private/home` },
-        { name: 'Admin', href: `${locale}/admin/home`, condition: session?.role === 'admin' },
-        // { name: 'Kilépés', href: `${locale}/admin/home`, condition: session?.role === 'admin' },
+        { name: 'Felhasználók', href: `${locale}/admin/users` },
     ]
 
     return (

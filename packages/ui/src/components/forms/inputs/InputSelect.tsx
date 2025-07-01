@@ -4,9 +4,14 @@ import { InputProps } from "@intra/shared/types/common.types";
 import { inputStyles } from "../../styles/inputStyles";
 
 /**
- * Input szöveg komponens, amely opcionálisan Formik-kompatibilis (alapértelmezetten true)
+ * Input select komponens, amely opcionálisan Formik-kompatibilis (alapértelmezetten true)
  */
-export const InputText: React.FC<InputProps> = ({ label, isFormik = true, ...props }) => {
+export const InputSelect: React.FC<InputProps> = ({
+                                                            label,
+                                                            isFormik = true,
+                                                            options,
+                                                            ...props
+                                                        }) => {
     // Formik field és meta csak akkor használjuk, ha isFormik === true
     const [field, meta] = isFormik
         ? useField({ name: props.name })
@@ -22,10 +27,13 @@ export const InputText: React.FC<InputProps> = ({ label, isFormik = true, ...pro
 
     return (
         <div className={inputStyles.outerDiv}>
+            {/* Label */}
             <label htmlFor={props.id} className={inputStyles.label}>
                 {props.required ? `${label} *` : label}
             </label>
-            <input
+
+            {/* Select mező */}
+            <select
                 {...props}
                 {...(isFormik ? field : {})}
                 id={props.id}
@@ -35,9 +43,18 @@ export const InputText: React.FC<InputProps> = ({ label, isFormik = true, ...pro
                     props.onBlur?.(e);
                 }}
                 aria-describedby={`${props.id}-feedback ${props.id}-help`}
-                type={"text"}
                 className={inputStyles.input(showError, props.disabled)}
-            />
+            >
+                {/* Default option */}
+                <option value="">Válassz...</option>
+                {options.map((option: any) => (
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
+
+            {/* Hibaüzenetek */}
             <p
                 id={`${props.id}-feedback`}
                 className={inputStyles.error(showError)}

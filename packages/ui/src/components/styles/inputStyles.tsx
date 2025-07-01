@@ -3,7 +3,7 @@
  */
 export const inputStyles = {
     // COMMON
-    outerDiv: 'flex flex-col gap-1 relative',
+    outerDiv: 'flex flex-col gap-1 relative text-sm font-medium',
 
     // EMAIL + PASSWORD + TEXT + DATE
     label: 'text-sm font-medium text-gray-700',

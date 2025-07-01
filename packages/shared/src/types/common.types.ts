@@ -50,4 +50,5 @@ export type InputProps = {
     error?: string;
     debounce?: boolean;
     preLoad?: boolean;
+    options?: { label: string; value: string }[]
 } & FieldHookConfig<string>;
