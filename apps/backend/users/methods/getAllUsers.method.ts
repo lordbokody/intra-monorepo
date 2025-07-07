@@ -4,13 +4,28 @@ import {prisma} from "../../database/prisma/database";
 import {getAuthData} from "~encore/auth";
 import {UserDto, GetAllUsersDto, GetAllUsersResponse} from "@intra/shared/types/user.types";
 import {getAllUsersSchema} from "@intra/shared/schemas/user/getAllUsers.schema";
-import {ApplicationLanguage} from "@intra/shared/types/common.types";
+import {ApplicationLanguage, RegistrationStatus, Role} from "@intra/shared/types/common.types";
+
+export interface UserFilters {
+    nameContains?: string;
+    emailContains?: string;
+    birthdayEquals?: string;
+    registrationStatusEquals?: RegistrationStatus;
+    roleEquals?: Role;
+}
+
+export interface GetAllUsersParams extends GetAllUsersDto {
+    locale: Header<"Accept-Language">;
+    filter?: UserFilters;
+}
+
 
 /**
- * Kiegészítjük a Dto-t a Header nyelvi értékével
+ * Kiegészítjük a Dto-t a Header nyelvi értékével és a filterezhető mezőkkel
  */
 export interface GetAllUsersParams extends GetAllUsersDto {
     locale: Header<"Accept-Language">;
+    filter?: UserFilters;
 }
 
 /**

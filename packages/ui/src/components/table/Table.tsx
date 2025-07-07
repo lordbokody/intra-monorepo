@@ -55,7 +55,7 @@ export const Table: React.FC<TableProps> = ({ data, filters }) => {
             setFilteredData(newFiltered);
             setCurrentPage(1);
         });
-    }, 500);
+    }, 1000);
 
     // Figyeli a filter mezők változását, de debounce-olva hívja meg a szűrést
     useEffect(() => {
@@ -71,13 +71,9 @@ export const Table: React.FC<TableProps> = ({ data, filters }) => {
 
     return (
         <div className="flex flex-col gap-4 relative">
-            {isPending && (
-                <div className="absolute inset-0 bg-white/50 backdrop-blur flex items-center justify-center z-50">
-                    <Loader className="h-8 w-8 animate-spin text-gray-600" />
-                </div>
-            )}
 
-            <div className="overflow-x-auto rounded border border-gray-300">
+
+            <div className="overflow-x-auto rounded border border-gray-300 relative">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         {/* Filter mezők */}
@@ -97,8 +93,11 @@ export const Table: React.FC<TableProps> = ({ data, filters }) => {
                         rowsPerPage={rowsPerPage}
                         filters={filters}
                     />
-
                 </table>
+
+                {isPending && (<div className="absolute bg-white/50 backdrop-blur flex items-center justify-center z-50 h-[78%] w-[100%] bottom-0">
+                    <Loader className="h-8 w-8 animate-spin text-gray-600" />
+                </div>)}
             </div>
 
             <TablePagination

@@ -41,6 +41,11 @@ export default async function middleware(request: NextRequest) {
                 request.nextUrl.pathname = `/hu/private/home`;
             }
 
+            // Ha az url-ben csak a locale szerepel akkor a főoldalra irányítjuk
+            if(hasLocale(routing.locales, locale) && segments.length === 0) {
+                request.nextUrl.pathname = `/hu/private/home`;
+            }
+
             // Betöltjük a sessionből a felhasználó regisztrációjának státuszát
             const registrationStatus = session?.registrationStatus;
 

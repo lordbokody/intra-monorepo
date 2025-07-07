@@ -17,7 +17,7 @@ export const TableBody: React.FC<TableBodyProps> = ({ filteredData, currentPage,
     );
 
     return (
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200 relative">
         {paginatedData.map((user, idx) => (
             <tr key={idx} className="hover:bg-gray-50">
                 {filters.map((filter) => {

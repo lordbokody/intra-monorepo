@@ -31,8 +31,6 @@ export default async function PrivateLayout({
     const locale = await getLocale()
     const session = await auth()
 
-    console.log('session', session)
-
     const menuItems = [
         { name: 'Főoldal', href: `${locale}/private/home` },
         { name: 'Felhasználók', href: `${locale}/admin/users` },
